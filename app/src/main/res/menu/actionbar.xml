@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/actionbar_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/searchview"
+        android:visible="false"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/actionbar_statistics"
+        android:icon="@drawable/icons8_timesheet_24"
+        android:iconTintMode="screen"
+        android:title="@string/actionbar_statistics"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/actionbar_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/action_settings" />
+</menu>

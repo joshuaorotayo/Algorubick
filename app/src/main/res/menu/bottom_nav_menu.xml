@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_notation"
+        android:icon="@drawable/icons8_help_black_24dp"
+        android:title="@string/title_notation_help" />
+    <item
+        android:id="@+id/navigation_solution_guide"
+        android:icon="@drawable/icons8_route_black_24dp"
+        android:title="@string/title_solution_guide" />
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/icons8_home_24_black"
+        android:title="@string/title_home" />
+    <item
+        android:id="@+id/navigation_timer"
+        android:icon="@drawable/icons8_stopwatch_black_24dp"
+        android:title="@string/title_timer" />
+    <item
+        android:id="@+id/navigation_simulator"
+        android:icon="@drawable/icons8_rubiks_cube_black_24dp"
+        android:title="@string/title_cube_simulator" />
+</menu>

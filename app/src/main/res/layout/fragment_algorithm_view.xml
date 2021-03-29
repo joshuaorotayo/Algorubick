@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/view_alg_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/colorPrimary"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:padding="10dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="-70dp"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/view_alg_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:text="@string/view_alg_name"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                    <TextView
+                        android:id="@+id/view_alg_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:gravity="center"
+                        android:text="@string/view_alg_text"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/view_alg_category_descriptor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:text="@string/view_alg_category_descriptor"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                        <TextView
+                            android:id="@+id/view_alg_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:text="@string/view_alg_category"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/view_alg_correct_practiced"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/activity_horizontal_margin"
+                            android:text="@string/view_alg_correct_practiced" />
+
+                        <TextView
+                            android:id="@+id/view_alg_correct_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_alg_correct_amount" />
+
+                        <TextView
+                            android:id="@+id/view_alg_practiced_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_alg_practiced_amount" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/view_alg_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:gravity="center"
+                        android:lines="3"
+                        android:text="@string/view_alg_description" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/view_alg_favourite_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:drawableEnd="@drawable/heart_outlined_24"
+                            android:drawablePadding="5dp"
+                            android:text="@string/favourite_chckbox" />
+
+                        <TextView
+                            android:id="@+id/view_alg_custom_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/thumb_up_outlined_24"
+                            android:drawablePadding="5dp"
+                            android:text="@string/custom_chckbox" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/view_alg_learn_algorithm_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:drawableBottom="@drawable/idea_white_outlined_32"
+                    android:text="@string/learn_alg_btn"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/view_alg_practice_algorithm_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:drawableBottom="@drawable/practice_32_outline_white"
+                    android:text="@string/practice_alg_btn"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

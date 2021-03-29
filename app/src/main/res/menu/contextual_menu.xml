@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/contextual_learn"
+        android:icon="@drawable/idea_white_outlined_64"
+        android:title="@string/contextual_learn"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/contextual_practice"
+        android:icon="@drawable/learn_white_outline_64"
+        android:title="@string/contextual_practice"
+        app:showAsAction="always" />
+</menu>

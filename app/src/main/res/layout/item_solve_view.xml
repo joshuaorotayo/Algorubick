@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/solve_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/item_solve_position"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/item_solve_position"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <TextView
+        android:id="@+id/item_solve_cube_size"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/item_solve_cube_size"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <TextView
+        android:id="@+id/item_solve_time"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/item_solve_time"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <TextView
+        android:id="@+id/item_solve_date"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/item_solve_date"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <ImageButton
+        android:id="@+id/item_solve_delete_icon"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:src="@drawable/icons8_circled_x_24" />
+</TableRow>

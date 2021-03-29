@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/view_algorithm_menu_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/view_algorithm_menu_edit"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/view_algorithm_menu_delete"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/view_algorithm_menu_delete"
+        app:showAsAction="always" />
+</menu>

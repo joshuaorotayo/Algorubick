@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/navigation_home">
+    <fragment
+        android:id="@id/navigation_home"
+        android:name="com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeFragment"
+        android:label="@string/title_home">
+        <action
+            android:id="@+id/action_navigation_home_to_createAlgorithmActivity2"
+            app:destination="@id/createAlgorithmActivity" />
+    </fragment>
+    <fragment
+        android:id="@id/navigation_timer"
+        android:name="com.jorotayo.algorubickrevamped.ui.timer.TimerFragment"
+        android:label="@string/title_timer" />
+    <fragment
+        android:id="@id/navigation_simulator"
+        android:name="com.jorotayo.algorubickrevamped.ui.simulator.SimulatorFragment"
+        android:label="@string/title_cube_simulator" />
+    <fragment
+        android:id="@id/navigation_solution_guide"
+        android:name="com.jorotayo.algorubickrevamped.ui.solution_guide.SolutionGuideFragment"
+        android:label="@string/title_solution_guide"/>
+    <fragment
+        android:id="@id/navigation_notation"
+        android:name="com.jorotayo.algorubickrevamped.ui.notation.NotationFragment"
+        android:label="@string/title_notation_help" />
+    <activity
+        android:id="@id/splashScreen"
+        android:name="com.jorotayo.algorubickrevamped.SplashScreen"
+        android:label="SplashScreen" />
+    <activity
+        android:id="@id/createAlgorithmActivity"
+        android:name="com.jorotayo.algorubickrevamped.ui.home.AlgorithmActivity"
+        android:label="CreateAlgorithmActivity" />
+</navigation>

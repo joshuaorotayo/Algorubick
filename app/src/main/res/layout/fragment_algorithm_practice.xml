@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/practice_alg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:drawableStart="@drawable/icons8_info_24_blue"
+            android:drawablePadding="5dp"
+            android:text="@string/learn_alg_name"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+        <LinearLayout
+            android:id="@+id/practice_alg_timer_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/practice_alg_timer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/practice_alg_timer_text" />
+
+            <TextView
+                android:id="@+id/practice_alg_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/practice_alg_timer_time"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/learn_alg_images_card"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="8dp"
+            android:elevation="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TableRow
+                        android:id="@+id/imageRow1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:id="@+id/algImage1"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage2"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage3"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage4"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage5"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage6"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/imageRow2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:id="@+id/algImage7"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage8"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage9"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage10"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage11"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage12"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/imageRow3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:id="@+id/algImage13"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage14"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage15"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage16"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage17"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage18"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/imageRow4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:id="@+id/algImage19"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage20"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage21"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage22"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage23"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage24"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/imageRow5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:id="@+id/algImage25"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage26"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage27"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage28"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage29"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage30"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/imageRow6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:id="@+id/algImage31"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage32"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage33"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage34"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage35"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/algImage36"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/practice_alg_step_image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cfop"
+                            android:visibility="gone" />
+                    </TableRow>
+                </LinearLayout>
+            </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/numbers_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/view_alg_correct_practiced"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+            <TextView
+                android:id="@+id/learn_alg_correct_practiced_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/learn_alg_correct_practiced_number"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:hint="@string/learn_alg_hint">
+
+            <EditText
+                android:id="@+id/learn_alg_inputspace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:inputType="none"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/check_alg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="8dp"
+            android:elegantTextHeight="true"
+            android:text="@string/check_alg"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/learn_alg_keyboard_space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|center_vertical|center_horizontal|center"
+        android:orientation="vertical" />
+</RelativeLayout>

@@ -1,0 +1,45 @@
+package com.jorotayo.algorubickrevamped;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SplashScreen extends Activity {
+    private static final int SPLASH_SCREEN = 2500;
+    Animation bottomAnim;
+    ImageView image;
+    TextView logo;
+    TextView slogan;
+    Animation spinAnim;
+    Animation topAnim;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ObjectBox.init(this);
+        setContentView(R.layout.splash_screen);
+        getWindow().setFlags(1024, 1024);
+        this.topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
+        this.spinAnim = AnimationUtils.loadAnimation(this, R.anim.spin_animation);
+        this.bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+        this.image = findViewById(R.id.splash_image_view);
+        this.logo = findViewById(R.id.splash_logo);
+        this.slogan = findViewById(R.id.splash_slogan);
+        this.image.setAnimation(this.topAnim);
+        this.image.setAnimation(this.spinAnim);
+        this.logo.setAnimation(this.bottomAnim);
+        this.slogan.setAnimation(this.bottomAnim);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                SplashScreen.this.startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                SplashScreen.this.finish();
+            }
+        }, SPLASH_SCREEN);
+    }
+}

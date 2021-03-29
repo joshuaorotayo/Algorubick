@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notation_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <view
+            android:id="@+id/tab_layout"
+            class="com.google.android.material.tabs.TabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:tabMode="scrollable"
+            app:tabTextColor="#ffffff">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/intro_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_intro" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/faces_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_faces" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/moves_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_moves" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/two_layer_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_two_layer" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/slices_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_slices" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/rotations_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_rotations" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/algorithms_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_title_algorithms" />
+        </view>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>
