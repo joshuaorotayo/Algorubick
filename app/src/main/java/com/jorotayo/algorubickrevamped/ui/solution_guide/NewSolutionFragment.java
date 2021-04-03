@@ -76,7 +76,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         Button saveNewSolutionBtn = this.view.findViewById(R.id.save_new_solution_btn);
         this.pageScroller = this.view.findViewById(R.id.create_solution_activity_scroller);
         this.solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
-        List<Steps> allSteps = (List) ObjectBox.getBoxStore().boxFor(Steps.class);
+        Box<Steps> allSteps = ObjectBox.getBoxStore().boxFor(Steps.class);
         this.stepsBox = (Box<Steps>) allSteps;
         addStepBtn.setOnClickListener(this);
         saveNewSolutionBtn.setOnClickListener(this);
@@ -122,11 +122,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             ((EditText) view2.findViewById(R.id.item_step_step_name)).setText(editSteps.get(i).getStepName());
             stepDescriptionEditText.setText(editSteps.get(i).getStepDescription());
             algorithmInputSpace.setText(editSteps.get(i).getStepAlgorithm());
-            algorithmInputSpace.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    NewSolutionFragment.this.openKeyboard(algorithmInputSpace);
-                }
-            });
+            algorithmInputSpace.setOnClickListener(v -> NewSolutionFragment.this.openKeyboard(algorithmInputSpace));
             scrollBottom();
         }
     }
@@ -148,10 +144,8 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             Solution newSolution = new Solution(solutionName, solutionCreator, solutionDescription);
             if (Objects.requireNonNull(Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).getTitle()).toString().contains("Edit")) {
                 newSolution.id = this.currentSolution.id;
-                this.solutionBox.put(newSolution);
-            } else {
-                this.solutionBox.put(newSolution);
             }
+            this.solutionBox.put(newSolution);
             saveSteps(solutionName);
             requireActivity().onBackPressed();
             return;
@@ -220,11 +214,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     }
 
     private void scrollBottom() {
-        this.pageScroller.postDelayed(new Runnable() {
-            public void run() {
-                NewSolutionFragment.this.pageScroller.fullScroll(130);
-            }
-        }, 5);
+        this.pageScroller.postDelayed(() -> NewSolutionFragment.this.pageScroller.fullScroll(130), 5);
     }
 
     private void openKeyboard(EditText editText) {

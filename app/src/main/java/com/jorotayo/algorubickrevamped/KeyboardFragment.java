@@ -13,7 +13,7 @@ import android.widget.ViewSwitcher;
 
 import androidx.fragment.app.Fragment;
 
-public class KeyboardFragment extends Fragment implements OnClickListener {
+public class KeyboardFragment extends Fragment implements OnClickListener, View.OnLongClickListener {
     private final EditText inputSpace;
     private String backSpaceAlg = "";
     private TextView btn_2;
@@ -54,9 +54,9 @@ public class KeyboardFragment extends Fragment implements OnClickListener {
         TextView btn_backspace = rootView.findViewById(R.id.btn_backspace);
         this.btn_prime = rootView.findViewById(R.id.btn_prime);
         TextView keyboard_close_btn = rootView.findViewById(R.id.keyboard_close_btn);
-        TextView btn_x2 = btn_x;
+        //TextView btn_shift = btn_x;
         keyboard_close_btn.setVisibility(View.GONE);
-        btn_x = rootView.findViewById(R.id.shift_btn);
+        TextView btn_shift = rootView.findViewById(R.id.shift_btn);
         this.keyboardSwitcher = rootView.findViewById(R.id.keyboard_switcher);
         this.single_face_moves = rootView.findViewById(R.id.single_face_moves);
         this.double_face_moves = rootView.findViewById(R.id.double_face_moves);
@@ -73,8 +73,8 @@ public class KeyboardFragment extends Fragment implements OnClickListener {
         btn_s_b.setOnClickListener(this);
         btn_s_u.setOnClickListener(this);
         btn_s_d.setOnClickListener(this);
-        keyboard_close_btn = btn_x2;
-        keyboard_close_btn.setOnClickListener(this);
+       // keyboard_close_btn = btn_x2;
+        //keyboard_close_btn.setOnClickListener(this);
         btn_y.setOnClickListener(this);
         btn_z.setOnClickListener(this);
         btn_e.setOnClickListener(this);
@@ -83,21 +83,21 @@ public class KeyboardFragment extends Fragment implements OnClickListener {
         this.btn_2.setOnClickListener(this);
         this.btn_prime.setOnClickListener(this);
         btn_backspace.setOnClickListener(this);
+        btn_backspace.setOnLongClickListener(this);
         this.btn_prime.setClickable(false);
         this.btn_2.setClickable(false);
         this.btn_2.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
         this.btn_prime.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
-        TextView finalBtn_x = btn_x;
-        btn_x.setOnClickListener(v -> {
+        btn_shift.setOnClickListener(v -> {
             if (KeyboardFragment.this.single_face_moves.getVisibility() == View.VISIBLE) {
                 KeyboardFragment.this.single_face_moves.setVisibility(View.GONE);
                 KeyboardFragment.this.double_face_moves.setVisibility(View.VISIBLE);
-                finalBtn_x.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorRed, null));
+                btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorRed, null));
                 return;
             }
             KeyboardFragment.this.single_face_moves.setVisibility(View.VISIBLE);
             KeyboardFragment.this.double_face_moves.setVisibility(View.GONE);
-            finalBtn_x.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorPrimary, null));
+            btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorAccent, null));
         });
         return rootView;
     }
@@ -257,5 +257,11 @@ public class KeyboardFragment extends Fragment implements OnClickListener {
         obj = this.backSpaceAlg;
         this.wholeAlg = obj;
         this.current_alg_text.setText(obj);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        this.inputSpace.setText("");
+        return true;
     }
 }

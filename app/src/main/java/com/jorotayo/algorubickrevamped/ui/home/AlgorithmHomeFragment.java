@@ -31,6 +31,7 @@ import com.jorotayo.algorubickrevamped.MainActivity;
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
+import com.jorotayo.algorubickrevamped.data.DefaultData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,18 +41,19 @@ import java.util.Objects;
 import io.objectbox.Box;
 
 public class AlgorithmHomeFragment extends Fragment implements OnClickListener, com.jorotayo.algorubickrevamped.ui.home.AlgorithmRecyclerAdapter.OnAlgorithmListener, OnItemSelectedListener {
-    private final ArrayList selectedList = new ArrayList();
-    ArrayList<String> alg_names = new ArrayList(Arrays.asList("Right Sexy Move", "Left Sexy Move", "H-Perm", "Z-Perm", "T-Perm", "J1-Perm", "J2-Perm", "N1-Perm", "N2-Perm", "V-Perm", "Y-Perm", "E-perm", "F-Perm", "R1-Perm", "R2-Perm"));
-    ArrayList algs = new ArrayList(Arrays.asList("R,U,R',U'", "L',U',L,U", "M2,U,M2,U2,M2,U,M2", "M2,U,M2,U,M',U2,M2,U2,M',U2", "R,U,R',U',R,F,R2,U',R',U',R',U,R',F'", "R',U,L',U2,R,U',R',U2,R,L,U'", "R,U,R',F',R,U,R',U',R',F,R2,U',R',U'", "L,U',R,U2,L',U,R',L,U',R,U2,L',U,R',U", "R',U,L',U2,R,U',L,R',U,L',U2,R,U',L,U'", "R',U,R',d',R',F',R2,U',R',U,R',F,R,F", "F,R,U',R',U',R,U,R',F',R,U,R',U',R',F,R,F'", "X',R,U',R',D,R,U,R',u2,R',U,R,D,R',U',R", "R',U2,R',d',R',F',R2,U',R',U,R',F,R,U',F", "L,U2,L',U2,L,F',L',U',L,U,L,F,L2,U", "R',U2,R,U2,R',F,R,U,R',U',R',F',R2,U'"));
-    ArrayList<String> categories = new ArrayList(Arrays.asList("Triggers", "Triggers", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL"));
-    ArrayList<String> descriptions = new ArrayList(Arrays.asList("Insert bottom right corner and trigger", "Insert bottom left corner and trigger", "Swap opposite Edges (4e)", "Swap adjacent Edges (4e)", "Swap two opposite edges and two corners (2e2c)", "Swap two opposite corners, swap two adjacent edges (2c2e)", "Swap two corners, swap two adjacent edges (2e2c)", "Swap diagonal corner and opposite edge, left to right (2e2c)", "wap diagonal corner and opposite edge, Right to left (2e2c)", "Swap inline adjacent edge and diagonal corner (2e2c)", "Cross shaped swap diagonal corner and adjacent edge (2e2c)", "Swap opposite corners (4c)", "Swap inline 2 edges and 2 corners (2e2c)", "Swap opposite corners and adjacent edge (2e2c)", "Swap opposite corners and adjacent edge (2e2c)"));
-    ArrayList<String> images = new ArrayList(Arrays.asList("R.drawable.right_edge", "R.drawable.left_edge", "R.drawable.h_perm", "R.drawable.z_perm", "R.drawable.t_perm", "R.drawable.j1_perm", "R.drawable.j2_perm", "R.drawable.n1_perm", "R.drawable.n2_perm", "R.drawable.v_perm", "R.drawable.y_perm", "R.drawable.e_perm", "R.drawable.f_perm", "R.drawable.r1_perm", "R.drawable.r2_perm"));
+    private final ArrayList<Integer> selectedList = new ArrayList<>();
+    ArrayList<String> alg_names = new ArrayList<>(Arrays.asList("Right Sexy Move", "Left Sexy Move", "H-Perm", "Z-Perm", "T-Perm", "J1-Perm", "J2-Perm", "N1-Perm", "N2-Perm", "V-Perm", "Y-Perm", "E-perm", "F-Perm", "R1-Perm", "R2-Perm"));
+    ArrayList<String> algs = new ArrayList<>(Arrays.asList("R,U,R',U'", "L',U',L,U", "M2,U,M2,U2,M2,U,M2", "M2,U,M2,U,M',U2,M2,U2,M',U2", "R,U,R',U',R,F,R2,U',R',U',R',U,R',F'", "R',U,L',U2,R,U',R',U2,R,L,U'", "R,U,R',F',R,U,R',U',R',F,R2,U',R',U'", "L,U',R,U2,L',U,R',L,U',R,U2,L',U,R',U", "R',U,L',U2,R,U',L,R',U,L',U2,R,U',L,U'", "R',U,R',d',R',F',R2,U',R',U,R',F,R,F", "F,R,U',R',U',R,U,R',F',R,U,R',U',R',F,R,F'", "X',R,U',R',D,R,U,R',u2,R',U,R,D,R',U',R", "R',U2,R',d',R',F',R2,U',R',U,R',F,R,U',F", "L,U2,L',U2,L,F',L',U',L,U,L,F,L2,U", "R',U2,R,U2,R',F,R,U,R',U',R',F',R2,U'"));
+    ArrayList<String> categories = new ArrayList<>(Arrays.asList("Triggers", "Triggers", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL"));
+    ArrayList<String> descriptions = new ArrayList<>(Arrays.asList("Insert bottom right corner and trigger", "Insert bottom left corner and trigger", "Swap opposite Edges (4e)", "Swap adjacent Edges (4e)", "Swap two opposite edges and two corners (2e2c)", "Swap two opposite corners, swap two adjacent edges (2c2e)", "Swap two corners, swap two adjacent edges (2e2c)", "Swap diagonal corner and opposite edge, left to right (2e2c)", "wap diagonal corner and opposite edge, Right to left (2e2c)", "Swap inline adjacent edge and diagonal corner (2e2c)", "Cross shaped swap diagonal corner and adjacent edge (2e2c)", "Swap opposite corners (4c)", "Swap inline 2 edges and 2 corners (2e2c)", "Swap opposite corners and adjacent edge (2e2c)", "Swap opposite corners and adjacent edge (2e2c)"));
+    ArrayList<String> images = new ArrayList<>(Arrays.asList("R.drawable.right_edge", "R.drawable.left_edge", "R.drawable.h_perm", "R.drawable.z_perm", "R.drawable.t_perm", "R.drawable.j1_perm", "R.drawable.j2_perm", "R.drawable.n1_perm", "R.drawable.n2_perm", "R.drawable.v_perm", "R.drawable.y_perm", "R.drawable.e_perm", "R.drawable.f_perm", "R.drawable.r1_perm", "R.drawable.r2_perm"));
     int selectedNum = 0;
     private ActionMode actionMode;
-    private ArrayList<Algorithm> algorithmArrayList = new ArrayList();
+    private ArrayList<Algorithm> algorithmArrayList = new ArrayList<>();
     private Box<Algorithm> algorithmBox;
     private RecyclerView algorithmRecycler;
     private AlgorithmRecyclerAdapter algorithmRecyclerAdapter;
+    DefaultData defaultData;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -60,12 +62,12 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         this.home_algs_number = inflate.findViewById(R.id.home_total_number);
         this.root.findViewById(R.id.create_new_algorithm_btn).setOnClickListener(this);
         this.algorithmRecycler = this.root.findViewById(R.id.algorithm_recycler);
-        Box boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
+        Box<Algorithm> boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
         this.algorithmBox = boxFor;
         if (boxFor.isEmpty()) {
-            getDefaultAlgs();
+           getDefaultAlgs();
         }
-        this.algorithmArrayList = (ArrayList) this.algorithmBox.getAll();
+        this.algorithmArrayList = (ArrayList<Algorithm>) this.algorithmBox.getAll();
         TextView textView = this.home_algs_number;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("");
@@ -133,7 +135,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void onResume() {
         super.onResume();
-        this.algorithmArrayList = (ArrayList) this.algorithmBox.getAll();
+        this.algorithmArrayList = (ArrayList<Algorithm>) this.algorithmBox.getAll();
         AlgorithmRecyclerAdapter algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(this.algorithmArrayList, this, getContext());
         this.algorithmRecyclerAdapter = algorithmRecyclerAdapter;
         this.algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
@@ -141,11 +143,11 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     private void setupHomeSpinner() {
         Spinner algorithms_filter_spinner = this.root.findViewById(R.id.algorithms_filter_spinner);
-        List<String> algorithm_filter = new ArrayList();
+        List<String> algorithm_filter = new ArrayList<>();
         algorithm_filter.add("Recently Added");
         algorithm_filter.add("Most Practiced");
         algorithm_filter.add("Most Correct");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, algorithm_filter);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, algorithm_filter);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         algorithms_filter_spinner.setAdapter(dataAdapter);
         this.algorithms_filter_text = algorithms_filter_spinner.getSelectedItem().toString();
@@ -196,7 +198,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         Algorithm alg = this.algorithmArrayList.get(position);
         alg.setFavourite_alg();
         this.algorithmBox.put(alg);
-        this.algorithmArrayList = (ArrayList) this.algorithmBox.getAll();
+        this.algorithmArrayList = (ArrayList<Algorithm>) this.algorithmBox.getAll();
         AlgorithmRecyclerAdapter algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(this.algorithmArrayList, this, getContext());
         this.algorithmRecyclerAdapter = algorithmRecyclerAdapter;
         this.algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
@@ -285,7 +287,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void getDefaultAlgs() {
         for (int i = 0; i < this.alg_names.size(); i++) {
-            this.algorithmBox.put(new Algorithm(i, alg_names.get(i), algs.get(i).toString(), descriptions.get(i), categories.get(i), images.get(i), 0, 0, false, false, false, false));
+            this.algorithmBox.put(new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i),  0, 0, false, false, false, false));
         }
     }
 }

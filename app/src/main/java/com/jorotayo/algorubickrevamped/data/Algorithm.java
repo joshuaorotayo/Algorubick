@@ -20,7 +20,7 @@ public class Algorithm {
     public boolean selected_alg;
     public boolean learnt;
 
-    public Algorithm(long id, String alg_name, String alg, String alg_description, String algorithm_icon, String category, int practiced_correctly_int, int practiced_number_int, boolean custom_alg, boolean favourite_alg, boolean selected_alg, boolean learnt) {
+    public Algorithm(String alg_name, String alg, String alg_description, String algorithm_icon, String category, int practiced_correctly_int, int practiced_number_int, boolean custom_alg, boolean favourite_alg, boolean selected_alg, boolean learnt) {
         this.id = id;
         this.alg_name = alg_name;
         this.alg = alg;

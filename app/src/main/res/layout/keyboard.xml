@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="280dp"
+    android:layout_height="260dp"
     android:layout_marginBottom="0dp"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_weight="0.8"
-            android:gravity="left|center_vertical|center_horizontal|center|start"
+            android:gravity="start|center_vertical|center_horizontal|center|start"
             android:padding="0dp"
             android:text="@string/current_alg_hint"
             android:textColor="@color/white"
@@ -75,7 +75,10 @@
                 android:id="@+id/shift_btn"
                 style="@style/key_space"
                 android:text="@string/shift_btn"
-                android:textColor="@color/colorAccent" />
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"/>
         </LinearLayout>
 
         <ViewSwitcher
@@ -272,5 +275,5 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="10dp" />
 </LinearLayout>
