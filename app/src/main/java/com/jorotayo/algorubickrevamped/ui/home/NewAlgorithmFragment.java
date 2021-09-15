@@ -232,4 +232,5 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
     public void customBackPressed() {
         this.alertDialogBuilder.show();
     }
+
 }

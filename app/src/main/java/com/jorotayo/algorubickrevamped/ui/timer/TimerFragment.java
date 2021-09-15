@@ -427,7 +427,7 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
     }
 
     private ArrayList<Solve> getSolvesByCubeSize() {
-       return (ArrayList) this.solveBox.query().equal(Solve_.solve_cube_size, this.cube_size_text).build().find();
+        return (ArrayList) this.solveBox.query().equal(Solve_.solve_cube_size, this.cube_size_text).build().find();
     }
 
     private String getFastestSolveByCubeSize(ArrayList<Integer> solve_times) {

@@ -18,7 +18,7 @@
             android:theme="@style/AppTheme" />
         <!--        <activity android:label="@string/title_activity_new_solution_fragment"
               android:name="com.jorotayo.algorubickrevamped.ui.solution_guide.SolutionActivity" />-->
-      <!--  <activityandroid:name="com.jorotayo.algorubickrevamped.ui.solution_guide />-->
+        <!--  <activityandroid:name="com.jorotayo.algorubickrevamped.ui.solution_guide />-->
         <activity
             android:name="com.jorotayo.algorubickrevamped.SplashScreen"
             android:theme="@style/bgSplashScreenStyle">

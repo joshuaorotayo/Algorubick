@@ -21,7 +21,7 @@
     <fragment
         android:id="@id/navigation_solution_guide"
         android:name="com.jorotayo.algorubickrevamped.ui.solution_guide.SolutionGuideFragment"
-        android:label="@string/title_solution_guide"/>
+        android:label="@string/title_solution_guide" />
     <fragment
         android:id="@id/navigation_notation"
         android:name="com.jorotayo.algorubickrevamped.ui.notation.NotationFragment"

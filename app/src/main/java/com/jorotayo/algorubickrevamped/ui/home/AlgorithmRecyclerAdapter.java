@@ -36,10 +36,10 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         public FilterResults performFiltering(CharSequence text) {
             ArrayList<Algorithm> filteredAlgorithms = new ArrayList();
             if (text == null || text.length() == 0) {
-                filteredAlgorithms.addAll(AlgorithmRecyclerAdapter.this.mAlgorithmsAll);
+                filteredAlgorithms.addAll(mAlgorithmsAll);
             } else {
                 String filterPattern = text.toString().toLowerCase().trim();
-                for (Algorithm item : AlgorithmRecyclerAdapter.this.mAlgorithmsAll) {
+                for (Algorithm item : mAlgorithmsAll) {
                     String algorithm = item.alg;
                     String description = item.alg_description.toLowerCase();
                     String name = item.alg_name.toLowerCase();

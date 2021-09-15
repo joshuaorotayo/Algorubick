@@ -9,8 +9,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class SplashScreen extends Activity {
     private static final int SPLASH_SCREEN = 2500;
     Animation bottomAnim;

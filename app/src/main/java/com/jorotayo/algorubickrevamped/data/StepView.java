@@ -2,8 +2,6 @@ package com.jorotayo.algorubickrevamped.data;
 
 import android.widget.EditText;
 
-import io.objectbox.annotation.Entity;
-
 public class StepView {
     EditText editStepAlgorithm;
     EditText editStepDescription;

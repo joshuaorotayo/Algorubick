@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -29,9 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jorotayo.algorubickrevamped.MainActivity;
 import com.jorotayo.algorubickrevamped.ObjectBox;
+import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
-import com.jorotayo.algorubickrevamped.data.DefaultData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +38,7 @@ import java.util.Objects;
 
 import io.objectbox.Box;
 
-public class AlgorithmHomeFragment extends Fragment implements OnClickListener, com.jorotayo.algorubickrevamped.ui.home.AlgorithmRecyclerAdapter.OnAlgorithmListener, OnItemSelectedListener {
+public class AlgorithmHomeFragment extends Fragment implements OnClickListener, AlgorithmRecyclerAdapter.OnAlgorithmListener, OnBackPressed {
     private final ArrayList<Integer> selectedList = new ArrayList<>();
     ArrayList<String> alg_names = new ArrayList<>(Arrays.asList("Right Sexy Move", "Left Sexy Move", "H-Perm", "Z-Perm", "T-Perm", "J1-Perm", "J2-Perm", "N1-Perm", "N2-Perm", "V-Perm", "Y-Perm", "E-perm", "F-Perm", "R1-Perm", "R2-Perm"));
     ArrayList<String> algs = new ArrayList<>(Arrays.asList("R,U,R',U'", "L',U',L,U", "M2,U,M2,U2,M2,U,M2", "M2,U,M2,U,M',U2,M2,U2,M',U2", "R,U,R',U',R,F,R2,U',R',U',R',U,R',F'", "R',U,L',U2,R,U',R',U2,R,L,U'", "R,U,R',F',R,U,R',U',R',F,R2,U',R',U'", "L,U',R,U2,L',U,R',L,U',R,U2,L',U,R',U", "R',U,L',U2,R,U',L,R',U,L',U2,R,U',L,U'", "R',U,R',d',R',F',R2,U',R',U,R',F,R,F", "F,R,U',R',U',R,U,R',F',R,U,R',U',R',F,R,F'", "X',R,U',R',D,R,U,R',u2,R',U,R,D,R',U',R", "R',U2,R',d',R',F',R2,U',R',U,R',F,R,U',F", "L,U2,L',U2,L,F',L',U',L,U,L,F,L2,U", "R',U2,R,U2,R',F,R,U,R',U',R',F',R2,U'"));
@@ -53,42 +51,12 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     private Box<Algorithm> algorithmBox;
     private RecyclerView algorithmRecycler;
     private AlgorithmRecyclerAdapter algorithmRecyclerAdapter;
-    DefaultData defaultData;
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        View inflate = inflater.inflate(R.layout.fragment_home, container, false);
-        this.root = inflate;
-        this.home_algs_number = inflate.findViewById(R.id.home_total_number);
-        this.root.findViewById(R.id.create_new_algorithm_btn).setOnClickListener(this);
-        this.algorithmRecycler = this.root.findViewById(R.id.algorithm_recycler);
-        Box<Algorithm> boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-        this.algorithmBox = boxFor;
-        if (boxFor.isEmpty()) {
-           getDefaultAlgs();
-        }
-        this.algorithmArrayList = (ArrayList<Algorithm>) this.algorithmBox.getAll();
-        TextView textView = this.home_algs_number;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("");
-        stringBuilder.append(this.algorithmArrayList.size());
-        textView.setText(stringBuilder.toString());
-        AlgorithmRecyclerAdapter algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(this.algorithmArrayList, this, getContext());
-        this.algorithmRecyclerAdapter = algorithmRecyclerAdapter;
-        this.algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
-        this.algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.algorithmRecycler.setHasFixedSize(true);
-        setupHomeSpinner();
-        return this.root;
-    }
 
     private final Callback actionModeCallback = new Callback() {
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.contextual_menu, menu);
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getSelectedItemCount());
-            stringBuilder.append(" Algorithm(s) Selected");
-            mode.setTitle(stringBuilder.toString());
+            String stringBuilder = algorithmRecyclerAdapter.getSelectedItemCount() + " Algorithm(s) Selected";
+            mode.setTitle(stringBuilder);
             return true;
         }
 
@@ -97,27 +65,23 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            Intent study2Intent = new Intent(AlgorithmHomeFragment.this.getContext(), com.jorotayo.algorubickrevamped.ui.home.StudyAlgorithmActivity.class);
+            Intent study2Intent = new Intent(getContext(), com.jorotayo.algorubickrevamped.ui.home.StudyAlgorithmActivity.class);
             switch (item.getItemId()) {
                 case R.id.contextual_learn /*2131362000*/:
-                    Toast.makeText(AlgorithmHomeFragment.this.getActivity(), "Learn multiple", Toast.LENGTH_SHORT).show();
-                    for (Integer selected : AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getSelectedItems()) {
-                        AlgorithmHomeFragment.this.selectedList.add(selected);
-                    }
-                    AlgorithmHomeFragment.this.actionMode.finish();
-                    AlgorithmHomeFragment.this.algorithmRecyclerAdapter.clearSelected();
-                    study2Intent.putExtra("learn", AlgorithmHomeFragment.this.selectedList);
-                    AlgorithmHomeFragment.this.startActivity(study2Intent);
+                    Toast.makeText(getActivity(), "Learn multiple", Toast.LENGTH_SHORT).show();
+                    selectedList.addAll(algorithmRecyclerAdapter.getSelectedItems());
+                    actionMode.finish();
+                    algorithmRecyclerAdapter.clearSelected();
+                    study2Intent.putExtra("learn", selectedList);
+                    startActivity(study2Intent);
                     return true;
                 case R.id.contextual_practice /*2131362001*/:
-                    Toast.makeText(AlgorithmHomeFragment.this.getActivity(), "Practice multiple", Toast.LENGTH_SHORT).show();
-                    for (Integer selected2 : AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getSelectedItems()) {
-                        AlgorithmHomeFragment.this.selectedList.add(selected2);
-                    }
-                    AlgorithmHomeFragment.this.actionMode.finish();
-                    AlgorithmHomeFragment.this.algorithmRecyclerAdapter.clearSelected();
-                    study2Intent.putExtra("practice", AlgorithmHomeFragment.this.selectedList);
-                    AlgorithmHomeFragment.this.startActivity(study2Intent);
+                    Toast.makeText(getActivity(), "Practice multiple", Toast.LENGTH_SHORT).show();
+                    selectedList.addAll(algorithmRecyclerAdapter.getSelectedItems());
+                    actionMode.finish();
+                    algorithmRecyclerAdapter.clearSelected();
+                    study2Intent.putExtra("practice", selectedList);
+                    startActivity(study2Intent);
                     return true;
                 default:
                     return false;
@@ -125,24 +89,53 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
 
         public void onDestroyActionMode(ActionMode mode) {
-            AlgorithmHomeFragment.this.actionMode = null;
+            actionMode = null;
+       /*     for (Algorithm algorithm: algorithmArrayList) {
+                if(algorithm.getSelected_alg()){
+                    algorithm.setSelected_alg();
+                }
+            }*/
         }
     };
-
     private String algorithms_filter_text;
     private TextView home_algs_number;
     private View root;
 
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        View inflate = inflater.inflate(R.layout.fragment_home, container, false);
+        root = inflate;
+        home_algs_number = inflate.findViewById(R.id.home_total_number);
+        root.findViewById(R.id.create_new_algorithm_btn).setOnClickListener(this);
+        algorithmRecycler = root.findViewById(R.id.algorithm_recycler);
+        Box<Algorithm> boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
+        algorithmBox = boxFor;
+        if (boxFor.isEmpty()) {
+            getDefaultAlgs();
+        }
+        algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
+        TextView textView = home_algs_number;
+        String stringBuilder = "" + algorithmArrayList.size();
+        textView.setText(stringBuilder);
+        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
+        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
+        algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        algorithmRecycler.setHasFixedSize(true);
+        setupHomeSpinner();
+        return root;
+    }
+
     public void onResume() {
         super.onResume();
-        this.algorithmArrayList = (ArrayList<Algorithm>) this.algorithmBox.getAll();
-        AlgorithmRecyclerAdapter algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(this.algorithmArrayList, this, getContext());
-        this.algorithmRecyclerAdapter = algorithmRecyclerAdapter;
-        this.algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
+        algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
+        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
+        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
     }
 
     private void setupHomeSpinner() {
-        Spinner algorithms_filter_spinner = this.root.findViewById(R.id.algorithms_filter_spinner);
+        Spinner algorithms_filter_spinner = root.findViewById(R.id.algorithms_filter_spinner);
         List<String> algorithm_filter = new ArrayList<>();
         algorithm_filter.add("Recently Added");
         algorithm_filter.add("Most Practiced");
@@ -150,7 +143,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, algorithm_filter);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         algorithms_filter_spinner.setAdapter(dataAdapter);
-        this.algorithms_filter_text = algorithms_filter_spinner.getSelectedItem().toString();
+        algorithms_filter_text = algorithms_filter_spinner.getSelectedItem().toString();
     }
 
     public void onClick(View v) {
@@ -166,7 +159,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void onAlgorithmClick(int position) {
         Intent intent = new Intent(getContext(), com.jorotayo.algorubickrevamped.ui.home.AlgorithmActivity.class);
-        intent.putExtra("algorithm_id", this.algorithmArrayList.get(position).id);
+        intent.putExtra("algorithm_id", algorithmArrayList.get(position).id);
         startActivity(intent);
     }
 
@@ -175,7 +168,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         if (actionMode != null) {
             actionMode.finish();
         }
-        Algorithm currentAlg = this.algorithmArrayList.get(position);
+        Algorithm currentAlg = algorithmArrayList.get(position);
         Toast.makeText(getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
         Dialog caseDialog = new Dialog(getContext());
         caseDialog.setContentView(R.layout.algorithm_image_dialog);
@@ -195,18 +188,16 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     public void onAlgorithmFavouriteClick(int position, View v) {
-        Algorithm alg = this.algorithmArrayList.get(position);
+        Algorithm alg = algorithmArrayList.get(position);
         alg.setFavourite_alg();
-        this.algorithmBox.put(alg);
-        this.algorithmArrayList = (ArrayList<Algorithm>) this.algorithmBox.getAll();
-        AlgorithmRecyclerAdapter algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(this.algorithmArrayList, this, getContext());
-        this.algorithmRecyclerAdapter = algorithmRecyclerAdapter;
-        this.algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
+        algorithmBox.put(alg);
+        algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
+        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
+        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
         Context context = getContext();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Favourite");
-        stringBuilder.append(position);
-        Toast.makeText(context, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+        String stringBuilder = "Favourite" + position;
+        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();
     }
 
     public void onAlgorithmLearntClick(int position, View v) {
@@ -214,23 +205,22 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     public void onAlgorithmLongClick(int pos, View v) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("onAlgorithmLongClick: ");
-        stringBuilder.append(this.algorithmRecyclerAdapter.getSelectedItemCount());
-        Log.d("AlgorithmHomeFragment", stringBuilder.toString());
-        if (this.algorithmRecyclerAdapter.getSelectedItemCount() == 0) {
-            this.actionMode.finish();
+        if (algorithmRecyclerAdapter.getSelectedItemCount() == 0) {
+            if (actionMode != null) {
+                actionMode.finish();
+                clearSelected();
+            }
         } else {
-            this.actionMode = ((MainActivity) getActivity()).startSupportActionMode(this.actionModeCallback);
+            actionMode = ((MainActivity) getActivity()).startSupportActionMode(actionModeCallback);
         }
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.algorithms_filter_text = parent.getItemAtPosition(position).toString();
+        algorithms_filter_text = parent.getItemAtPosition(position).toString();
         Context context = parent.getContext();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Selected: ");
-        stringBuilder.append(this.algorithms_filter_text);
+        stringBuilder.append(algorithms_filter_text);
         Toast.makeText(context, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
     }
 
@@ -239,7 +229,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
 /*    public void createAlgorithmList(int numAlgorithms) {
         for (int i = 1; i <= numAlgorithms; i++) {
-            Box box = this.algorithmBox;
+            Box box = algorithmBox;
             Object obj = r4;
             Algorithm algorithm = new Algorithm("Algorithm_name", "R',U,R2,D',B,F,L'", "Description of an algorithm", "Triggers", true, true, false, 5, 5, false, "");
             box.put(obj);
@@ -251,22 +241,21 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         searchView.setImeOptions(6);
         searchView.setOnQueryTextListener(new OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {
-                AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getFilter().filter(query);
-                TextView access$100 = AlgorithmHomeFragment.this.home_algs_number;
+                algorithmRecyclerAdapter.getFilter().filter(query);
+                TextView access$100 = home_algs_number;
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("");
-                stringBuilder.append(AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getItemCount());
+                stringBuilder.append(algorithmRecyclerAdapter.getItemCount());
                 access$100.setText(stringBuilder.toString());
                 return true;
             }
 
             public boolean onQueryTextChange(String newText) {
-                AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getFilter().filter(newText);
-                TextView access$100 = AlgorithmHomeFragment.this.home_algs_number;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(AlgorithmHomeFragment.this.algorithmRecyclerAdapter.getItemCount());
-                access$100.setText(stringBuilder.toString());
+                algorithmRecyclerAdapter.getFilter().filter(newText);
+                TextView access$100 = home_algs_number;
+                String stringBuilder = "" +
+                        algorithmRecyclerAdapter.getItemCount();
+                access$100.setText(stringBuilder);
                 return true;
             }
         });
@@ -279,15 +268,32 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     private void clearSelected() {
-        this.algorithmRecyclerAdapter.getSelectedItems();
-        for (Integer selected : this.algorithmRecyclerAdapter.getSelectedItems()) {
-            Objects.requireNonNull(this.algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.setBackgroundResource(R.color.white);
+        for (Integer selected : algorithmRecyclerAdapter.getSelectedItems()) {
+            Objects.requireNonNull(algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.setBackgroundResource(R.color.white);
         }
     }
 
     public void getDefaultAlgs() {
-        for (int i = 0; i < this.alg_names.size(); i++) {
-            this.algorithmBox.put(new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i),  0, 0, false, false, false, false));
+        for (int i = 0; i < alg_names.size(); i++) {
+            algorithmBox.put(new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i), 0, 0, false, false, false, false));
         }
     }
+
+    @Override
+    public void customBackPressed() {
+        if (actionMode != null) {
+            Toast.makeText(getContext(), "aCTION MODE", Toast.LENGTH_SHORT).show();
+        } else {
+            getActivity().finish();
+        }
+    }
+
+/*    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }*/
 }

@@ -172,4 +172,5 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
     public void customBackPressed() {
         requireActivity().finish();
     }
+
 }

@@ -73,7 +73,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         btn_s_b.setOnClickListener(this);
         btn_s_u.setOnClickListener(this);
         btn_s_d.setOnClickListener(this);
-       // keyboard_close_btn = btn_x2;
+        // keyboard_close_btn = btn_x2;
         //keyboard_close_btn.setOnClickListener(this);
         btn_y.setOnClickListener(this);
         btn_z.setOnClickListener(this);
