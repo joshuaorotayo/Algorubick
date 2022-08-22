@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
@@ -19,13 +20,14 @@ import java.util.ArrayList;
 
 public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.ViewHolder> {
     private final OnSolutionListener mOnSolutionListener;
-    private ArrayList<Solution> mSolutions = new ArrayList();
+    private ArrayList<Solution> mSolutions;
 
     public SolutionRecyclerAdapter(ArrayList<Solution> mSolutions, OnSolutionListener mOnSolutionListener) {
         this.mSolutions = mSolutions;
         this.mOnSolutionListener = mOnSolutionListener;
     }
 
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solution, parent, false), this.mOnSolutionListener);
     }
@@ -48,7 +50,7 @@ public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.Vie
         void onSolutionImageClick(int i, View view);
     }
 
-    public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener {
+    public static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener {
         OnSolutionListener mOnSolutionListener;
         LinearLayout solutionCard;
         TextView solutionCreator;
@@ -93,7 +95,6 @@ public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.Vie
                     Log.d(str, stringBuilder.toString());
                     return;
                 default:
-                    return;
             }
         }
     }

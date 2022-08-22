@@ -40,55 +40,49 @@ import io.objectbox.Box;
 public class PracticeAlgorithmFragment extends Fragment implements OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private final ArrayList<Long> mParam2 = new ArrayList();
-    private final long timeSwapBuff = 0;
-    HashMap<String, Integer> algImageMap = new HashMap();
-    ArrayList<ImageView> algImages = new ArrayList();
+    final HashMap<String, Integer> algImageMap = new HashMap();
+    final ArrayList<ImageView> algImages = new ArrayList();
     int correct = 0;
     int counter;
     Algorithm currentAlgorithm;
-    Handler mIncomingHandler = new Handler(new IncomingHandlerCallback());
+    final Handler mIncomingHandler = new Handler(new IncomingHandlerCallback());
     int milliseconds;
     int mins;
     LinearLayout numbers_section;
     LinearLayout practiceAlgTimerSection;
     int practiced_count = 0;
     int secs;
-    ArrayList<Algorithm> session = new ArrayList();
+    final ArrayList<Algorithm> session = new ArrayList();
     int sessionLength = 2;
     int sessionPosition = 0;
-    private ArrayList algorithmArrayList = new ArrayList();
     private Box algorithmBox;
-    private Button checkAlg;
     private MaterialAlertDialogBuilder correctDialog;
     private MaterialAlertDialogBuilder incorrectDialog;
     private TextView learn_alg_correct_practiced_number;
     private EditText learn_alg_inputspace;
     private TextView learn_alg_name;
-    private ArrayList<Integer> mParam1;
     private TextView practiceAlgorithmTimer;
     private long startTime;
-    private long timeInMilliseconds = 0;
-    private long updatedTime = 0;
 
     private final Runnable updateTimerThread = new Runnable() {
         public void run() {
             String str = "%02d";
             try {
-                timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-                updatedTime = timeSwapBuff + timeInMilliseconds;
+                long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+                long timeSwapBuff = 0;
+                long updatedTime = timeSwapBuff + timeInMilliseconds;
                 secs = (int) (updatedTime / 1000);
                 mins = secs / 60;
                 secs %= 60;
                 milliseconds = (int) (updatedTime % 100);
                 TextView access$500 = practiceAlgorithmTimer;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(String.format(Locale.getDefault(), str, mins));
-                stringBuilder.append(":");
-                stringBuilder.append(String.format(Locale.getDefault(), str, secs));
-                stringBuilder.append(".");
-                stringBuilder.append(String.format(Locale.getDefault(), str, milliseconds));
-                access$500.setText(stringBuilder.toString());
+                String stringBuilder = "" +
+                        String.format(Locale.getDefault(), str, mins) +
+                        ":" +
+                        String.format(Locale.getDefault(), str, secs) +
+                        "." +
+                        String.format(Locale.getDefault(), str, milliseconds);
+                access$500.setText(stringBuilder);
                 mIncomingHandler.postDelayed(this, 0);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -109,7 +103,6 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             ArrayList integerArrayList = getArguments().getIntegerArrayList(ARG_PARAM1);
-            mParam1 = integerArrayList;
             Iterator it = integerArrayList.iterator();
             while (it.hasNext()) {
                 mParam2.add(((long) ((Integer) it.next()).intValue()) + 1);
@@ -118,7 +111,7 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
         Box boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
         algorithmBox = boxFor;
         boxFor.getAll();
-        algorithmArrayList = (ArrayList) algorithmBox.get(mParam2);
+        ArrayList algorithmArrayList = (ArrayList) algorithmBox.get(mParam2);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,7 +122,7 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
         learn_alg_inputspace.setOnClickListener(this);
         learn_alg_correct_practiced_number = view.findViewById(R.id.learn_alg_correct_practiced_number);
         practiceAlgorithmTimer = view.findViewById(R.id.practice_alg_timer);
-        checkAlg = view.findViewById(R.id.check_alg);
+        Button checkAlg = view.findViewById(R.id.check_alg);
         numbers_section = view.findViewById(R.id.numbers_section);
         practiceAlgTimerSection = view.findViewById(R.id.practice_alg_timer_section);
         setupHashmap();
@@ -213,11 +206,10 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
         correct = currentAlgorithm.getPracticed_correctly_int();
         practiced_count = currentAlgorithm.getPracticed_number_int();
         TextView textView = learn_alg_correct_practiced_number;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(correct);
-        stringBuilder.append(" / ");
-        stringBuilder.append(practiced_count);
-        textView.setText(stringBuilder.toString());
+        String stringBuilder = correct +
+                " / " +
+                practiced_count;
+        textView.setText(stringBuilder);
         setupAlgImages();
         startTimer();
         sessionPosition++;

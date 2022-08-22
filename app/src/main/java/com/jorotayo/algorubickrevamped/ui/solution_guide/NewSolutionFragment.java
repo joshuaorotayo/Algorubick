@@ -41,7 +41,6 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     private MaterialAlertDialogBuilder closeSolutionDialog;
     private Solution currentSolution;
     private Intent intent;
-    private ArrayList<Integer> mParam1;
     private EditText new_solution_creator;
     private EditText new_solution_description;
     private EditText new_solution_name;
@@ -60,7 +59,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getIntegerArrayList(ARG_PARAM1);
+            ArrayList<Integer> mParam1 = getArguments().getIntegerArrayList(ARG_PARAM1);
         }
     }
 
@@ -79,7 +78,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         pageScroller = view.findViewById(R.id.create_solution_activity_scroller);
         solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
         Box<Steps> allSteps = ObjectBox.getBoxStore().boxFor(Steps.class);
-        stepsBox = (Box<Steps>) allSteps;
+        stepsBox = allSteps;
         addStepBtn.setOnClickListener(this);
         saveNewSolutionBtn.setOnClickListener(this);
         createCloseSolutionDialog();

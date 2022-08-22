@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +41,6 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
     private static final String ARG_PARAM1 = "param1";
     Builder deleteDialog;
     private Solution currentSolution;
-    private ArrayList<Integer> mParam1;
     private Box<Solution> solutionBox;
     private ArrayList<Steps> stepsArrayList = new ArrayList();
     private Box<Steps> stepsBox;
@@ -53,7 +53,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.mParam1 = getArguments().getIntegerArrayList(ARG_PARAM1);
+            ArrayList<Integer> mParam1 = getArguments().getIntegerArrayList(ARG_PARAM1);
         }
     }
 
@@ -80,10 +80,9 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         TextView view_solution_description = view.findViewById(R.id.view_solution_description);
         ((TextView) view.findViewById(R.id.view_solution_name)).setText(this.currentSolution.getSolutionName());
         view_solution_creator.setText(this.currentSolution.getSolutionCreator());
-        StringBuilder stringBuilder2 = new StringBuilder();
-        stringBuilder2.append("");
-        stringBuilder2.append(this.currentSolution.getSolutionDescription());
-        view_solution_description.setText(stringBuilder2.toString());
+        String stringBuilder2 = "" +
+                this.currentSolution.getSolutionDescription();
+        view_solution_description.setText(stringBuilder2);
         view_solution_image.setImageResource(R.drawable.cfop);
         this.view_solution_steps_recycler = view.findViewById(R.id.view_solution_steps_recycler);
         this.view_solution_steps_recycler.setAdapter(new StepsRecyclerAdapter(this.stepsArrayList, this));
@@ -94,11 +93,10 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
 
     private void setupDeleteDialog() {
         Builder title = new Builder(getContext()).setTitle("Delete Solution");
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Are you sure you want to delete the current Solution:");
-        stringBuilder.append(this.currentSolution.getSolutionName());
+        String stringBuilder = "Are you sure you want to delete the current Solution:" +
+                this.currentSolution.getSolutionName();
         String str = "No";
-        this.deleteDialog = title.setMessage(stringBuilder.toString()).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        this.deleteDialog = title.setMessage(stringBuilder).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 ViewSolutionFragment.this.deleteSolution();
             }
@@ -120,7 +118,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         Collections.sort(arrayList);
     }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_solution_menu, menu);
     }
 

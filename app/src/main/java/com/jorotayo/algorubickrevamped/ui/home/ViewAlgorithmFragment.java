@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -38,8 +39,6 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
     private Drawable customDrawableImage;
     private Builder deleteDialog;
     private Drawable favDrawableImage;
-    private Drawable iconDrawableImage;
-    private View view;
 
     public static ViewAlgorithmFragment newInstance(long param1) {
         ViewAlgorithmFragment fragment = new ViewAlgorithmFragment();
@@ -57,30 +56,29 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.view = inflater.inflate(R.layout.fragment_algorithm_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_algorithm_view, container, false);
         long id = Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getIntent().getExtras()).getLong("algorithm_id");
         this.currentAlg = this.algorithmBox.get(id);
         setHasOptionsMenu(true);
-        TextView view_alg_name = this.view.findViewById(R.id.view_alg_name);
-        TextView view_alg_text = this.view.findViewById(R.id.view_alg_text);
-        TextView view_alg_category = this.view.findViewById(R.id.view_alg_category);
-        TextView view_alg_correct_amount = this.view.findViewById(R.id.view_alg_correct_amount);
-        TextView view_alg_practiced_amount = this.view.findViewById(R.id.view_alg_practiced_amount);
-        TextView view_alg_description = this.view.findViewById(R.id.view_alg_description);
-        TextView view_alg_favourite_textview = this.view.findViewById(R.id.view_alg_favourite_textview);
-        TextView view_alg_custom_textview = this.view.findViewById(R.id.view_alg_custom_textview);
-        Button learn_alg_btn = this.view.findViewById(R.id.view_alg_learn_algorithm_btn);
-        Button practice_alg_btn = this.view.findViewById(R.id.view_alg_practice_algorithm_btn);
-        LinearLayout view_alg_image = this.view.findViewById(R.id.view_alg_image);
+        TextView view_alg_name = view.findViewById(R.id.view_alg_name);
+        TextView view_alg_text = view.findViewById(R.id.view_alg_text);
+        TextView view_alg_category = view.findViewById(R.id.view_alg_category);
+        TextView view_alg_correct_amount = view.findViewById(R.id.view_alg_correct_amount);
+        TextView view_alg_practiced_amount = view.findViewById(R.id.view_alg_practiced_amount);
+        TextView view_alg_description = view.findViewById(R.id.view_alg_description);
+        TextView view_alg_favourite_textview = view.findViewById(R.id.view_alg_favourite_textview);
+        TextView view_alg_custom_textview = view.findViewById(R.id.view_alg_custom_textview);
+        Button learn_alg_btn = view.findViewById(R.id.view_alg_learn_algorithm_btn);
+        Button practice_alg_btn = view.findViewById(R.id.view_alg_practice_algorithm_btn);
+        LinearLayout view_alg_image = view.findViewById(R.id.view_alg_image);
         view_alg_image.setBackgroundResource(R.drawable.cfop);
         view_alg_name.setText(this.currentAlg.alg_name);
         Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
         ActionBar actionBar = Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar());
-        StringBuilder stringBuilder = new StringBuilder();
         String str = "";
-        stringBuilder.append(str);
-        stringBuilder.append(this.currentAlg.alg_name);
-        actionBar.setSubtitle(stringBuilder.toString());
+        String stringBuilder = str +
+                this.currentAlg.alg_name;
+        actionBar.setSubtitle(stringBuilder);
         view_alg_text.setText(this.currentAlg.alg);
         view_alg_category.setText(this.currentAlg.category);
         view_alg_description.setText(this.currentAlg.alg_description);
@@ -102,7 +100,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
         learn_alg_btn.setOnClickListener(this);
         practice_alg_btn.setOnClickListener(this);
         setupDeleteDialog();
-        return this.view;
+        return view;
     }
 
     public void onClick(View v) {
@@ -120,11 +118,10 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
 
     private void setupDeleteDialog() {
         Builder title = new Builder(requireContext()).setTitle("Delete Algorithm");
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Are you sure you want to delete the current Algorithm: ");
-        stringBuilder.append(this.currentAlg.getAlg_name());
+        String stringBuilder = "Are you sure you want to delete the current Algorithm: " +
+                this.currentAlg.getAlg_name();
         String str = "No";
-        this.deleteDialog = title.setMessage(stringBuilder.toString()).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        this.deleteDialog = title.setMessage(stringBuilder).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 ViewAlgorithmFragment.this.deleteAlgorithm();
             }
@@ -138,18 +135,19 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
     public Drawable getIconDrawable(Algorithm alg) {
         int iconDrawable;
         Drawable drawable;
+        Drawable iconDrawableImage;
         if (alg.getAlgorithm_icon() != null) {
             String str = "";
             if (!alg.getAlgorithm_icon().equals(str)) {
                 iconDrawable = getResources().getIdentifier(alg.getAlgorithm_icon().replace("R.drawable.", str), "drawable", requireActivity().getPackageName());
                 drawable = requireActivity().getDrawable(iconDrawable);
-                this.iconDrawableImage = drawable;
+                iconDrawableImage = drawable;
                 return drawable;
             }
         }
         iconDrawable = R.drawable.cfop;
         drawable = requireActivity().getDrawable(iconDrawable);
-        this.iconDrawableImage = drawable;
+        iconDrawableImage = drawable;
         return drawable;
     }
 
@@ -186,7 +184,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
         requireActivity().finish();
     }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_algorithm_menu, menu);
     }
 

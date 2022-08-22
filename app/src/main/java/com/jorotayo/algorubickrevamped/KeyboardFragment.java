@@ -15,16 +15,13 @@ import androidx.fragment.app.Fragment;
 
 public class KeyboardFragment extends Fragment implements OnClickListener, View.OnLongClickListener {
     private final EditText inputSpace;
-    private String backSpaceAlg = "";
     private TextView btn_2;
     private TextView btn_prime;
     private TextView current_alg_text;
     private TableLayout double_face_moves;
-    private ViewSwitcher keyboardSwitcher;
-    private Boolean modified = Boolean.valueOf(false);
+    private Boolean modified = Boolean.FALSE;
     private Dialog rootView;
     private TableLayout single_face_moves;
-    private String wholeAlg;
 
     public KeyboardFragment(EditText inputSpace) {
         this.inputSpace = inputSpace;
@@ -57,7 +54,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         //TextView btn_shift = btn_x;
         keyboard_close_btn.setVisibility(View.GONE);
         TextView btn_shift = rootView.findViewById(R.id.shift_btn);
-        this.keyboardSwitcher = rootView.findViewById(R.id.keyboard_switcher);
+        ViewSwitcher keyboardSwitcher = rootView.findViewById(R.id.keyboard_switcher);
         this.single_face_moves = rootView.findViewById(R.id.single_face_moves);
         this.double_face_moves = rootView.findViewById(R.id.double_face_moves);
         this.current_alg_text = rootView.findViewById(R.id.current_alg_text);
@@ -73,8 +70,6 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         btn_s_b.setOnClickListener(this);
         btn_s_u.setOnClickListener(this);
         btn_s_d.setOnClickListener(this);
-        // keyboard_close_btn = btn_x2;
-        //keyboard_close_btn.setOnClickListener(this);
         btn_y.setOnClickListener(this);
         btn_z.setOnClickListener(this);
         btn_e.setOnClickListener(this);
@@ -86,18 +81,18 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         btn_backspace.setOnLongClickListener(this);
         this.btn_prime.setClickable(false);
         this.btn_2.setClickable(false);
-        this.btn_2.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
-        this.btn_prime.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
+        this.btn_2.setTextColor(requireContext().getResources().getColor(R.color.colorPrimary, null));
+        this.btn_prime.setTextColor(requireContext().getResources().getColor(R.color.colorPrimary, null));
         btn_shift.setOnClickListener(v -> {
             if (KeyboardFragment.this.single_face_moves.getVisibility() == View.VISIBLE) {
                 KeyboardFragment.this.single_face_moves.setVisibility(View.GONE);
                 KeyboardFragment.this.double_face_moves.setVisibility(View.VISIBLE);
-                btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorRed, null));
+                btn_shift.setTextColor(KeyboardFragment.this.requireContext().getResources().getColor(R.color.colorRed, null));
                 return;
             }
             KeyboardFragment.this.single_face_moves.setVisibility(View.VISIBLE);
             KeyboardFragment.this.double_face_moves.setVisibility(View.GONE);
-            btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorAccent, null));
+            btn_shift.setTextColor(KeyboardFragment.this.requireContext().getResources().getColor(R.color.colorAccent, null));
         });
         return rootView;
     }
@@ -107,87 +102,87 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         if (id != R.id.shift_btn) {
             switch (id) {
                 case R.id.btn_2 /*2131361951*/:
-                    this.modified = Boolean.valueOf(true);
+                    this.modified = Boolean.TRUE;
                     enter("2");
                     return;
                 case R.id.btn_b /*2131361952*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("B");
                     return;
                 case R.id.btn_backspace /*2131361953*/:
-                    this.modified = Boolean.valueOf(true);
+                    this.modified = Boolean.TRUE;
                     backspace();
                     return;
                 case R.id.btn_d /*2131361954*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("D");
                     return;
                 case R.id.btn_e /*2131361955*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("E");
                     return;
                 case R.id.btn_f /*2131361956*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("F");
                     return;
                 case R.id.btn_l /*2131361957*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("L");
                     return;
                 case R.id.btn_m /*2131361958*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("M");
                     return;
                 case R.id.btn_prime /*2131361959*/:
-                    this.modified = Boolean.valueOf(true);
+                    this.modified = Boolean.TRUE;
                     enter("'");
                     return;
                 case R.id.btn_r /*2131361960*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("R");
                     return;
                 case R.id.btn_s /*2131361961*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("S");
                     return;
                 case R.id.btn_s_b /*2131361962*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("b");
                     return;
                 case R.id.btn_s_d /*2131361963*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("d");
                     return;
                 case R.id.btn_s_f /*2131361964*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("f");
                     return;
                 case R.id.btn_s_l /*2131361965*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("l");
                     return;
                 case R.id.btn_s_r /*2131361966*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("r");
                     return;
                 case R.id.btn_s_u /*2131361967*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("u");
                     return;
                 case R.id.btn_u /*2131361968*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("U");
                     return;
                 case R.id.btn_x /*2131361969*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("X");
                     return;
                 case R.id.btn_y /*2131361970*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("Y");
                     return;
                 case R.id.btn_z /*2131361971*/:
-                    this.modified = Boolean.valueOf(false);
+                    this.modified = Boolean.FALSE;
                     enter("Z");
                     return;
                 default:
@@ -199,16 +194,16 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
 
     private void enter(String keypressed) {
         int i = 0;
-        if (this.modified.booleanValue()) {
+        if (this.modified) {
             this.btn_prime.setClickable(false);
             this.btn_2.setClickable(false);
-            this.btn_2.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
-            this.btn_prime.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
+            this.btn_2.setTextColor(requireContext().getResources().getColor(R.color.colorPrimary, null));
+            this.btn_prime.setTextColor(requireContext().getResources().getColor(R.color.colorPrimary, null));
         } else {
             this.btn_prime.setClickable(true);
             this.btn_2.setClickable(true);
-            this.btn_2.setTextColor(getContext().getResources().getColor(R.color.white, null));
-            this.btn_prime.setTextColor(getContext().getResources().getColor(R.color.white, null));
+            this.btn_2.setTextColor(requireContext().getResources().getColor(R.color.white, null));
+            this.btn_prime.setTextColor(requireContext().getResources().getColor(R.color.white, null));
         }
         if (this.inputSpace.getText().toString().isEmpty()) {
             this.inputSpace.append(keypressed);
@@ -225,11 +220,9 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         int length = alg.length;
         while (i < length) {
             String letter = alg[i];
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(wholeFormattedAlg);
-            stringBuilder.append(str);
-            stringBuilder.append(letter);
-            wholeFormattedAlg = stringBuilder.toString();
+            wholeFormattedAlg = wholeFormattedAlg +
+                    str +
+                    letter;
             i++;
         }
         String wholeFormattedAlg2 = wholeFormattedAlg.replace(",,", str2);
@@ -240,22 +233,22 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
 
     private void backspace() {
         String obj = this.inputSpace.getText().toString();
-        this.backSpaceAlg = obj;
+        String backSpaceAlg = obj;
         String str = "";
         if (obj.isEmpty()) {
-            this.backSpaceAlg = str;
+            backSpaceAlg = str;
         } else {
             String str2 = ",";
-            if (this.backSpaceAlg.contains(str2)) {
-                obj = this.backSpaceAlg;
-                this.backSpaceAlg = obj.substring(0, obj.lastIndexOf(str2));
+            if (backSpaceAlg.contains(str2)) {
+                obj = backSpaceAlg;
+                backSpaceAlg = obj.substring(0, obj.lastIndexOf(str2));
             } else {
-                this.backSpaceAlg = str;
+                backSpaceAlg = str;
             }
         }
-        this.inputSpace.setText(this.backSpaceAlg);
-        obj = this.backSpaceAlg;
-        this.wholeAlg = obj;
+        this.inputSpace.setText(backSpaceAlg);
+        obj = backSpaceAlg;
+        String wholeAlg = obj;
         this.current_alg_text.setText(obj);
     }
 

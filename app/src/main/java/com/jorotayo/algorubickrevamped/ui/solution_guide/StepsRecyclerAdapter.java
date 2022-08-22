@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolder> {
     private final OnStepListener mOnStepListener;
-    private ArrayList<Steps> mSteps = new ArrayList();
+    private ArrayList<Steps> mSteps;
     private Solution solution;
 
     public StepsRecyclerAdapter(ArrayList<Steps> mSteps, OnStepListener mOnStepListener) {
@@ -28,6 +29,7 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
         this.mOnStepListener = mOnStepListener;
     }
 
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_step_view, parent, false), this.mOnStepListener);
     }
@@ -51,7 +53,7 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
         void onStepImageClick(int i, View view);
     }
 
-    public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener {
+    public static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener {
         OnStepListener mOnStepListener;
         TextView stepAlgorithm;
         CardView stepCard;
@@ -80,10 +82,9 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
         public void onClick(View view) {
             if (view.getId() == R.id.view_step_card) {
                 this.mOnStepListener.onStepClick(getAdapterPosition());
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("onClick: ");
-                stringBuilder.append(getAdapterPosition());
-                Log.d(Constraints.TAG, stringBuilder.toString());
+                String stringBuilder = "onClick: " +
+                        getAdapterPosition();
+                Log.d(Constraints.TAG, stringBuilder);
             }
         }
     }

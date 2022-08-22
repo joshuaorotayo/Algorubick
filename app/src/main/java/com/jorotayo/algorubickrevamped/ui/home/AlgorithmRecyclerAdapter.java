@@ -32,7 +32,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
     private final ArrayList<Algorithm> mAlgorithmsAll;
     private final ArrayList<Integer> selectedPos = new ArrayList();
 
-    Filter filter = new Filter() {
+    final Filter filter = new Filter() {
         /* Access modifiers changed, original: protected */
         public FilterResults performFiltering(CharSequence text) {
             ArrayList<Algorithm> filteredAlgorithms = new ArrayList();
@@ -61,7 +61,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
             AlgorithmRecyclerAdapter.this.notifyDataSetChanged();
         }
     };
-    SparseBooleanArray selected_items;
+    final SparseBooleanArray selected_items;
     private int current_selected = -1;
     private OnAlgorithmListener mOnAlgorithmListener;
 
@@ -162,16 +162,16 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
     }
 
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
-        TextView algorithm;
-        LinearLayout algorithmCard;
-        TextView algorithmCategory;
-        ImageView algorithmIcon;
-        TextView algorithmName;
-        CheckBox algorithm_selected;
-        CheckBox favourite_checkbox;
-        CheckBox learnt_checkbox;
-        TextView numberCorrect;
-        TextView numberPracticed;
+        final TextView algorithm;
+        final LinearLayout algorithmCard;
+        final TextView algorithmCategory;
+        final ImageView algorithmIcon;
+        final TextView algorithmName;
+        final CheckBox algorithm_selected;
+        final CheckBox favourite_checkbox;
+        final CheckBox learnt_checkbox;
+        final TextView numberCorrect;
+        final TextView numberPracticed;
 
         public ViewHolder(View view, OnAlgorithmListener onAlgorithmListener) {
             super(view);

@@ -110,10 +110,9 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
         this.currentAlgorithm = this.algorithmBox.get(this.intent.getLongExtra("edit", 0));
         Objects.requireNonNull(((AlgorithmActivity) requireActivity()).getSupportActionBar()).setTitle("Edit Algorithm");
         ActionBar actionBar = Objects.requireNonNull(((AlgorithmActivity) requireActivity()).getSupportActionBar());
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("");
-        stringBuilder.append(this.currentAlgorithm.getAlg_name());
-        actionBar.setSubtitle(stringBuilder.toString());
+        String stringBuilder = "" +
+                this.currentAlgorithm.getAlg_name();
+        actionBar.setSubtitle(stringBuilder);
         this.new_alg_name_edit.setText(this.currentAlgorithm.getAlg_name());
         this.new_alg_edit.setText(this.currentAlgorithm.getAlg());
         this.new_alg_description_edit.setText(this.currentAlgorithm.getAlg_description());

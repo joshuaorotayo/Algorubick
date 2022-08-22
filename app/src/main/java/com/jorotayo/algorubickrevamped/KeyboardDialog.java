@@ -13,18 +13,15 @@ import android.widget.ViewSwitcher;
 
 public class KeyboardDialog implements OnClickListener {
     static final /* synthetic */ boolean $assertionsDisabled = false;
-    private String backSpaceAlg = "";
     private TextView btn_2;
     private TextView btn_prime;
     private Context ctx;
     private TextView current_alg_text;
     private TableLayout double_face_moves;
     private EditText inputSpace;
-    private ViewSwitcher keyboardSwitcher;
     private Boolean modified = Boolean.FALSE;
     private Dialog rootView;
     private TableLayout single_face_moves;
-    private String wholeAlg;
 
     public void newKeyboard(Context context, EditText editText) {
         Dialog keyboardDialog = new Dialog(context, R.style.DialogTheme);
@@ -44,34 +41,33 @@ public class KeyboardDialog implements OnClickListener {
     }
 
     private void setUpBtns(Dialog rootView) {
-        Dialog dialog = rootView;
-        TextView btn_r = dialog.findViewById(R.id.btn_r);
-        TextView btn_l = dialog.findViewById(R.id.btn_l);
-        TextView btn_f = dialog.findViewById(R.id.btn_f);
-        TextView btn_b = dialog.findViewById(R.id.btn_b);
-        TextView btn_u = dialog.findViewById(R.id.btn_u);
-        TextView btn_d = dialog.findViewById(R.id.btn_d);
-        TextView btn_s_r = dialog.findViewById(R.id.btn_s_r);
-        TextView btn_s_l = dialog.findViewById(R.id.btn_s_l);
-        TextView btn_s_f = dialog.findViewById(R.id.btn_s_f);
-        TextView btn_s_b = dialog.findViewById(R.id.btn_s_b);
-        TextView btn_s_u = dialog.findViewById(R.id.btn_s_u);
-        TextView btn_s_d = dialog.findViewById(R.id.btn_s_d);
-        TextView btn_x = dialog.findViewById(R.id.btn_x);
-        TextView btn_y = dialog.findViewById(R.id.btn_y);
-        TextView btn_z = dialog.findViewById(R.id.btn_z);
-        TextView btn_e = dialog.findViewById(R.id.btn_e);
-        TextView btn_s = dialog.findViewById(R.id.btn_s);
-        TextView btn_m = dialog.findViewById(R.id.btn_m);
-        this.btn_2 = dialog.findViewById(R.id.btn_2);
-        TextView btn_backspace = dialog.findViewById(R.id.btn_backspace);
-        this.btn_prime = dialog.findViewById(R.id.btn_prime);
-        TextView keyboard_close_btn = dialog.findViewById(R.id.keyboard_close_btn);
-        TextView btn_shift = dialog.findViewById(R.id.shift_btn);
-        this.keyboardSwitcher = dialog.findViewById(R.id.keyboard_switcher);
-        this.single_face_moves = dialog.findViewById(R.id.single_face_moves);
-        this.double_face_moves = dialog.findViewById(R.id.double_face_moves);
-        this.current_alg_text = dialog.findViewById(R.id.current_alg_text);
+        TextView btn_r = rootView.findViewById(R.id.btn_r);
+        TextView btn_l = rootView.findViewById(R.id.btn_l);
+        TextView btn_f = rootView.findViewById(R.id.btn_f);
+        TextView btn_b = rootView.findViewById(R.id.btn_b);
+        TextView btn_u = rootView.findViewById(R.id.btn_u);
+        TextView btn_d = rootView.findViewById(R.id.btn_d);
+        TextView btn_s_r = rootView.findViewById(R.id.btn_s_r);
+        TextView btn_s_l = rootView.findViewById(R.id.btn_s_l);
+        TextView btn_s_f = rootView.findViewById(R.id.btn_s_f);
+        TextView btn_s_b = rootView.findViewById(R.id.btn_s_b);
+        TextView btn_s_u = rootView.findViewById(R.id.btn_s_u);
+        TextView btn_s_d = rootView.findViewById(R.id.btn_s_d);
+        TextView btn_x = rootView.findViewById(R.id.btn_x);
+        TextView btn_y = rootView.findViewById(R.id.btn_y);
+        TextView btn_z = rootView.findViewById(R.id.btn_z);
+        TextView btn_e = rootView.findViewById(R.id.btn_e);
+        TextView btn_s = rootView.findViewById(R.id.btn_s);
+        TextView btn_m = rootView.findViewById(R.id.btn_m);
+        this.btn_2 = rootView.findViewById(R.id.btn_2);
+        TextView btn_backspace = rootView.findViewById(R.id.btn_backspace);
+        this.btn_prime = rootView.findViewById(R.id.btn_prime);
+        TextView keyboard_close_btn = rootView.findViewById(R.id.keyboard_close_btn);
+        TextView btn_shift = rootView.findViewById(R.id.shift_btn);
+        ViewSwitcher keyboardSwitcher = rootView.findViewById(R.id.keyboard_switcher);
+        this.single_face_moves = rootView.findViewById(R.id.single_face_moves);
+        this.double_face_moves = rootView.findViewById(R.id.double_face_moves);
+        this.current_alg_text = rootView.findViewById(R.id.current_alg_text);
 
         btn_r.setOnClickListener(this);
         btn_l.setOnClickListener(this);
@@ -227,21 +223,18 @@ public class KeyboardDialog implements OnClickListener {
             return;
         }
         String inputSpaceText = this.inputSpace.getText().toString();
-        String wholeAlgorithm = "";
         String str = ",";
         String str2 = "";
-        wholeAlgorithm = "" + inputSpaceText.replace(str, str2);
+        String wholeAlgorithm = "" + inputSpaceText.replace(str, str2);
         wholeAlgorithm = keypressed;
         String wholeFormattedAlg = "";
         String[] alg = wholeAlgorithm.split("(?=([A-z][2]?[{'}]?)|([A-z][2]?)|([A-z][{'}]?)|([A-z]))");
         int length = alg.length;
         while (i < length) {
             String letter = alg[i];
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(wholeFormattedAlg);
-            stringBuilder.append(str);
-            stringBuilder.append(letter);
-            wholeFormattedAlg = stringBuilder.toString();
+            wholeFormattedAlg = wholeFormattedAlg +
+                    str +
+                    letter;
             i++;
         }
         String wholeFormattedAlg2 = wholeFormattedAlg.replace(",,", str2);
@@ -252,22 +245,22 @@ public class KeyboardDialog implements OnClickListener {
 
     private void backspace() {
         String obj = this.inputSpace.getText().toString();
-        this.backSpaceAlg = obj;
+        String backSpaceAlg = obj;
         String str = "";
         if (obj.isEmpty()) {
-            this.backSpaceAlg = str;
+            backSpaceAlg = str;
         } else {
             String str2 = ",";
-            if (this.backSpaceAlg.contains(str2)) {
-                obj = this.backSpaceAlg;
-                this.backSpaceAlg = obj.substring(0, obj.lastIndexOf(str2));
+            if (backSpaceAlg.contains(str2)) {
+                obj = backSpaceAlg;
+                backSpaceAlg = obj.substring(0, obj.lastIndexOf(str2));
             } else {
-                this.backSpaceAlg = str;
+                backSpaceAlg = str;
             }
         }
-        this.inputSpace.setText(this.backSpaceAlg);
-        obj = this.backSpaceAlg;
-        this.wholeAlg = obj;
+        this.inputSpace.setText(backSpaceAlg);
+        obj = backSpaceAlg;
+        String wholeAlg = obj;
         this.current_alg_text.setText(obj);
     }
 }

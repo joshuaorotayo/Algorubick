@@ -41,11 +41,11 @@ import io.objectbox.Box;
 
 public class AlgorithmHomeFragment extends Fragment implements OnClickListener, AlgorithmRecyclerAdapter.OnAlgorithmListener, OnBackPressed {
     private final ArrayList<Integer> selectedList = new ArrayList<>();
-    ArrayList<String> alg_names = new ArrayList<>(Arrays.asList("Right Sexy Move", "Left Sexy Move", "H-Perm", "Z-Perm", "T-Perm", "J1-Perm", "J2-Perm", "N1-Perm", "N2-Perm", "V-Perm", "Y-Perm", "E-perm", "F-Perm", "R1-Perm", "R2-Perm"));
-    ArrayList<String> algs = new ArrayList<>(Arrays.asList("R,U,R',U'", "L',U',L,U", "M2,U,M2,U2,M2,U,M2", "M2,U,M2,U,M',U2,M2,U2,M',U2", "R,U,R',U',R,F,R2,U',R',U',R',U,R',F'", "R',U,L',U2,R,U',R',U2,R,L,U'", "R,U,R',F',R,U,R',U',R',F,R2,U',R',U'", "L,U',R,U2,L',U,R',L,U',R,U2,L',U,R',U", "R',U,L',U2,R,U',L,R',U,L',U2,R,U',L,U'", "R',U,R',d',R',F',R2,U',R',U,R',F,R,F", "F,R,U',R',U',R,U,R',F',R,U,R',U',R',F,R,F'", "X',R,U',R',D,R,U,R',u2,R',U,R,D,R',U',R", "R',U2,R',d',R',F',R2,U',R',U,R',F,R,U',F", "L,U2,L',U2,L,F',L',U',L,U,L,F,L2,U", "R',U2,R,U2,R',F,R,U,R',U',R',F',R2,U'"));
-    ArrayList<String> categories = new ArrayList<>(Arrays.asList("Triggers", "Triggers", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL"));
-    ArrayList<String> descriptions = new ArrayList<>(Arrays.asList("Insert bottom right corner and trigger", "Insert bottom left corner and trigger", "Swap opposite Edges (4e)", "Swap adjacent Edges (4e)", "Swap two opposite edges and two corners (2e2c)", "Swap two opposite corners, swap two adjacent edges (2c2e)", "Swap two corners, swap two adjacent edges (2e2c)", "Swap diagonal corner and opposite edge, left to right (2e2c)", "wap diagonal corner and opposite edge, Right to left (2e2c)", "Swap inline adjacent edge and diagonal corner (2e2c)", "Cross shaped swap diagonal corner and adjacent edge (2e2c)", "Swap opposite corners (4c)", "Swap inline 2 edges and 2 corners (2e2c)", "Swap opposite corners and adjacent edge (2e2c)", "Swap opposite corners and adjacent edge (2e2c)"));
-    ArrayList<String> images = new ArrayList<>(Arrays.asList("R.drawable.right_edge", "R.drawable.left_edge", "R.drawable.h_perm", "R.drawable.z_perm", "R.drawable.t_perm", "R.drawable.j1_perm", "R.drawable.j2_perm", "R.drawable.n1_perm", "R.drawable.n2_perm", "R.drawable.v_perm", "R.drawable.y_perm", "R.drawable.e_perm", "R.drawable.f_perm", "R.drawable.r1_perm", "R.drawable.r2_perm"));
+    final ArrayList<String> alg_names = new ArrayList<>(Arrays.asList("Right Sexy Move", "Left Sexy Move", "H-Perm", "Z-Perm", "T-Perm", "J1-Perm", "J2-Perm", "N1-Perm", "N2-Perm", "V-Perm", "Y-Perm", "E-perm", "F-Perm", "R1-Perm", "R2-Perm"));
+    final ArrayList<String> algs = new ArrayList<>(Arrays.asList("R,U,R',U'", "L',U',L,U", "M2,U,M2,U2,M2,U,M2", "M2,U,M2,U,M',U2,M2,U2,M',U2", "R,U,R',U',R,F,R2,U',R',U',R',U,R',F'", "R',U,L',U2,R,U',R',U2,R,L,U'", "R,U,R',F',R,U,R',U',R',F,R2,U',R',U'", "L,U',R,U2,L',U,R',L,U',R,U2,L',U,R',U", "R',U,L',U2,R,U',L,R',U,L',U2,R,U',L,U'", "R',U,R',d',R',F',R2,U',R',U,R',F,R,F", "F,R,U',R',U',R,U,R',F',R,U,R',U',R',F,R,F'", "X',R,U',R',D,R,U,R',u2,R',U,R,D,R',U',R", "R',U2,R',d',R',F',R2,U',R',U,R',F,R,U',F", "L,U2,L',U2,L,F',L',U',L,U,L,F,L2,U", "R',U2,R,U2,R',F,R,U,R',U',R',F',R2,U'"));
+    final ArrayList<String> categories = new ArrayList<>(Arrays.asList("Triggers", "Triggers", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL"));
+    final ArrayList<String> descriptions = new ArrayList<>(Arrays.asList("Insert bottom right corner and trigger", "Insert bottom left corner and trigger", "Swap opposite Edges (4e)", "Swap adjacent Edges (4e)", "Swap two opposite edges and two corners (2e2c)", "Swap two opposite corners, swap two adjacent edges (2c2e)", "Swap two corners, swap two adjacent edges (2e2c)", "Swap diagonal corner and opposite edge, left to right (2e2c)", "wap diagonal corner and opposite edge, Right to left (2e2c)", "Swap inline adjacent edge and diagonal corner (2e2c)", "Cross shaped swap diagonal corner and adjacent edge (2e2c)", "Swap opposite corners (4c)", "Swap inline 2 edges and 2 corners (2e2c)", "Swap opposite corners and adjacent edge (2e2c)", "Swap opposite corners and adjacent edge (2e2c)"));
+    final ArrayList<String> images = new ArrayList<>(Arrays.asList("R.drawable.right_edge", "R.drawable.left_edge", "R.drawable.h_perm", "R.drawable.z_perm", "R.drawable.t_perm", "R.drawable.j1_perm", "R.drawable.j2_perm", "R.drawable.n1_perm", "R.drawable.n2_perm", "R.drawable.v_perm", "R.drawable.y_perm", "R.drawable.e_perm", "R.drawable.f_perm", "R.drawable.r1_perm", "R.drawable.r2_perm"));
     int selectedNum = 0;
     private ActionMode actionMode;
     private ArrayList<Algorithm> algorithmArrayList = new ArrayList<>();
@@ -174,7 +174,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         TextView dialog_alg_image_name = caseDialog.findViewById(R.id.dialog_alg_image_name);
         TextView dialog_alg_image_alg = caseDialog.findViewById(R.id.dialog_alg_image_alg);
         String str = "";
-        int id = getResources().getIdentifier(currentAlg.getAlgorithm_icon().replace("R.drawable.", str), "drawable", getActivity().getPackageName());
+        int id = getResources().getIdentifier(currentAlg.getAlgorithm_icon().replace("R.drawable.", str), "drawable", requireActivity().getPackageName());
         if (Objects.equals(currentAlg.getAlgorithm_icon(), str)) {
             dialog_alg_image_icon.setBackgroundResource(R.drawable.cfop);
         } else {
@@ -222,15 +222,6 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
-
-/*    public void createAlgorithmList(int numAlgorithms) {
-        for (int i = 1; i <= numAlgorithms; i++) {
-            Box box = algorithmBox;
-            Object obj = r4;
-            Algorithm algorithm = new Algorithm("Algorithm_name", "R',U,R2,D',B,F,L'", "Description of an algorithm", "Triggers", true, true, false, 5, 5, false, "");
-            box.put(obj);
-        }
-    }*/
 
     public void onPrepareOptionsMenu(Menu menu) {
         SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
@@ -282,13 +273,4 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
             requireActivity().finish();
         }
     }
-
-/*    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }*/
 }

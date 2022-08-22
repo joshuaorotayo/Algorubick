@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Random;
 
 import io.objectbox.Box;
@@ -30,17 +31,15 @@ import io.objectbox.Box;
 public class LearnAlgorithmFragment extends Fragment implements OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private final ArrayList<Long> mParam2 = new ArrayList();
-    HashMap<String, Integer> algImageMap = new HashMap();
-    ArrayList<ImageView> algImages = new ArrayList();
+    final HashMap algImageMap = new HashMap();
+    final ArrayList algImages = new ArrayList();
     Algorithm currentAlgorithm;
-    private ArrayList<Algorithm> algorithmArrayList = new ArrayList();
-    private Button checkAlg;
+    private ArrayList algorithmArrayList = new ArrayList();
     private MaterialAlertDialogBuilder correctDialog;
     private MaterialAlertDialogBuilder incorrectDialog;
     private TextView learn_alg_alg;
     private EditText learn_alg_inputspace;
     private TextView learn_alg_name;
-    private ArrayList<Integer> mParam1;
     private View view;
 
     public static LearnAlgorithmFragment newInstance(ArrayList<Integer> param1) {
@@ -55,10 +54,8 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             ArrayList integerArrayList = getArguments().getIntegerArrayList(ARG_PARAM1);
-            mParam1 = integerArrayList;
-            Iterator it = integerArrayList.iterator();
-            while (it.hasNext()) {
-                mParam2.add(((long) ((Integer) it.next()).intValue()) + 1);
+            for (Object o : integerArrayList) {
+                mParam2.add(((long) (Integer) o) + 1);
             }
         }
         Box<Algorithm> algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
@@ -68,8 +65,8 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_algorithm_learn, container, false);
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setTitle("Learn Algorithm");
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setSubtitle("Algorithm Name");
+        Objects.requireNonNull(((StudyAlgorithmActivity) requireActivity()).getSupportActionBar()).setTitle("Learn Algorithm");
+        Objects.requireNonNull(((StudyAlgorithmActivity) getActivity()).getSupportActionBar()).setSubtitle("Algorithm Name");
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.learn_alg_name);
         learn_alg_alg = view.findViewById(R.id.learn_alg_alg);
@@ -77,7 +74,6 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
         setupHashmap();
         setupImageViews();
         Button button = view.findViewById(R.id.check_alg);
-        checkAlg = button;
         button.setOnClickListener(this);
         setupKeyboard();
         setupDialogs();
@@ -86,7 +82,7 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
     }
 
     private void setupKeyboard() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.add(R.id.learn_alg_keyboard_space, new KeyboardFragment(this.learn_alg_inputspace));
         ft.commit();
     }
@@ -98,12 +94,12 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
     }
 
     private Algorithm nextAlgorithm() {
-        return algorithmArrayList.get(new Random().nextInt(this.algorithmArrayList.size()));
+        return (Algorithm) algorithmArrayList.get(new Random().nextInt(this.algorithmArrayList.size()));
     }
 
     private void setupAlgorithm(Algorithm nextAlgorithm) {
         currentAlgorithm = nextAlgorithm;
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
+        Objects.requireNonNull(((StudyAlgorithmActivity) requireActivity()).getSupportActionBar()).setSubtitle(this.currentAlgorithm.getAlg_name());
         learn_alg_name.setText(this.currentAlgorithm.getAlg_name());
         learn_alg_alg.setText(this.currentAlgorithm.getAlg());
         setupAlgImages();
@@ -120,8 +116,8 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
     }
 
     private void setupDialogs() {
-        incorrectDialog = new MaterialAlertDialogBuilder(getContext()).setMessage("Incorrect Algorithm Inputted. Try Again").setTitle("Incorrect").setIcon(R.drawable.incorrect_48_r).setCancelable(true);
-        correctDialog = new MaterialAlertDialogBuilder(getContext()).setMessage("Correct Algorithm Inputted. Keep it up").setTitle("Correct").setIcon(R.drawable.correct_48_g).setCancelable(true);
+        incorrectDialog = new MaterialAlertDialogBuilder(requireContext()).setMessage("Incorrect Algorithm Inputted. Try Again").setTitle("Incorrect").setIcon(R.drawable.incorrect_48_r).setCancelable(true);
+        correctDialog = new MaterialAlertDialogBuilder(requireContext()).setMessage("Correct Algorithm Inputted. Keep it up").setTitle("Correct").setIcon(R.drawable.correct_48_g).setCancelable(true);
     }
 
     private void setupHashmap() {
@@ -221,13 +217,13 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
     private void setupAlgImages() {
         int i;
         String[] steps = currentAlgorithm.alg.split(",");
-        ArrayList<Integer> stepIDs = new ArrayList();
+        ArrayList stepIDs = new ArrayList();
         for (String step : steps) {
             stepIDs.add(this.algImageMap.get(step));
         }
         for (i = 0; i < stepIDs.size(); i++) {
-            ImageView newImage = algImages.get(i);
-            newImage.setImageResource(stepIDs.get(i));
+            ImageView newImage = (ImageView) algImages.get(i);
+            newImage.setImageResource((Integer) stepIDs.get(i));
             newImage.setVisibility(View.VISIBLE);
         }
     }
