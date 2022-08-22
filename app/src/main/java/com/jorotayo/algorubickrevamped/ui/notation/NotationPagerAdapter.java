@@ -1,5 +1,6 @@
 package com.jorotayo.algorubickrevamped.ui.notation;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -15,10 +16,9 @@ public class NotationPagerAdapter extends FragmentStatePagerAdapter {
         this.mContext = context;
     }
 
+    @NonNull
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:
-                return new intro();
             case 1:
                 return new faces();
             case 2:
@@ -34,7 +34,7 @@ public class NotationPagerAdapter extends FragmentStatePagerAdapter {
             case 7:
                 return new algorithms();
             default:
-                return null;
+                return new intro();
         }
     }
 

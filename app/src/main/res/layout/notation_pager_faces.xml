@@ -51,9 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:drawableEnd="@drawable/left_face"
                 android:text="@string/left_face"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                app:drawableEndCompat="@drawable/left_face" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -68,9 +68,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:drawableEnd="@drawable/right_face"
                 android:text="@string/right_face"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                app:drawableEndCompat="@drawable/right_face" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -85,9 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:drawableEnd="@drawable/front_face"
                 android:text="@string/front_face"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                app:drawableEndCompat="@drawable/front_face" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -102,9 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:drawableEnd="@drawable/back_face"
                 android:text="@string/back_face"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                app:drawableEndCompat="@drawable/back_face" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -119,9 +119,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:drawableEnd="@drawable/up_face"
                 android:text="@string/up_face"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                app:drawableEndCompat="@drawable/up_face" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -135,9 +135,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:drawableEnd="@drawable/down_face"
                 android:text="@string/down_face"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                app:drawableEndCompat="@drawable/down_face" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

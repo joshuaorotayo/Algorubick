@@ -56,26 +56,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:drawableEnd="@drawable/two_right"
                     android:text="@string/layer_2r"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="viewStart"
+                    app:drawableEndCompat="@drawable/double_r" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/two_layer_left"
                 style="@style/grid_sq_right"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:cardCornerRadius="6dp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:drawableEnd="@drawable/two_left"
                     android:text="@string/layer_2l"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="viewStart"
+                    app:drawableEndCompat="@drawable/two_left" />
             </androidx.cardview.widget.CardView>
         </TableRow>
 
@@ -95,9 +95,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:drawableEnd="@drawable/two_front"
-                    android:text="@string/double_f"
-                    android:textAlignment="viewStart" />
+                    android:text="@string/layer_2f"
+                    android:textAlignment="viewStart"
+                    app:drawableEndCompat="@drawable/two_front" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -112,9 +112,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:drawableEnd="@drawable/two_back"
-                    android:text="@string/double_b"
-                    android:textAlignment="viewStart" />
+                    android:text="@string/layer_2b"
+                    android:textAlignment="viewStart"
+                    app:drawableEndCompat="@drawable/two_back" />
             </androidx.cardview.widget.CardView>
         </TableRow>
 
@@ -134,9 +134,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:drawableEnd="@drawable/two_up"
                     android:text="@string/layer_2u"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="viewStart"
+                    app:drawableEndCompat="@drawable/two_up" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -151,9 +151,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:drawableEnd="@drawable/two_down"
                     android:text="@string/layer_2d"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="viewStart"
+                    app:drawableEndCompat="@drawable/two_down" />
             </androidx.cardview.widget.CardView>
         </TableRow>
     </LinearLayout>

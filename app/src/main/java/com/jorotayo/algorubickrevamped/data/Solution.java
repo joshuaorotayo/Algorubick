@@ -30,10 +30,9 @@ public class Solution {
             lastCreatorID = i2;
             stringBuilder.append(i2);
             String stringBuilder2 = stringBuilder.toString();
-            StringBuilder stringBuilder3 = new StringBuilder();
-            stringBuilder3.append("Creator Name_");
-            stringBuilder3.append(lastCreatorID);
-            contacts.add(new Solution(stringBuilder2, stringBuilder3.toString(), "Description of the solution that will be created and listed"));
+            String stringBuilder3 = "Creator Name_" +
+                    lastCreatorID;
+            contacts.add(new Solution(stringBuilder2, stringBuilder3, "Description of the solution that will be created and listed"));
         }
         return contacts;
     }

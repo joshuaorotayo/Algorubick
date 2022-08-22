@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
@@ -72,6 +73,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         this.ctx = ctx;
     }
 
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_algorithm, parent, false), this.mOnAlgorithmListener);
     }
@@ -82,10 +84,9 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         holder.algorithm.setText(algorithmItem.getAlg());
         holder.algorithmCategory.setText(algorithmItem.getCategory());
         TextView textView = holder.numberCorrect;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(algorithmItem.getPracticed_correctly_int());
-        stringBuilder.append(" / ");
-        textView.setText(stringBuilder.toString());
+        String stringBuilder = algorithmItem.getPracticed_correctly_int() +
+                " / ";
+        textView.setText(stringBuilder);
         holder.numberPracticed.setText(String.valueOf(algorithmItem.getPracticed_number_int()));
         setAlgorithmIcon(holder, algorithmItem);
         holder.favourite_checkbox.setChecked(algorithmItem.isFavourite_alg());

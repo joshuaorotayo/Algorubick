@@ -21,7 +21,7 @@ public class Algorithm {
     public boolean learnt;
 
     public Algorithm(String alg_name, String alg, String alg_description, String algorithm_icon, String category, int practiced_correctly_int, int practiced_number_int, boolean custom_alg, boolean favourite_alg, boolean selected_alg, boolean learnt) {
-        this.id = id;
+        this.id = 0;
         this.alg_name = alg_name;
         this.alg = alg;
         this.alg_description = alg_description;

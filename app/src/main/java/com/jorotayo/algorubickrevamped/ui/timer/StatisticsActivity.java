@@ -23,7 +23,7 @@ import io.objectbox.Box;
 
 public class StatisticsActivity extends AppCompatActivity implements OnSolveListener {
     LinearLayout noSolvesAlert;
-    ArrayList<Solve> solveArrayList = new ArrayList();
+    ArrayList solveArrayList = new ArrayList();
     Box<Solve> solveBox;
     RecyclerView statisticsRecycler;
     StatisticsRecyclerAdapter statisticsRecyclerAdapter;
@@ -33,7 +33,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnSolveList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         this.statisticsRecycler = findViewById(R.id.statistics_recycler);
-        Box boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
+        Box<Solve> boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
         this.solveBox = boxFor;
         this.solveArrayList = (ArrayList) boxFor.getAll();
         this.noSolvesAlert = findViewById(R.id.no_solves_alert);
@@ -64,7 +64,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnSolveList
     }
 
     public void DeleteSolve(int position) {
-        this.solveBox.remove(this.solveArrayList.get(position));
+        this.solveBox.remove((Solve) this.solveArrayList.get(position));
         this.solveArrayList.remove(position);
         this.statisticsRecyclerAdapter.notifyItemRemoved(position);
         this.statisticsRecyclerAdapter.notifyItemRangeChanged(position, this.solveArrayList.size());

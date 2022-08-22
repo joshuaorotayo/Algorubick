@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
@@ -26,6 +27,7 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
         this.mOnSolveListener = mOnSolveListener;
     }
 
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solve_view, parent, false), this.mOnSolveListener);
     }
@@ -33,10 +35,9 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         Solve solve = this.mSolve.get(position);
         TextView textView = holder.solvePosition;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("");
-        stringBuilder.append(position);
-        textView.setText(stringBuilder.toString());
+        String stringBuilder = "" +
+                position;
+        textView.setText(stringBuilder);
         holder.solveCubeSize.setText(solve.getSolve_cube_size());
         holder.solveTime.setText(solve.getSolve_time());
         holder.solveDate.setText(solve.getSolve_date());
@@ -83,10 +84,9 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
                 StatisticsRecyclerAdapter.this.mOnSolveListener.onSolveDeleteClick(getAdapterPosition());
             } else if (id == R.id.solve_row) {
                 StatisticsRecyclerAdapter.this.mOnSolveListener.onSolveClick(getAdapterPosition());
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("onClick: ");
-                stringBuilder.append(getAdapterPosition());
-                Log.d(Constraints.TAG, stringBuilder.toString());
+                String stringBuilder = "onClick: " +
+                        getAdapterPosition();
+                Log.d(Constraints.TAG, stringBuilder);
             }
         }
     }

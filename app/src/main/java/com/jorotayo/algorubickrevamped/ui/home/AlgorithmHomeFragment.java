@@ -29,6 +29,7 @@ import com.jorotayo.algorubickrevamped.MainActivity;
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
+import com.jorotayo.algorubickrevamped.R.id;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             Intent study2Intent = new Intent(getContext(), com.jorotayo.algorubickrevamped.ui.home.StudyAlgorithmActivity.class);
             switch (item.getItemId()) {
-                case R.id.contextual_learn /*2131362000*/:
+                case id.contextual_learn /*2131362000*/:
                     Toast.makeText(getActivity(), "Learn multiple", Toast.LENGTH_SHORT).show();
                     selectedList.addAll(algorithmRecyclerAdapter.getSelectedItems());
                     actionMode.finish();
@@ -117,8 +118,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         TextView textView = home_algs_number;
         String stringBuilder = "" + algorithmArrayList.size();
         textView.setText(stringBuilder);
-        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
         algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         algorithmRecycler.setHasFixedSize(true);
@@ -129,8 +129,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     public void onResume() {
         super.onResume();
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
     }
 
@@ -151,10 +150,9 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
             startActivity(new Intent(getContext(), AlgorithmActivity.class));
             return;
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Unexpected value: ");
-        stringBuilder.append(v.getId());
-        throw new IllegalStateException(stringBuilder.toString());
+        String stringBuilder = "Unexpected value: " +
+                v.getId();
+        throw new IllegalStateException(stringBuilder);
     }
 
     public void onAlgorithmClick(int position) {
@@ -177,7 +175,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         TextView dialog_alg_image_alg = caseDialog.findViewById(R.id.dialog_alg_image_alg);
         String str = "";
         int id = getResources().getIdentifier(currentAlg.getAlgorithm_icon().replace("R.drawable.", str), "drawable", getActivity().getPackageName());
-        if (currentAlg.getAlgorithm_icon() == str) {
+        if (Objects.equals(currentAlg.getAlgorithm_icon(), str)) {
             dialog_alg_image_icon.setBackgroundResource(R.drawable.cfop);
         } else {
             dialog_alg_image_icon.setBackgroundResource(id);
@@ -192,8 +190,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         alg.setFavourite_alg();
         algorithmBox.put(alg);
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
         Context context = getContext();
         String stringBuilder = "Favourite" + position;
@@ -211,17 +208,16 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
                 clearSelected();
             }
         } else {
-            actionMode = ((MainActivity) getActivity()).startSupportActionMode(actionModeCallback);
+            actionMode = ((MainActivity) requireActivity()).startSupportActionMode(actionModeCallback);
         }
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         algorithms_filter_text = parent.getItemAtPosition(position).toString();
         Context context = parent.getContext();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Selected: ");
-        stringBuilder.append(algorithms_filter_text);
-        Toast.makeText(context, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+        String stringBuilder = "Selected: " +
+                algorithms_filter_text;
+        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> adapterView) {
@@ -243,10 +239,9 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
             public boolean onQueryTextSubmit(String query) {
                 algorithmRecyclerAdapter.getFilter().filter(query);
                 TextView access$100 = home_algs_number;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(algorithmRecyclerAdapter.getItemCount());
-                access$100.setText(stringBuilder.toString());
+                String stringBuilder = "" +
+                        algorithmRecyclerAdapter.getItemCount();
+                access$100.setText(stringBuilder);
                 return true;
             }
 
@@ -284,7 +279,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         if (actionMode != null) {
             Toast.makeText(getContext(), "aCTION MODE", Toast.LENGTH_SHORT).show();
         } else {
-            getActivity().finish();
+            requireActivity().finish();
         }
     }
 
