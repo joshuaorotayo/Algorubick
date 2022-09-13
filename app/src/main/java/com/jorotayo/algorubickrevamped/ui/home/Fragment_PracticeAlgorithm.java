@@ -37,7 +37,7 @@ import java.util.Locale;
 
 import io.objectbox.Box;
 
-public class PracticeAlgorithmFragment extends Fragment implements OnClickListener {
+public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private final ArrayList<Long> mParam2 = new ArrayList();
     private final long timeSwapBuff = 0;
@@ -97,8 +97,8 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
     };
     private View view;
 
-    public static PracticeAlgorithmFragment newInstance(ArrayList<Integer> param1) {
-        PracticeAlgorithmFragment fragment = new PracticeAlgorithmFragment();
+    public static Fragment_PracticeAlgorithm newInstance(ArrayList<Integer> param1) {
+        Fragment_PracticeAlgorithm fragment = new Fragment_PracticeAlgorithm();
         Bundle args = new Bundle();
         args.putIntegerArrayList(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -123,7 +123,7 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_algorithm_practice, container, false);
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setTitle("Practice Algorithm");
+        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setTitle("Practice Algorithm");
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.practice_alg_name);
         learn_alg_inputspace.setOnClickListener(this);
@@ -208,7 +208,7 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
         Algorithm algorithm = session.get(sessionPosition);
         currentAlgorithm = algorithm;
         currentAlgorithm = (Algorithm) algorithmBox.get(algorithm.id);
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setSubtitle(currentAlgorithm.getAlg_name());
+        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle(currentAlgorithm.getAlg_name());
         learn_alg_name.setText(currentAlgorithm.alg_name);
         correct = currentAlgorithm.getPracticed_correctly_int();
         practiced_count = currentAlgorithm.getPracticed_number_int();
@@ -349,7 +349,7 @@ public class PracticeAlgorithmFragment extends Fragment implements OnClickListen
         private IncomingHandlerCallback() {
         }
 
-        /* synthetic */ IncomingHandlerCallback(PracticeAlgorithmFragment practiceAlgorithmFragment) {
+        /* synthetic */ IncomingHandlerCallback(Fragment_PracticeAlgorithm fragmentPracticeAlgorithm) {
             this();
         }
 

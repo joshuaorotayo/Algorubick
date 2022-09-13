@@ -15,10 +15,6 @@
         android:name="com.jorotayo.algorubickrevamped.ui.timer.TimerFragment"
         android:label="@string/title_timer" />
     <fragment
-        android:id="@id/navigation_simulator"
-        android:name="com.jorotayo.algorubickrevamped.ui.simulator.SimulatorFragment"
-        android:label="@string/title_cube_simulator" />
-    <fragment
         android:id="@id/navigation_solution_guide"
         android:name="com.jorotayo.algorubickrevamped.ui.solution_guide.SolutionGuideFragment"
         android:label="@string/title_solution_guide" />
@@ -32,6 +28,6 @@
         android:label="SplashScreen" />
     <activity
         android:id="@id/createAlgorithmActivity"
-        android:name="com.jorotayo.algorubickrevamped.ui.home.AlgorithmActivity"
+        android:name="com.jorotayo.algorubickrevamped.ui.home.Activity_Algorithm"
         android:label="CreateAlgorithmActivity" />
 </navigation>

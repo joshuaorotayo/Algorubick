@@ -65,7 +65,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
 
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            Intent study2Intent = new Intent(getContext(), com.jorotayo.algorubickrevamped.ui.home.StudyAlgorithmActivity.class);
+            Intent study2Intent = new Intent(getContext(), Activity_StudyAlgorithm.class);
             switch (item.getItemId()) {
                 case R.id.contextual_learn /*2131362000*/:
                     Toast.makeText(getActivity(), "Learn multiple", Toast.LENGTH_SHORT).show();
@@ -148,7 +148,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void onClick(View v) {
         if (v.getId() == R.id.create_new_algorithm_btn) {
-            startActivity(new Intent(getContext(), AlgorithmActivity.class));
+            startActivity(new Intent(getContext(), Activity_Algorithm.class));
             return;
         }
         StringBuilder stringBuilder = new StringBuilder();
@@ -158,7 +158,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     public void onAlgorithmClick(int position) {
-        Intent intent = new Intent(getContext(), com.jorotayo.algorubickrevamped.ui.home.AlgorithmActivity.class);
+        Intent intent = new Intent(getContext(), Activity_Algorithm.class);
         intent.putExtra("algorithm_id", algorithmArrayList.get(position).id);
         startActivity(intent);
     }

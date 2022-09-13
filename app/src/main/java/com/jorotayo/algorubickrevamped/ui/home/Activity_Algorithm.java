@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 
-public class AlgorithmActivity extends AppCompatActivity {
+public class Activity_Algorithm extends AppCompatActivity {
     /* Access modifiers changed, original: protected */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +23,13 @@ public class AlgorithmActivity extends AppCompatActivity {
 
     private void setUpViewAlgPage() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.algorithm_activity_container, ViewAlgorithmFragment.newInstance(getIntent().getLongExtra("algorithm_id", 0)));
+        transaction.replace(R.id.algorithm_activity_container, Fragment_ViewAlgorithm.newInstance(getIntent().getLongExtra("algorithm_id", 0)));
         transaction.commit();
     }
 
     public void setUpNewAlgPage() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.algorithm_activity_container, NewAlgorithmFragment.newInstance());
+        transaction.replace(R.id.algorithm_activity_container, Fragment_NewAlgorithm.newInstance());
         transaction.commit();
     }
 

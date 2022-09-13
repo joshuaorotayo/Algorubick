@@ -15,8 +15,8 @@
         android:title="@string/actionbar_statistics"
         android:visible="false"
         app:showAsAction="always" />
-    <item
+   <!-- <item
         android:id="@+id/actionbar_settings"
         android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/action_settings" />
+        android:title="@string/action_settings" />-->
 </menu>

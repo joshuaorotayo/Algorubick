@@ -16,8 +16,4 @@
         android:id="@+id/navigation_timer"
         android:icon="@drawable/icons8_stopwatch_black_24dp"
         android:title="@string/title_timer" />
-    <item
-        android:id="@+id/navigation_simulator"
-        android:icon="@drawable/icons8_rubiks_cube_black_24dp"
-        android:title="@string/title_cube_simulator" />
 </menu>

@@ -30,7 +30,7 @@ import java.util.Objects;
 
 import io.objectbox.Box;
 
-public class ViewAlgorithmFragment extends Fragment implements OnClickListener, OnBackPressed {
+public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener, OnBackPressed {
     private static final String ALG_ID = "param1";
     private final ArrayList<Integer> selectedList = new ArrayList();
     private Box<Algorithm> algorithmBox;
@@ -41,8 +41,8 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
     private Drawable iconDrawableImage;
     private View view;
 
-    public static ViewAlgorithmFragment newInstance(long param1) {
-        ViewAlgorithmFragment fragment = new ViewAlgorithmFragment();
+    public static Fragment_ViewAlgorithm newInstance(long param1) {
+        Fragment_ViewAlgorithm fragment = new Fragment_ViewAlgorithm();
         Bundle args = new Bundle();
         args.putLong(ALG_ID, param1);
         fragment.setArguments(args);
@@ -58,7 +58,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.fragment_algorithm_view, container, false);
-        long id = Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getIntent().getExtras()).getLong("algorithm_id");
+        long id = Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getIntent().getExtras()).getLong("algorithm_id");
         this.currentAlg = this.algorithmBox.get(id);
         setHasOptionsMenu(true);
         TextView view_alg_name = this.view.findViewById(R.id.view_alg_name);
@@ -74,8 +74,8 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
         LinearLayout view_alg_image = this.view.findViewById(R.id.view_alg_image);
         view_alg_image.setBackgroundResource(R.drawable.cfop);
         view_alg_name.setText(this.currentAlg.alg_name);
-        Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
-        ActionBar actionBar = Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar());
+        Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
+        ActionBar actionBar = Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar());
         StringBuilder stringBuilder = new StringBuilder();
         String str = "";
         stringBuilder.append(str);
@@ -106,7 +106,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
     }
 
     public void onClick(View v) {
-        Intent intent = new Intent(getContext(), StudyAlgorithmActivity.class);
+        Intent intent = new Intent(getContext(), Activity_StudyAlgorithm.class);
         this.selectedList.add(Integer.valueOf(((int) this.currentAlg.id) - 1));
         int id = v.getId();
         if (id == R.id.view_alg_learn_algorithm_btn) {
@@ -126,7 +126,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
         String str = "No";
         this.deleteDialog = title.setMessage(stringBuilder.toString()).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                ViewAlgorithmFragment.this.deleteAlgorithm();
+                Fragment_ViewAlgorithm.this.deleteAlgorithm();
             }
         }).setNegativeButton(str, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -206,7 +206,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
     }
 
     private void editAlgorithm() {
-        NewAlgorithmFragment newFragment = NewAlgorithmFragment.newInstance();
+        Fragment_NewAlgorithm newFragment = Fragment_NewAlgorithm.newInstance();
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.algorithm_activity_container, newFragment);
         transaction.addToBackStack("editSolution");

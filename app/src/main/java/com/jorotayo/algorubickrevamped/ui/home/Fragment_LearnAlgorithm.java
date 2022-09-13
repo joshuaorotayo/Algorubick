@@ -27,7 +27,7 @@ import java.util.Random;
 
 import io.objectbox.Box;
 
-public class LearnAlgorithmFragment extends Fragment implements OnClickListener {
+public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private final ArrayList<Long> mParam2 = new ArrayList();
     HashMap<String, Integer> algImageMap = new HashMap();
@@ -43,8 +43,8 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
     private ArrayList<Integer> mParam1;
     private View view;
 
-    public static LearnAlgorithmFragment newInstance(ArrayList<Integer> param1) {
-        LearnAlgorithmFragment fragment = new LearnAlgorithmFragment();
+    public static Fragment_LearnAlgorithm newInstance(ArrayList<Integer> param1) {
+        Fragment_LearnAlgorithm fragment = new Fragment_LearnAlgorithm();
         Bundle args = new Bundle();
         args.putIntegerArrayList(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -68,8 +68,8 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_algorithm_learn, container, false);
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setTitle("Learn Algorithm");
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setSubtitle("Algorithm Name");
+        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setTitle("Learn Algorithm");
+        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle("Algorithm Name");
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.learn_alg_name);
         learn_alg_alg = view.findViewById(R.id.learn_alg_alg);
@@ -103,7 +103,7 @@ public class LearnAlgorithmFragment extends Fragment implements OnClickListener 
 
     private void setupAlgorithm(Algorithm nextAlgorithm) {
         currentAlgorithm = nextAlgorithm;
-        ((StudyAlgorithmActivity) getActivity()).getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
+        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
         learn_alg_name.setText(this.currentAlgorithm.getAlg_name());
         learn_alg_alg.setText(this.currentAlgorithm.getAlg());
         setupAlgImages();

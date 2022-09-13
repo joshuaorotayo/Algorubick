@@ -33,7 +33,7 @@ import java.util.Objects;
 
 import io.objectbox.Box;
 
-public class NewAlgorithmFragment extends Fragment implements OnClickListener, OnItemSelectedListener, OnBackPressed {
+public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, OnItemSelectedListener, OnBackPressed {
     MaterialAlertDialogBuilder alertDialogBuilder;
     Button new_alg_save_btn;
     View view;
@@ -50,8 +50,8 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
     private TextInputLayout til_alg_description;
     private TextInputLayout til_alg_name;
 
-    static NewAlgorithmFragment newInstance() {
-        return new NewAlgorithmFragment();
+    static Fragment_NewAlgorithm newInstance() {
+        return new Fragment_NewAlgorithm();
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         this.view = inflater.inflate(R.layout.fragment_algorithm_new, container, false);
-        Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar()).setTitle("Create New Algorithm");
+        Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("Create New Algorithm");
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
         ArrayList<String> filter_category = new ArrayList();
         filter_category.add("Triggers");
@@ -88,7 +88,7 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
         spinner.setOnItemSelectedListener(this);
         this.new_alg_edit.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                NewAlgorithmFragment.this.openKeyboard();
+                Fragment_NewAlgorithm.this.openKeyboard();
             }
         });
         this.new_alg_save_btn.setOnClickListener(this);
@@ -108,8 +108,8 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
 
     public void editAlgorithm() {
         this.currentAlgorithm = this.algorithmBox.get(this.intent.getLongExtra("edit", 0));
-        Objects.requireNonNull(((AlgorithmActivity) requireActivity()).getSupportActionBar()).setTitle("Edit Algorithm");
-        ActionBar actionBar = Objects.requireNonNull(((AlgorithmActivity) requireActivity()).getSupportActionBar());
+        Objects.requireNonNull(((Activity_Algorithm) requireActivity()).getSupportActionBar()).setTitle("Edit Algorithm");
+        ActionBar actionBar = Objects.requireNonNull(((Activity_Algorithm) requireActivity()).getSupportActionBar());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("");
         stringBuilder.append(this.currentAlgorithm.getAlg_name());
@@ -122,7 +122,7 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
         this.new_alg_favourite_switch.setChecked(this.currentAlgorithm.isFavourite_alg());
         this.new_alg_save_btn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                NewAlgorithmFragment.this.saveEditAlgorithm();
+                Fragment_NewAlgorithm.this.saveEditAlgorithm();
             }
         });
     }
@@ -131,7 +131,7 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
         CharSequence charSequence = "Cancel";
         this.alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext()).setTitle("Close without saving?").setMessage("If you carry on the current Algorithm will be closed without saving. Click ok if you are fine to do this.").setPositiveButton("Close", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                NewAlgorithmFragment.this.requireActivity().finish();
+                Fragment_NewAlgorithm.this.requireActivity().finish();
             }
         }).setNegativeButton(charSequence, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

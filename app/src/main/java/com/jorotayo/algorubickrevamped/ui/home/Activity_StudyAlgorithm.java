@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.jorotayo.algorubickrevamped.R;
 
-public class StudyAlgorithmActivity extends AppCompatActivity {
+public class Activity_StudyAlgorithm extends AppCompatActivity {
     /* Access modifiers changed, original: protected */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,13 +17,13 @@ public class StudyAlgorithmActivity extends AppCompatActivity {
         Fragment newFragment;
         FragmentTransaction transaction;
         if (getIntent().getExtras().containsKey(str)) {
-            newFragment = PracticeAlgorithmFragment.newInstance(getIntent().getIntegerArrayListExtra(str));
+            newFragment = Fragment_PracticeAlgorithm.newInstance(getIntent().getIntegerArrayListExtra(str));
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.study_fragment_space, newFragment);
             transaction.commit();
             return;
         }
-        newFragment = LearnAlgorithmFragment.newInstance(getIntent().getIntegerArrayListExtra("learn"));
+        newFragment = Fragment_LearnAlgorithm.newInstance(getIntent().getIntegerArrayListExtra("learn"));
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.study_fragment_space, newFragment);
         transaction.commit();
