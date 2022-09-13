@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
+    <!--<item
         android:id="@+id/actionbar_search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/searchview"
         android:visible="false"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/actionbar_statistics"
         android:icon="@drawable/icons8_timesheet_24"
@@ -18,5 +21,6 @@
     <item
         android:id="@+id/actionbar_settings"
         android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/action_settings" />
-</menu>
+        android:title="@string/action_settings" />-->
+
+</androidx.appcompat.widget.Toolbar>

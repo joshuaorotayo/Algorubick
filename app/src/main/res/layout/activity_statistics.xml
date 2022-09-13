@@ -67,7 +67,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:src="@drawable/icons8_info_24_blue" />
+                    app:srcCompat="@drawable/icons8_info_24_blue" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -24,7 +24,7 @@
                 android:contentDescription="@string/add_solution_icon"
                 android:elevation="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/icons8_camera_90_w_circle" />
+                app:srcCompat="@drawable/icons8_camera_90_w_circle" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

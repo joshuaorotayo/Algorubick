@@ -53,7 +53,7 @@
                 android:layout_gravity="end"
                 android:contentDescription="@string/create_new_alg"
                 android:scaleType="fitCenter"
-                android:src="@drawable/icons8_plus_64_w_blue_circle" />
+                app:srcCompat="@drawable/icons8_plus_64_w_blue_circle" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

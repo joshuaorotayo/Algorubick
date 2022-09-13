@@ -4,16 +4,22 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 
 public class AlgorithmActivity extends AppCompatActivity {
-    /* Access modifiers changed, original: protected */
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_algorithm);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(toolbar);
+
         if (getIntent().getExtras() != null) {
             setUpViewAlgPage();
         } else {

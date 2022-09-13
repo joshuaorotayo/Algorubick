@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="?attr/selectableItemBackground"
     android:baselineAligned="false"
     android:clipToPadding="false"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight">
+    android:minHeight="?attr/listPreferredItemHeightSmall"
+    android:paddingStart="?attr/listPreferredItemPaddingStart"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+    android:paddingEnd="?attr/listPreferredItemPaddingEnd"
+    android:paddingRight="?attr/listPreferredItemPaddingRight">
 
     <include layout="@layout/image_frame" />
 

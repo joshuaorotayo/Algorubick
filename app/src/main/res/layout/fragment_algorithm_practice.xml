@@ -82,7 +82,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -92,7 +92,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -102,7 +102,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -112,7 +112,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -122,7 +122,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -132,7 +132,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
                     </TableRow>
 
@@ -149,7 +149,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -159,7 +159,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -169,7 +169,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -179,7 +179,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -189,7 +189,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -199,7 +199,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
                     </TableRow>
 
@@ -216,7 +216,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -226,7 +226,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -236,7 +236,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -246,7 +246,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -256,7 +256,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -266,7 +266,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
                     </TableRow>
 
@@ -283,7 +283,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -293,7 +293,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -303,7 +303,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -313,7 +313,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -323,7 +323,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -333,7 +333,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
                     </TableRow>
 
@@ -350,7 +350,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -360,7 +360,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -370,7 +370,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -380,7 +380,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -390,7 +390,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -400,7 +400,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
                     </TableRow>
 
@@ -417,7 +417,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -427,7 +427,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -437,7 +437,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -447,7 +447,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -457,7 +457,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
 
                         <ImageView
@@ -467,7 +467,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@string/practice_alg_step_image"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cfop"
+                            app:srcCompat="@drawable/cfop"
                             android:visibility="gone" />
                     </TableRow>
                 </LinearLayout>

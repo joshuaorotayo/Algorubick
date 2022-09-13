@@ -13,14 +13,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.view.ActionMode.Callback;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.SearchView.OnQueryTextListener;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -224,7 +225,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     public void onPrepareOptionsMenu(Menu menu) {
-        SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(id.actionbar_search).setVisible(true));
         searchView.setImeOptions(6);
         searchView.setOnQueryTextListener(new OnQueryTextListener() {
             public boolean onQueryTextSubmit(String query) {

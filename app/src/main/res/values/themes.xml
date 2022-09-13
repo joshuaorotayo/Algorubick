@@ -1,10 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.AlgorubickRevamped" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.AlgorubickRevamped" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.App.Starting" parent="AppTheme">
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/branding_images_algorubick</item>
+        <item name="android:windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/branding_images_text_brand</item>
+        <item name="android:windowSplashScreenAnimationDuration">300</item>
+<!--        <item name="android:postSplashScreenTheme">@style/Theme.AlgorubickRevamped</item>-->
     </style>
 </resources>

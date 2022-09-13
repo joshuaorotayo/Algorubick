@@ -2,18 +2,22 @@
 <resources>
 
     <style name="ActionModeTheme">
-        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextColor">@color/colorPrimary</item>
         <item name="actionModeStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="background">@color/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="android:windowActionBar">true</item>
+    <style name="AppTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">true</item>
         <item name="actionModeBackground">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="SplashScreen" parent="@style/Theme.App.Starting">
+        <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
     <style name="bgSplashScreenStyle" parent="Theme.AppCompat.NoActionBar">
@@ -27,38 +31,38 @@
     <style name="key">
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/blue_key_filled_white_outline_64</item>
+        <item name="background">@drawable/blue_key_filled_white_outline_64</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
         <item name="android:textSize">25sp</item>
     </style>
 
     <style name="key_space">
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
-        <item name="android:background">@drawable/blue_key_filled_white_outline_64</item>
+        <item name="background">@drawable/blue_key_filled_white_outline_64</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
     </style>
 
     <style name="key_special">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/blue_key_filled_white_outline_64</item>
+        <item name="background">@drawable/blue_key_filled_white_outline_64</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
         <item name="android:textSize">25sp</item>
     </style>
 
@@ -74,15 +78,13 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
-    <style name="DialogTheme" parent="@style/Theme.MaterialComponents.Light.Dialog">
+    <style name="DialogTheme" parent="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <item name="android:windowBackground">@null</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
     </style>
 
     <style name="Base.V7.Theme.AppCompat" parent="@style/Platform.AppCompat">
-        <item name="android:panelBackground">@android:color/transparent</item>
-        <item name="android:dropDownListViewStyle">@style/Widget.AppCompat.ListView.DropDown</item>
         <item name="android:textViewStyle">@style/Widget.AppCompat.TextView</item>
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
         <item name="android:spinnerItemStyle">@style/Widget.AppCompat.TextView.SpinnerItem</item>
@@ -150,7 +152,7 @@
         <item name="dividerHorizontal">@drawable/abc_list_divider_mtrl_alpha</item>
         <item name="dividerVertical">@drawable/abc_list_divider_mtrl_alpha</item>
         <item name="drawerArrowStyle">@style/Widget.AppCompat.DrawerArrowToggle</item>
-        <item name="dropDownListViewStyle">?android:dropDownListViewStyle</item>
+        <item name="dropDownListViewStyle">?attr/dropDownListViewStyle</item>
         <item name="dropdownListPreferredItemHeight">?listPreferredItemHeightSmall</item>
         <item name="editTextBackground">@drawable/abc_edit_text_material</item>
         <item name="editTextColor">?android:textColorPrimary</item>

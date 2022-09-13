@@ -86,11 +86,7 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
         Spinner spinner = this.view.findViewById(R.id.new_alg_category_spinner);
         this.new_alg_category_spinner = spinner;
         spinner.setOnItemSelectedListener(this);
-        this.new_alg_edit.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                NewAlgorithmFragment.this.openKeyboard();
-            }
-        });
+        this.new_alg_edit.setOnClickListener(v -> NewAlgorithmFragment.this.openKeyboard());
         this.new_alg_save_btn.setOnClickListener(this);
         this.new_alg_category_spinner.setAdapter(categoryAdapter);
         createAlertDialog();
@@ -109,21 +105,16 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
     public void editAlgorithm() {
         this.currentAlgorithm = this.algorithmBox.get(this.intent.getLongExtra("edit", 0));
         Objects.requireNonNull(((AlgorithmActivity) requireActivity()).getSupportActionBar()).setTitle("Edit Algorithm");
-        ActionBar actionBar = Objects.requireNonNull(((AlgorithmActivity) requireActivity()).getSupportActionBar());
         String stringBuilder = "" +
                 this.currentAlgorithm.getAlg_name();
-        actionBar.setSubtitle(stringBuilder);
+        ((AlgorithmActivity) requireActivity()).getActionBar().setSubtitle(stringBuilder);
         this.new_alg_name_edit.setText(this.currentAlgorithm.getAlg_name());
         this.new_alg_edit.setText(this.currentAlgorithm.getAlg());
         this.new_alg_description_edit.setText(this.currentAlgorithm.getAlg_description());
         this.new_alg_category_spinner.setSelected(this.currentAlgorithm.getSelected_alg());
         this.new_alg_custom_switch.setChecked(this.currentAlgorithm.isCustom_alg());
         this.new_alg_favourite_switch.setChecked(this.currentAlgorithm.isFavourite_alg());
-        this.new_alg_save_btn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                NewAlgorithmFragment.this.saveEditAlgorithm();
-            }
-        });
+        this.new_alg_save_btn.setOnClickListener(v -> NewAlgorithmFragment.this.saveEditAlgorithm());
     }
 
     private void createAlertDialog() {
@@ -132,11 +123,7 @@ public class NewAlgorithmFragment extends Fragment implements OnClickListener, O
             public void onClick(DialogInterface dialog, int which) {
                 NewAlgorithmFragment.this.requireActivity().finish();
             }
-        }).setNegativeButton(charSequence, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        }).setNegativeButton(charSequence, (dialog, which) -> dialog.dismiss());
     }
 
     private void openKeyboard() {

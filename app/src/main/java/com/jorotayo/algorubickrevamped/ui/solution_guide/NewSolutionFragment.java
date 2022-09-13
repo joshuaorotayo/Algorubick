@@ -77,8 +77,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         Button saveNewSolutionBtn = view.findViewById(R.id.save_new_solution_btn);
         pageScroller = view.findViewById(R.id.create_solution_activity_scroller);
         solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
-        Box<Steps> allSteps = ObjectBox.getBoxStore().boxFor(Steps.class);
-        stepsBox = allSteps;
+        stepsBox = ObjectBox.getBoxStore().boxFor(Steps.class);
         addStepBtn.setOnClickListener(this);
         saveNewSolutionBtn.setOnClickListener(this);
         createCloseSolutionDialog();
@@ -143,7 +142,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         String solutionDescription = new_solution_description.getText().toString();
         if (validateSolution()) {
             Solution newSolution = new Solution(solutionName, solutionCreator, solutionDescription);
-            if (Objects.requireNonNull(Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).getTitle()).toString().contains("Edit")) {
+            if (getActivity().getActionBar().getTitle().toString().contains("Edit")) {
                 newSolution.id = currentSolution.id;
             }
             solutionBox.put(newSolution);

@@ -131,7 +131,7 @@
                 android:contentDescription="@string/save_solve_icon_description"
                 android:padding="20sp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/icons8_save_52_w_blue_circle"
+                app:srcCompat="@drawable/icons8_save_52_w_blue_circle"
                 android:text="@string/save_button" />
 
             <ImageButton
@@ -145,7 +145,7 @@
                 android:contentDescription="@string/remove_solve_icon_description"
                 android:padding="20sp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/icons8_delete_bin_48"
+                app:srcCompat="@drawable/icons8_delete_bin_48"
                 android:text="@string/close_button" />
 
             <ImageButton
@@ -159,7 +159,7 @@
                 android:contentDescription="@string/dnf_solve_icon_description"
                 android:padding="20sp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/dnf_48_w_filled"
+                app:srcCompat="@drawable/dnf_48_w_filled"
                 android:text="@string/dnf_button" />
 
             <ImageButton
@@ -173,7 +173,7 @@
                 android:contentDescription="@string/plus_2_description"
                 android:padding="20sp"
                 android:scaleType="fitXY"
-                android:src="@drawable/icons8_plus_64_w_blue_circle" />
+                app:srcCompat="@drawable/icons8_plus_64_w_blue_circle" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

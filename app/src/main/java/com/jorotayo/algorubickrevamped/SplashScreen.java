@@ -1,6 +1,5 @@
 package com.jorotayo.algorubickrevamped;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +8,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SplashScreen extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SplashScreen extends AppCompatActivity {
     private static final int SPLASH_SCREEN = 2500;
     Animation bottomAnim;
     ImageView image;
@@ -33,11 +34,9 @@ public class SplashScreen extends Activity {
         this.image.setAnimation(this.spinAnim);
         this.logo.setAnimation(this.bottomAnim);
         this.slogan.setAnimation(this.bottomAnim);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                SplashScreen.this.startActivity(new Intent(SplashScreen.this, MainActivity.class));
-                SplashScreen.this.finish();
-            }
+        new Handler().postDelayed(() -> {
+            SplashScreen.this.startActivity(new Intent(SplashScreen.this, MainActivity.class));
+            SplashScreen.this.finish();
         }, SPLASH_SCREEN);
     }
 }

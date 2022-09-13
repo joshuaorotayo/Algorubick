@@ -1,6 +1,5 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -15,26 +14,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
 import io.objectbox.Box;
 
 public class ViewAlgorithmFragment extends Fragment implements OnClickListener, OnBackPressed {
     private static final String ALG_ID = "param1";
-    private final ArrayList<Integer> selectedList = new ArrayList();
-    private Box<Algorithm> algorithmBox;
+    private final ArrayList selectedList = new ArrayList();
+    private Box algorithmBox;
     private Algorithm currentAlg = new Algorithm();
     private Drawable customDrawableImage;
     private Builder deleteDialog;
@@ -50,15 +45,15 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Box boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-        this.algorithmBox = boxFor;
-        this.currentAlg = (Algorithm) boxFor.get(getArguments().getLong(ALG_ID));
+        Box algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
+        this.algorithmBox = algorithmBox;
+        this.currentAlg = (Algorithm) algorithmBox.get(getArguments().getLong(ALG_ID));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_algorithm_view, container, false);
         long id = Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getIntent().getExtras()).getLong("algorithm_id");
-        this.currentAlg = this.algorithmBox.get(id);
+        this.currentAlg = (Algorithm) this.algorithmBox.get(id);
         setHasOptionsMenu(true);
         TextView view_alg_name = view.findViewById(R.id.view_alg_name);
         TextView view_alg_text = view.findViewById(R.id.view_alg_text);
@@ -73,12 +68,11 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
         LinearLayout view_alg_image = view.findViewById(R.id.view_alg_image);
         view_alg_image.setBackgroundResource(R.drawable.cfop);
         view_alg_name.setText(this.currentAlg.alg_name);
-        Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
-        ActionBar actionBar = Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getSupportActionBar());
+        Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getActionBar()).setTitle("View Algorithm");
         String str = "";
         String stringBuilder = str +
                 this.currentAlg.alg_name;
-        actionBar.setSubtitle(stringBuilder);
+        Objects.requireNonNull(Objects.requireNonNull((AlgorithmActivity) getActivity()).getActionBar()).setSubtitle(stringBuilder);
         view_alg_text.setText(this.currentAlg.alg);
         view_alg_category.setText(this.currentAlg.category);
         view_alg_description.setText(this.currentAlg.alg_description);
@@ -105,7 +99,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
 
     public void onClick(View v) {
         Intent intent = new Intent(getContext(), StudyAlgorithmActivity.class);
-        this.selectedList.add(Integer.valueOf(((int) this.currentAlg.id) - 1));
+        this.selectedList.add((int) this.currentAlg.id - 1);
         int id = v.getId();
         if (id == R.id.view_alg_learn_algorithm_btn) {
             intent.putExtra("learn", this.selectedList);
@@ -125,11 +119,7 @@ public class ViewAlgorithmFragment extends Fragment implements OnClickListener, 
             public void onClick(DialogInterface dialog, int which) {
                 ViewAlgorithmFragment.this.deleteAlgorithm();
             }
-        }).setNegativeButton(str, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).setIcon(R.drawable.incorrect_48_r).setCancelable(true);
+        }).setNegativeButton(str, (dialog, which) -> dialog.dismiss()).setIcon(R.drawable.incorrect_48_r).setCancelable(true);
     }
 
     public Drawable getIconDrawable(Algorithm alg) {
