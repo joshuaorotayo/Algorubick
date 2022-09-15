@@ -98,7 +98,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
     };
     private String algorithms_filter_text;
-    private TextView home_algs_number;
+    private TextView home_algs_number ;
     private View root;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,8 +115,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
         TextView textView = home_algs_number;
-        String stringBuilder = "" + algorithmArrayList.size();
-        textView.setText(stringBuilder);
+        textView.setText("" + algorithmBox.getAll().size());
         AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
@@ -151,10 +150,9 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
             startActivity(new Intent(getContext(), Activity_Algorithm.class));
             return;
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Unexpected value: ");
-        stringBuilder.append(v.getId());
-        throw new IllegalStateException(stringBuilder.toString());
+        String stringBuilder = "Unexpected value: " +
+                v.getId();
+        throw new IllegalStateException(stringBuilder);
     }
 
     public void onAlgorithmClick(int position) {
@@ -185,6 +183,10 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         dialog_alg_image_name.setText(currentAlg.alg_name);
         dialog_alg_image_alg.setText(currentAlg.alg);
         caseDialog.show();
+    }
+
+    private void loadAlgorithmIcon(Algorithm currentAlg){
+
     }
 
     public void onAlgorithmFavouriteClick(int position, View v) {
@@ -218,10 +220,9 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         algorithms_filter_text = parent.getItemAtPosition(position).toString();
         Context context = parent.getContext();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Selected: ");
-        stringBuilder.append(algorithms_filter_text);
-        Toast.makeText(context, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+        String stringBuilder = "Selected: " +
+                algorithms_filter_text;
+        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> adapterView) {
@@ -243,10 +244,9 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
             public boolean onQueryTextSubmit(String query) {
                 algorithmRecyclerAdapter.getFilter().filter(query);
                 TextView access$100 = home_algs_number;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(algorithmRecyclerAdapter.getItemCount());
-                access$100.setText(stringBuilder.toString());
+                String stringBuilder = "" +
+                        algorithmRecyclerAdapter.getItemCount();
+                access$100.setText(stringBuilder);
                 return true;
             }
 
@@ -282,7 +282,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     @Override
     public void customBackPressed() {
         if (actionMode != null) {
-            Toast.makeText(getContext(), "aCTION MODE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Action Mode", Toast.LENGTH_SHORT).show();
         } else {
             getActivity().finish();
         }

@@ -199,7 +199,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
 
     private void enter(String keypressed) {
         int i = 0;
-        if (this.modified.booleanValue()) {
+        if (this.modified) {
             this.btn_prime.setClickable(false);
             this.btn_2.setClickable(false);
             this.btn_2.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
@@ -218,21 +218,20 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         String wholeAlgorithm = "";
         String str = ",";
         String str2 = "";
-        wholeAlgorithm = wholeAlgorithm + inputSpaceText.replace(str, str2);
-        wholeAlgorithm = wholeAlgorithm + keypressed;
-        String wholeFormattedAlg = "";
+//        wholeAlgorithm = wholeAlgorithm + inputSpaceText.replace(str, str2);
+//        wholeAlgorithm = wholeAlgorithm + keypressed;
+
+        wholeAlgorithm += inputSpaceText.replace(str, str2);
+        wholeAlgorithm += keypressed;
+        StringBuilder wholeFormattedAlg = new StringBuilder();
         String[] alg = wholeAlgorithm.split("(?=([A-z][2]?[{'}]?)|([A-z][2]?)|([A-z][{'}]?)|([A-z]))");
         int length = alg.length;
         while (i < length) {
             String letter = alg[i];
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(wholeFormattedAlg);
-            stringBuilder.append(str);
-            stringBuilder.append(letter);
-            wholeFormattedAlg = stringBuilder.toString();
+            wholeFormattedAlg.append(str).append(letter);
             i++;
         }
-        String wholeFormattedAlg2 = wholeFormattedAlg.replace(",,", str2);
+        String wholeFormattedAlg2 = wholeFormattedAlg.toString().replace(",,", str2);
         wholeFormattedAlg2 = wholeFormattedAlg2.startsWith(str) ? wholeFormattedAlg2.substring(1) : wholeFormattedAlg2;
         this.inputSpace.setText(wholeFormattedAlg2);
         this.current_alg_text.setText(wholeFormattedAlg2);

@@ -11,7 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-public class KeyboardDialog implements OnClickListener {
+public class KeyboardDialog implements OnClickListener, View.OnLongClickListener {
     static final /* synthetic */ boolean $assertionsDisabled = false;
     private String backSpaceAlg = "";
     private TextView btn_2;
@@ -95,6 +95,7 @@ public class KeyboardDialog implements OnClickListener {
         this.btn_2.setOnClickListener(this);
         this.btn_prime.setOnClickListener(this);
         btn_backspace.setOnClickListener(this);
+        btn_backspace.setOnLongClickListener(this);
         keyboard_close_btn.setOnClickListener(this);
 
         btn_r = btn_shift;
@@ -211,7 +212,7 @@ public class KeyboardDialog implements OnClickListener {
 
     private void enter(String keypressed) {
         int i = 0;
-        if (this.modified.booleanValue()) {
+        if (this.modified) {
             this.btn_prime.setClickable(false);
             this.btn_2.setClickable(false);
             this.btn_2.setTextColor(this.ctx.getResources().getColor(R.color.colorPrimary, null));
@@ -230,21 +231,17 @@ public class KeyboardDialog implements OnClickListener {
         String wholeAlgorithm = "";
         String str = ",";
         String str2 = "";
-        wholeAlgorithm = "" + inputSpaceText.replace(str, str2);
-        wholeAlgorithm = keypressed;
-        String wholeFormattedAlg = "";
+        wholeAlgorithm += inputSpaceText.replace(str, str2);
+        wholeAlgorithm += keypressed;
+        StringBuilder wholeFormattedAlg = new StringBuilder();
         String[] alg = wholeAlgorithm.split("(?=([A-z][2]?[{'}]?)|([A-z][2]?)|([A-z][{'}]?)|([A-z]))");
         int length = alg.length;
         while (i < length) {
             String letter = alg[i];
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(wholeFormattedAlg);
-            stringBuilder.append(str);
-            stringBuilder.append(letter);
-            wholeFormattedAlg = stringBuilder.toString();
+            wholeFormattedAlg.append(str).append(letter);
             i++;
         }
-        String wholeFormattedAlg2 = wholeFormattedAlg.replace(",,", str2);
+        String wholeFormattedAlg2 = wholeFormattedAlg.toString().replace(",,", str2);
         wholeFormattedAlg2 = wholeFormattedAlg2.startsWith(str) ? wholeFormattedAlg2.substring(1) : wholeFormattedAlg2;
         this.inputSpace.setText(wholeFormattedAlg2);
         this.current_alg_text.setText(wholeFormattedAlg2);
@@ -269,5 +266,11 @@ public class KeyboardDialog implements OnClickListener {
         obj = this.backSpaceAlg;
         this.wholeAlg = obj;
         this.current_alg_text.setText(obj);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        this.inputSpace.setText("");
+        return true;
     }
 }

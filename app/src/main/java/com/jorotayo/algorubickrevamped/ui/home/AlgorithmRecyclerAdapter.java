@@ -1,6 +1,7 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,10 +84,8 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         holder.algorithm.setText(algorithmItem.getAlg());
         holder.algorithmCategory.setText(algorithmItem.getCategory());
         TextView textView = holder.numberCorrect;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(algorithmItem.getPracticed_correctly_int());
-        stringBuilder.append(" / ");
-        textView.setText(stringBuilder.toString());
+        String stringBuilder = algorithmItem.getPracticed_correctly_int() + " / ";
+        textView.setText(stringBuilder);
         holder.numberPracticed.setText(String.valueOf(algorithmItem.getPracticed_number_int()));
         setAlgorithmIcon(holder, algorithmItem);
         holder.favourite_checkbox.setChecked(algorithmItem.isFavourite_alg());
@@ -94,15 +94,19 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
     }
 
     private void setAlgorithmIcon(ViewHolder holder, Algorithm algorithmItem) {
-        String s = "";
+
         if (algorithmItem.getAlgorithm_icon() != null) {
             String str = "";
-            if (!algorithmItem.getAlgorithm_icon().equals(str)) {
+            if (algorithmItem.getAlgorithm_icon().isEmpty()) {
+                holder.algorithmIcon.setImageResource(R.drawable.cfop);
+            }
+            else if(algorithmItem.getAlgorithm_icon().contains("content://")){
+                holder.algorithmIcon.setImageURI(Uri.parse(algorithmItem.getAlgorithm_icon()));
+            }else{
                 holder.algorithmIcon.setImageResource(this.ctx.getResources().getIdentifier(algorithmItem.getAlgorithm_icon().replace("R.drawable.", str), "drawable", this.ctx.getPackageName()));
-                return;
             }
         }
-        holder.algorithmIcon.setImageResource(R.drawable.cfop);
+        //
     }
 
     private void toggleCheckedIcon(ViewHolder holder, int position) {

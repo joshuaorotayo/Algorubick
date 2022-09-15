@@ -437,4 +437,5 @@
     <string name="title_activity_main_new">MainActivity</string>
     <string name="algorubick_logo">Algorubick Logo</string>
     <string name="add_algorithm_suggestion">Add Algorithm</string>
+    <string name="new_alg_image_preview">Preview of New Algorithm Image</string>
 </resources>
