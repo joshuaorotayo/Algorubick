@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
+        android:exported="true"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.jorotayo.algorubickrevamped.ui.timer.StatisticsActivity"
@@ -21,7 +22,8 @@
         <!--  <activityandroid:name="com.jorotayo.algorubickrevamped.ui.solution_guide />-->
         <activity
             android:name="com.jorotayo.algorubickrevamped.SplashScreen"
-            android:theme="@style/bgSplashScreenStyle">
+            android:theme="@style/bgSplashScreenStyle"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -32,7 +34,8 @@
         <activity
             android:name="com.jorotayo.algorubickrevamped.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

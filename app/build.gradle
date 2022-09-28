@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.jorotayo.algorubickrevamped"
-        minSdkVersion 28
-        targetSdkVersion 30
+        minSdkVersion 31
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -49,6 +49,7 @@ dependencies {
 //    implementation 'com.android.support:design:28.0.0'
     debugImplementation("io.objectbox:objectbox-android-objectbrowser:$objectboxVersion")
     releaseImplementation("io.objectbox:objectbox-android:$objectboxVersion")
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 
 }
 

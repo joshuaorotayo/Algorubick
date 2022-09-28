@@ -10,6 +10,7 @@
         android:duration="500"
         android:fromXDelta="0%"
         android:fromYDelta="-200%" />
+
     <alpha
         android:fromAlpha="0.1"
         android:fromYDelta="-300%"

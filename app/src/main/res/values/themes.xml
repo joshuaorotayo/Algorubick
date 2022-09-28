@@ -7,11 +7,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!-- Customize your theme here. -->
     </style>
-<!--    <style name="Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/branding_images_logo_red
-        </item>
-        <item name="android:windowSplashScreenBrandingImage">@drawable/branding_images_brand</item>
+  <style name="Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/algorubick_branding_patch</item>
+      <item name="windowSplashScreenBackground">@color/colorPrimary</item>
         <item name="android:windowSplashScreenAnimationDuration">1000</item>
-        <item name="postSplashScreenTheme">@style/Theme.FL_Datatracker</item>
-    </style>-->
+        <item name="postSplashScreenTheme">@style/Theme.AlgorubickRevamped</item>
+    </style>
 </resources>

@@ -17,7 +17,12 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="bgSplashScreenStyle" parent="Theme.AppCompat.NoActionBar">
+    <style name="bgSplashScreenStyle" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/algorubick_branding_patch</item>
+        <item name="android:windowNoTitle">true</item>
+<!--        <item name="android:windowSplashScreenBrandingImage">@drawable/algorubick_name</item>-->
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
