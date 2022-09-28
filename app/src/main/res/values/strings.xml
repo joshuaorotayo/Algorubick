@@ -47,7 +47,7 @@
     <string name="algorithm_description_hint">e.g. Where did you find this algorithm? What does it do? 1st GEN or 2nd GEN? etc</string>
     <string name="algorithm_item_algorithm">Algorithm</string>
     <string name="algorithm_item_name">Algorithm Name</string>
-    <string name="algorithm_item_practiced">Practiced/Correct:</string>
+    <string name="algorithm_item_practiced_vs_correct">Practiced/Correct:</string>
     <string name="algorithm_name">Enter Name of Algorithm</string>
     <string name="algorithm_name_header">Input Name of Algorithm</string>
     <string name="algorithms_intro">How Algorithms Work</string>

@@ -1,6 +1,10 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+import static com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeFragment.actionMode;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -19,19 +23,20 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.objectbox.Box;
 
 public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.ViewHolder> implements Filterable {
 
     private final Context ctx;
     private final ArrayList<Algorithm> mAlgorithms;
     private final ArrayList<Algorithm> mAlgorithmsAll;
-    private final ArrayList<Integer> selectedPos = new ArrayList();
 
     Filter filter = new Filter() {
         /* Access modifiers changed, original: protected */
@@ -83,14 +88,12 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         holder.algorithmName.setText(algorithmItem.getAlg_name());
         holder.algorithm.setText(algorithmItem.getAlg());
         holder.algorithmCategory.setText(algorithmItem.getCategory());
-        TextView textView = holder.numberCorrect;
-        String stringBuilder = algorithmItem.getPracticed_correctly_int() + " / ";
-        textView.setText(stringBuilder);
-        holder.numberPracticed.setText(String.valueOf(algorithmItem.getPracticed_number_int()));
+        String practicedCorrect = String.format("Correct/Practiced: %s / %s", algorithmItem.getPracticed_correctly_int(), algorithmItem.getPracticed_number_int());
+        holder.practicedCorrect.setText(practicedCorrect);
         setAlgorithmIcon(holder, algorithmItem);
         holder.favourite_checkbox.setChecked(algorithmItem.isFavourite_alg());
         holder.learnt_checkbox.setChecked(algorithmItem.isLearnt());
-        toggleCheckedIcon(holder, position);
+        toggleSelectedRow(holder, position);
     }
 
     private void setAlgorithmIcon(ViewHolder holder, Algorithm algorithmItem) {
@@ -99,26 +102,38 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
             String str = "";
             if (algorithmItem.getAlgorithm_icon().isEmpty()) {
                 holder.algorithmIcon.setImageResource(R.drawable.cfop);
-            }
-            else if(algorithmItem.getAlgorithm_icon().contains("content://")){
+            } else if (algorithmItem.getAlgorithm_icon().contains("content://")) {
                 holder.algorithmIcon.setImageURI(Uri.parse(algorithmItem.getAlgorithm_icon()));
-            }else{
+            } else {
                 holder.algorithmIcon.setImageResource(this.ctx.getResources().getIdentifier(algorithmItem.getAlgorithm_icon().replace("R.drawable.", str), "drawable", this.ctx.getPackageName()));
             }
         }
         //
     }
 
-    private void toggleCheckedIcon(ViewHolder holder, int position) {
+    private void toggleSelectedRow(ViewHolder holder, int position) {
         if (this.selected_items.get(position, false)) {
             holder.algorithmCard.setBackgroundResource(R.color.colorPrimaryDark);
-            holder.algorithm_selected.setVisibility(View.VISIBLE);
+            holder.algorithmName.setTextColor(Color.rgb(255, 255, 255));
+            holder.algorithmCategory.setTextColor(Color.rgb(255, 255, 255));
+            holder.algorithm.setTextColor(Color.rgb(255, 255, 255));
+            holder.practicedCorrect.setTextColor(Color.rgb(255, 255, 255));
+            holder.algorithm_item_checks.setVisibility(View.GONE);
+            holder.algorithm_selected_checks.setVisibility(View.VISIBLE);
             holder.algorithm_selected.setChecked(true);
+            Log.d(TAG, "toggleSelectedRow: Selected = " + holder.algorithmName.getText().toString());
             return;
         }
-        holder.algorithm_selected.setVisibility(View.GONE);
         holder.algorithmCard.setBackgroundResource(R.color.white);
+        holder.algorithmName.setTextColor(Color.rgb(0, 0, 0));
+        holder.algorithmCategory.setTextColor(Color.rgb(0, 0, 0));
+        holder.algorithm.setTextColor(Color.rgb(0, 0, 0));
+        holder.practicedCorrect.setTextColor(Color.rgb(0, 0, 0));
+        holder.algorithm_item_checks.setVisibility(View.VISIBLE);
+        holder.algorithm_selected_checks.setVisibility(View.GONE);
         holder.algorithm_selected.setChecked(false);
+        Log.d(TAG, "toggleSelectedRow: UnSelected = " + holder.algorithmName.getText().toString());
+
     }
 
     public void clearSelected() {
@@ -165,30 +180,26 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
     }
 
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
-        TextView algorithm;
-        LinearLayout algorithmCard;
-        TextView algorithmCategory;
+        LinearLayout algorithmCard, algorithm_item_checks, algorithm_selected_checks;
         ImageView algorithmIcon;
-        TextView algorithmName;
-        CheckBox algorithm_selected;
-        CheckBox favourite_checkbox;
-        CheckBox learnt_checkbox;
-        TextView numberCorrect;
-        TextView numberPracticed;
+        TextView algorithmName, algorithmCategory, algorithm, practicedCorrect;
+        CheckBox algorithm_selected, favourite_checkbox, learnt_checkbox;
+
 
         public ViewHolder(View view, OnAlgorithmListener onAlgorithmListener) {
             super(view);
             this.algorithmName = view.findViewById(R.id.algorithm_item_name_textview);
             this.algorithm = view.findViewById(R.id.algorithm_item_algorithm);
             this.algorithmCategory = view.findViewById(R.id.algorithm_category_textview);
-            this.numberCorrect = view.findViewById(R.id.algorithm_item_correct);
-            this.numberPracticed = view.findViewById(R.id.algorithm_item_practiced);
+            this.practicedCorrect = view.findViewById(R.id.algorithm_item_practiced_vs_correct);
             this.algorithmCard = view.findViewById(R.id.algorithm_card);
             this.algorithmIcon = view.findViewById(R.id.algorithm_icon);
             this.algorithm_selected = view.findViewById(R.id.algorithm_selected);
-            AlgorithmRecyclerAdapter.this.mOnAlgorithmListener = onAlgorithmListener;
+            this.algorithm_item_checks = view.findViewById(R.id.algorithm_item_checks);
+            this.algorithm_selected_checks = view.findViewById(R.id.algorithm_selected_checks);
             this.favourite_checkbox = view.findViewById(R.id.favourite_checkbox);
             this.learnt_checkbox = view.findViewById(R.id.learnt_checkbox);
+            AlgorithmRecyclerAdapter.this.mOnAlgorithmListener = onAlgorithmListener;
             this.favourite_checkbox.setOnClickListener(this);
             this.learnt_checkbox.setOnClickListener(this);
             this.algorithmCard.setOnClickListener(this);
@@ -201,6 +212,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
             String str = "onLearnClick: ";
             String str2 = Constraints.TAG;
             StringBuilder stringBuilder;
+            if (actionMode != null) actionMode.finish();
             switch (id) {
                 case R.id.algorithm_card /*2131361910*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmClick(getAdapterPosition());
@@ -218,10 +230,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
                     return;
                 case R.id.favourite_checkbox /*2131362073*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmFavouriteClick(getAdapterPosition(), view);
-                    stringBuilder = new StringBuilder();
-                    stringBuilder.append(str);
-                    stringBuilder.append(getAdapterPosition());
-                    Log.d(str2, stringBuilder.toString());
+
                     return;
                 case R.id.learnt_checkbox /*2131362144*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmLearntClick(getAdapterPosition(), view);
@@ -236,7 +245,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
 
         public boolean onLongClick(View v) {
             AlgorithmRecyclerAdapter.this.current_selected = getAdapterPosition();
-            if (AlgorithmRecyclerAdapter.this.selected_items.get(getAdapterPosition(), false)) {
+            if (AlgorithmRecyclerAdapter.this.selected_items.get(current_selected, false)) {
                 AlgorithmRecyclerAdapter.this.selected_items.delete(getAdapterPosition());
             } else {
                 AlgorithmRecyclerAdapter.this.selected_items.put(getAdapterPosition(), true);

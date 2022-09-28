@@ -1,9 +1,14 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Spinner;
@@ -30,6 +36,7 @@ import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
+import com.jorotayo.algorubickrevamped.data.Algorithm_;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +44,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.objectbox.Box;
+import io.objectbox.query.Query;
 
 public class AlgorithmHomeFragment extends Fragment implements OnClickListener, AlgorithmRecyclerAdapter.OnAlgorithmListener, OnBackPressed {
     private final ArrayList<Integer> selectedList = new ArrayList<>();
@@ -45,18 +53,17 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     ArrayList<String> categories = new ArrayList<>(Arrays.asList("Triggers", "Triggers", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL", "PLL"));
     ArrayList<String> descriptions = new ArrayList<>(Arrays.asList("Insert bottom right corner and trigger", "Insert bottom left corner and trigger", "Swap opposite Edges (4e)", "Swap adjacent Edges (4e)", "Swap two opposite edges and two corners (2e2c)", "Swap two opposite corners, swap two adjacent edges (2c2e)", "Swap two corners, swap two adjacent edges (2e2c)", "Swap diagonal corner and opposite edge, left to right (2e2c)", "wap diagonal corner and opposite edge, Right to left (2e2c)", "Swap inline adjacent edge and diagonal corner (2e2c)", "Cross shaped swap diagonal corner and adjacent edge (2e2c)", "Swap opposite corners (4c)", "Swap inline 2 edges and 2 corners (2e2c)", "Swap opposite corners and adjacent edge (2e2c)", "Swap opposite corners and adjacent edge (2e2c)"));
     ArrayList<String> images = new ArrayList<>(Arrays.asList("R.drawable.right_edge", "R.drawable.left_edge", "R.drawable.h_perm", "R.drawable.z_perm", "R.drawable.t_perm", "R.drawable.j1_perm", "R.drawable.j2_perm", "R.drawable.n1_perm", "R.drawable.n2_perm", "R.drawable.v_perm", "R.drawable.y_perm", "R.drawable.e_perm", "R.drawable.f_perm", "R.drawable.r1_perm", "R.drawable.r2_perm"));
-    int selectedNum = 0;
-    private ActionMode actionMode;
+    public static ActionMode actionMode;
     private ArrayList<Algorithm> algorithmArrayList = new ArrayList<>();
     private Box<Algorithm> algorithmBox;
     private RecyclerView algorithmRecycler;
     private AlgorithmRecyclerAdapter algorithmRecyclerAdapter;
 
     private final Callback actionModeCallback = new Callback() {
+
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.contextual_menu, menu);
-            String stringBuilder = algorithmRecyclerAdapter.getSelectedItemCount() + " Algorithm(s) Selected";
-            mode.setTitle(stringBuilder);
+            mode.setTitle(algorithmRecyclerAdapter.getSelectedItemCount() + " Algorithm(s) Selected");
             return true;
         }
 
@@ -90,15 +97,11 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
         public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
-       /*     for (Algorithm algorithm: algorithmArrayList) {
-                if(algorithm.getSelected_alg()){
-                    algorithm.setSelected_alg();
-                }
-            }*/
         }
     };
+
     private String algorithms_filter_text;
-    private TextView home_algs_number ;
+    private TextView home_algs_number;
     private View root;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,8 +119,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
         TextView textView = home_algs_number;
         textView.setText("" + algorithmBox.getAll().size());
-        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
         algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         algorithmRecycler.setHasFixedSize(true);
@@ -128,15 +130,15 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     public void onResume() {
         super.onResume();
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
     }
 
     private void setupHomeSpinner() {
         Spinner algorithms_filter_spinner = root.findViewById(R.id.algorithms_filter_spinner);
+        algorithms_filter_spinner.setGravity(View.TEXT_ALIGNMENT_CENTER);
         List<String> algorithm_filter = new ArrayList<>();
-        algorithm_filter.add("Recently Added");
+        algorithm_filter.add("Recently Created");
         algorithm_filter.add("Most Practiced");
         algorithm_filter.add("Most Correct");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, algorithm_filter);
@@ -162,12 +164,12 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     public void onAlgorithmImageClick(int position, View v) {
-        ActionMode actionMode = this.actionMode;
+        ActionMode actionMode = AlgorithmHomeFragment.actionMode;
         if (actionMode != null) {
             actionMode.finish();
         }
         Algorithm currentAlg = algorithmArrayList.get(position);
-        Toast.makeText(getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), String.format("%s - Image Clicked",currentAlg.alg_name), Toast.LENGTH_SHORT).show();
         Dialog caseDialog = new Dialog(getContext());
         caseDialog.setContentView(R.layout.algorithm_image_dialog);
         ImageView dialog_alg_image_icon = caseDialog.findViewById(R.id.dialog_alg_image_icon);
@@ -183,10 +185,10 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         dialog_alg_image_name.setText(currentAlg.alg_name);
         dialog_alg_image_alg.setText(currentAlg.alg);
         caseDialog.show();
-    }
 
-    private void loadAlgorithmIcon(Algorithm currentAlg){
-
+        algorithmRecyclerAdapter.clearSelected();
+        algorithmRecyclerAdapter.selected_items.clear();
+        algorithmRecyclerAdapter.notifyDataSetChanged();
     }
 
     public void onAlgorithmFavouriteClick(int position, View v) {
@@ -194,8 +196,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         alg.setFavourite_alg();
         algorithmBox.put(alg);
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        AlgorithmRecyclerAdapter NewAlgorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecyclerAdapter = NewAlgorithmRecyclerAdapter;
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
         Context context = getContext();
         String stringBuilder = "Favourite" + position;
@@ -217,6 +218,10 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
     }
 
+    private void loadAlgorithmIcon(Algorithm currentAlg) {
+
+    }
+
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         algorithms_filter_text = parent.getItemAtPosition(position).toString();
         Context context = parent.getContext();
@@ -227,15 +232,6 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
-
-/*    public void createAlgorithmList(int numAlgorithms) {
-        for (int i = 1; i <= numAlgorithms; i++) {
-            Box box = algorithmBox;
-            Object obj = r4;
-            Algorithm algorithm = new Algorithm("Algorithm_name", "R',U,R2,D',B,F,L'", "Description of an algorithm", "Triggers", true, true, false, 5, 5, false, "");
-            box.put(obj);
-        }
-    }*/
 
     public void onPrepareOptionsMenu(Menu menu) {
         SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
@@ -270,6 +266,17 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     private void clearSelected() {
         for (Integer selected : algorithmRecyclerAdapter.getSelectedItems()) {
             Objects.requireNonNull(algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.setBackgroundResource(R.color.white);
+            LinearLayout card = (LinearLayout) algorithmRecycler.findViewHolderForAdapterPosition(selected).itemView.findViewById(R.id.algorithm_card_texts);
+
+            for (int i = 0; i < card.getChildCount(); i++) {
+                View v = card.getChildAt(i);
+                if (v instanceof TextView) {
+                    ((TextView) v).setTextColor(Color.rgb(0, 0, 0));
+                }
+            }
+            algorithmRecycler.findViewHolderForAdapterPosition(selected).itemView.findViewById(R.id.algorithm_item_checks).setVisibility(View.VISIBLE);
+            algorithmRecycler.findViewHolderForAdapterPosition(selected).itemView.findViewById(R.id.algorithm_selected_checks).setVisibility(View.GONE);
+
         }
     }
 
@@ -282,18 +289,12 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     @Override
     public void customBackPressed() {
         if (actionMode != null) {
+            actionMode.finish();
+            clearSelected();
             Toast.makeText(getContext(), "Action Mode", Toast.LENGTH_SHORT).show();
         } else {
-            getActivity().finish();
+            requireActivity().finish();
         }
     }
 
-/*    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }*/
 }

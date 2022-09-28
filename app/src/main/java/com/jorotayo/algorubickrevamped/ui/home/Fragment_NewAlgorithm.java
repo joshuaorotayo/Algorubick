@@ -193,13 +193,13 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
     private void saveEditAlgorithm() {
         clearErrors();
         if (validateErrors()) {
-            this.currentAlgorithm.alg_name = this.new_alg_name_edit.getText().toString();
-            this.currentAlgorithm.alg = this.new_alg_edit.getText().toString();
-            this.currentAlgorithm.alg_description = this.new_alg_description_edit.getText().toString();
-            this.currentAlgorithm.category = this.new_alg_category_spinner.getSelectedItem().toString();
+            this.currentAlgorithm.setAlg_name(this.new_alg_name_edit.getText().toString());
+            this.currentAlgorithm.setAlg(this.new_alg_edit.getText().toString());
+            this.currentAlgorithm.setAlg_description(this.new_alg_description_edit.getText().toString());
+            this.currentAlgorithm.setCategory(this.new_alg_category_spinner.getSelectedItem().toString());
             this.currentAlgorithm.custom_alg = this.new_alg_custom_switch.isChecked();
             this.currentAlgorithm.favourite_alg = this.new_alg_favourite_switch.isChecked();
-            this.currentAlgorithm.algorithm_icon = alg_Uri.toString();
+           // this.currentAlgorithm.algorithm_icon = alg_Uri.toString();
             this.algorithmBox.put(this.currentAlgorithm);
             List<Algorithm> algorithmList = this.algorithmBox.getAll();
             StringBuilder stringBuilder = new StringBuilder();
@@ -213,13 +213,13 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         clearErrors();
         if (validateErrors()) {
             Algorithm newAlg = new Algorithm();
-            newAlg.alg_name = this.new_alg_name_edit.getText().toString();
-            newAlg.alg = this.new_alg_edit.getText().toString();
-            newAlg.alg_description = this.new_alg_description_edit.getText().toString();
-            newAlg.category = this.new_alg_category_spinner.getSelectedItem().toString();
+            newAlg.setAlg_name(this.new_alg_name_edit.getText().toString());
+            newAlg.setAlg(this.new_alg_edit.getText().toString());
+            newAlg.setAlg_description(this.new_alg_description_edit.getText().toString());
+            newAlg.setCategory(this.new_alg_category_spinner.getSelectedItem().toString());
             newAlg.custom_alg = this.new_alg_custom_switch.isChecked();
             newAlg.favourite_alg = this.new_alg_favourite_switch.isChecked();
-            newAlg.algorithm_icon = this.alg_Uri.toString();
+            newAlg.setAlgorithm_icon(this.alg_Uri.toString());
             newAlg.setPracticed_correctly_int(0);
             newAlg.setPracticed_number_int(0);
             this.algorithmBox.put(newAlg);

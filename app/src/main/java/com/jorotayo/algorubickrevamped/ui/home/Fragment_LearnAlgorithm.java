@@ -22,7 +22,6 @@ import com.jorotayo.algorubickrevamped.data.Algorithm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 
 import io.objectbox.Box;
@@ -33,14 +32,12 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     HashMap<String, Integer> algImageMap = new HashMap();
     ArrayList<ImageView> algImages = new ArrayList();
     Algorithm currentAlgorithm;
-    private ArrayList<Algorithm> algorithmArrayList = new ArrayList();
-    private Button checkAlg;
+    private ArrayList algorithmArrayList = new ArrayList();
     private MaterialAlertDialogBuilder correctDialog;
     private MaterialAlertDialogBuilder incorrectDialog;
     private TextView learn_alg_alg;
     private EditText learn_alg_inputspace;
     private TextView learn_alg_name;
-    private ArrayList<Integer> mParam1;
     private View view;
 
     public static Fragment_LearnAlgorithm newInstance(ArrayList<Integer> param1) {
@@ -54,11 +51,9 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            ArrayList integerArrayList = getArguments().getIntegerArrayList(ARG_PARAM1);
-            mParam1 = integerArrayList;
-            Iterator it = integerArrayList.iterator();
-            while (it.hasNext()) {
-                mParam2.add(((long) ((Integer) it.next()).intValue()) + 1);
+            ArrayList<Integer> integerArrayList = getArguments().getIntegerArrayList(ARG_PARAM1);
+            for (Integer o : integerArrayList) {
+                mParam2.add(((long) o) + 1);
             }
         }
         Box<Algorithm> algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
@@ -77,7 +72,6 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
         setupHashmap();
         setupImageViews();
         Button button = view.findViewById(R.id.check_alg);
-        checkAlg = button;
         button.setOnClickListener(this);
         setupKeyboard();
         setupDialogs();
@@ -98,7 +92,7 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     }
 
     private Algorithm nextAlgorithm() {
-        return algorithmArrayList.get(new Random().nextInt(this.algorithmArrayList.size()));
+        return (Algorithm) algorithmArrayList.get(new Random().nextInt(this.algorithmArrayList.size()));
     }
 
     private void setupAlgorithm(Algorithm nextAlgorithm) {
