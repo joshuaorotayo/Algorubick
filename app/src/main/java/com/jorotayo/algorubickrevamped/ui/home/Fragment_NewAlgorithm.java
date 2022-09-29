@@ -1,9 +1,8 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
-import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,12 +21,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jorotayo.algorubickrevamped.KeyboardDialog;
@@ -35,6 +35,7 @@ import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
+import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
     private EditText new_alg_description_edit, new_alg_edit, new_alg_name_edit;
     private Switch new_alg_favourite_switch;
     private TextInputLayout til_alg, til_alg_description, til_alg_name;
-    private ImageView add_new_alg_image, new_alg_image_preview;
+    private ImageView new_add_new_alg_image, new_alg_image_preview;
     private Uri alg_Uri;
 
     static Fragment_NewAlgorithm newInstance() {
@@ -84,7 +85,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.new_alg_name_edit = this.view.findViewById(R.id.new_alg_name_edit);
         this.new_alg_edit = this.view.findViewById(R.id.new_alg_edit);
         this.new_alg_description_edit = this.view.findViewById(R.id.new_alg_description_edit);
-        this.add_new_alg_image = this.view.findViewById(R.id.add_new_alg_image);
+        this.new_add_new_alg_image = this.view.findViewById(R.id.new_add_new_alg_image);
         this.new_alg_image_preview = this.view.findViewById(R.id.new_alg_image_preview);
         this.til_alg_name = this.view.findViewById(R.id.til_alg_name);
         this.til_alg = this.view.findViewById(R.id.til_alg);
@@ -92,53 +93,32 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.new_alg_favourite_switch = this.view.findViewById(R.id.new_alg_favourite_switch);
         this.new_alg_custom_switch = this.view.findViewById(R.id.new_alg_custom_switch);
         this.new_alg_save_btn = this.view.findViewById(R.id.new_alg_save_btn);
+
         Spinner spinner = this.view.findViewById(R.id.new_alg_category_spinner);
         this.new_alg_category_spinner = spinner;
         spinner.setOnItemSelectedListener(this);
         this.new_alg_edit.setOnClickListener(v -> Fragment_NewAlgorithm.this.openKeyboard());
         this.new_alg_save_btn.setOnClickListener(this);
-        this.add_new_alg_image.setOnClickListener(click -> Fragment_NewAlgorithm.this.addNewImage());
+        this.new_add_new_alg_image.setOnClickListener(v -> UtilMethods.ImageSelection(this));
         this.new_alg_category_spinner.setAdapter(categoryAdapter);
         createAlertDialog();
         checkEditAlgorithm();
         return this.view;
     }
 
+    @Override
+    public final void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
 
-    private void addNewImage() {
-        launchPickerSingleMode();
-    }
+            alg_Uri = data.getData();
+            Log.d(TAG, "onActivityResult: " + alg_Uri.toString());
 
-    private final ActivityResultLauncher<Intent> startForSingleModeResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                final Intent data = result.getData();
-                //Log.d(TAG, " resultCode: " + resultCode + " data: " + data);
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    if (data == null) return;
-                    // Get photo picker response for single select.
-                    // Do stuff with the photo/video URI.
-                    alg_Uri = data.getData();
-                    this.add_new_alg_image.setVisibility(View.GONE);
-                    this.new_alg_image_preview.setImageURI(alg_Uri);
-                    Log.d(TAG, "" + alg_Uri );
-                    this.new_alg_image_preview.setVisibility(View.VISIBLE);
-
-                }
-            });
-
-    private void launchPickerSingleMode() {
-        // Launches photo picker in single-select mode.
-        // This means that the user can select one photo or video.
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        if (!"all".equals("image/*")) intent.setType("image/*");
-        try {
-            startForSingleModeResult.launch(intent);
-        } catch (ActivityNotFoundException ignored) {
-
+            this.new_alg_image_preview.setImageURI(alg_Uri);
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(getActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Image selection cancelled", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,6 +142,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.new_alg_custom_switch.setChecked(this.currentAlgorithm.isCustom_alg());
         this.new_alg_favourite_switch.setChecked(this.currentAlgorithm.isFavourite_alg());
         this.new_alg_save_btn.setOnClickListener(v -> Fragment_NewAlgorithm.this.saveEditAlgorithm());
+        UtilMethods.loadAlgorithmIcon(getContext(), this.new_alg_image_preview, currentAlgorithm);
     }
 
     private void createAlertDialog() {
@@ -199,7 +180,9 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
             this.currentAlgorithm.setCategory(this.new_alg_category_spinner.getSelectedItem().toString());
             this.currentAlgorithm.custom_alg = this.new_alg_custom_switch.isChecked();
             this.currentAlgorithm.favourite_alg = this.new_alg_favourite_switch.isChecked();
-           // this.currentAlgorithm.algorithm_icon = alg_Uri.toString();
+            if(alg_Uri != null){
+                this.currentAlgorithm.setAlgorithm_icon(alg_Uri.toString());
+            }
             this.algorithmBox.put(this.currentAlgorithm);
             List<Algorithm> algorithmList = this.algorithmBox.getAll();
             StringBuilder stringBuilder = new StringBuilder();

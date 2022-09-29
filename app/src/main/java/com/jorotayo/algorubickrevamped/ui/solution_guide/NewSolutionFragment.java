@@ -1,5 +1,7 @@
 package com.jorotayo.algorubickrevamped.ui.solution_guide;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,8 +35,6 @@ import java.util.List;
 import java.util.Objects;
 
 import io.objectbox.Box;
-
-import static android.content.ContentValues.TAG;
 
 public class NewSolutionFragment extends Fragment implements OnClickListener, OnBackPressed {
     private static final String ARG_PARAM1 = "param1";
@@ -79,7 +79,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         pageScroller = view.findViewById(R.id.create_solution_activity_scroller);
         solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
         Box<Steps> allSteps = ObjectBox.getBoxStore().boxFor(Steps.class);
-        stepsBox = (Box<Steps>) allSteps;
+        stepsBox = allSteps;
         addStepBtn.setOnClickListener(this);
         saveNewSolutionBtn.setOnClickListener(this);
         createCloseSolutionDialog();
@@ -168,9 +168,9 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             til_solution_description.setError("Solution Description cannot be blank");
             valid = false;
         }
-        if (valid){
+        if (valid) {
             return true;
-        }else {
+        } else {
             new MaterialAlertDialogBuilder(requireContext()).setTitle("Solution Error").setMessage("Fill in all Solution details before saving").setIcon(R.drawable.incorrect_48_r).show();
             return false;
         }
@@ -249,7 +249,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         closeSolutionDialog.show();
     }
 
-    public void saveBackPressed(String text){
+    public void saveBackPressed(String text) {
         requireActivity().onBackPressed();
     }
 }

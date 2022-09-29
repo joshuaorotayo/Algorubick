@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/view_alg_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
                 android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical"
-                android:padding="10dp" />
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/view_alg_image"
+                    android:layout_width="160dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:contentDescription="@string/algorithm_description"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="-70dp"
+                android:layout_marginTop="-50dp"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp"
@@ -45,7 +52,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:text="@string/view_alg_name"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                        android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                     <TextView
                         android:id="@+id/view_alg_text"
@@ -54,7 +61,7 @@
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:gravity="center"
                         android:text="@string/view_alg_text"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                        android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -69,7 +76,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_horizontal_margin"
                             android:text="@string/view_alg_category_descriptor"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
                         <TextView
                             android:id="@+id/view_alg_category"
@@ -77,35 +84,14 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_horizontal_margin"
                             android:text="@string/view_alg_category"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/view_alg_correct_vs_practiced"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/view_alg_correct_practiced"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/activity_horizontal_margin"
-                            android:text="@string/view_alg_correct_practiced" />
-
-                        <TextView
-                            android:id="@+id/view_alg_correct_amount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_alg_correct_amount" />
-
-                        <TextView
-                            android:id="@+id/view_alg_practiced_amount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_alg_practiced_amount" />
-                    </LinearLayout>
+                        android:text="@string/view_alg_correct_vs_practiced" />
 
                     <TextView
                         android:id="@+id/view_alg_description"
@@ -173,6 +159,5 @@
                     android:text="@string/practice_alg_btn"
                     android:textColor="@color/white" />
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -202,7 +202,7 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         Log.d(str2, stringBuilder2);
         stringBuilder = new StringBuilder();
         stringBuilder.append(str);
-        stringBuilder.append(s.toString());
+        stringBuilder.append(s);
         Log.d(str2, stringBuilder.toString());
         stringBuilder = new StringBuilder();
         stringBuilder.append(str);

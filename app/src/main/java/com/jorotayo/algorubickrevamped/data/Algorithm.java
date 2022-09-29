@@ -126,17 +126,16 @@ public class Algorithm {
         return selected_alg;
     }
 
-    public void setSelected_alg(boolean selected) {
-        this.selected_alg = selected;
-    }
-
-    public void toggleSelectedAlg(){
+    public void toggleSelectedAlg() {
         this.selected_alg ^= true;
     }
 
-
     public boolean getSelected_alg() {
         return selected_alg;
+    }
+
+    public void setSelected_alg(boolean selected) {
+        this.selected_alg = selected;
     }
 
     public void setFavourite_alg() {
