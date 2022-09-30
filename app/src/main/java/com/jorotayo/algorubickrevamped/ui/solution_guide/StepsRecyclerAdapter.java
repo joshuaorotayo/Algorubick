@@ -86,10 +86,6 @@ private Context context;
         public void onClick(View view) {
             if (view.getId() == R.id.view_step_card) {
                 this.mOnStepListener.onStepClick(getAdapterPosition());
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("onClick: ");
-                stringBuilder.append(getAdapterPosition());
-                Log.d(Constraints.TAG, stringBuilder.toString());
             }
         }
     }

@@ -30,15 +30,10 @@ public class UtilMethods {
 
     public static void LoadStepIcon(Context ctx, ImageView imageView, String stepIcon) {
         if (ctx != null) {
-            if (stepIcon != null) {
-                String str = "";
-                if (stepIcon.isEmpty()) {
-                    imageView.setImageResource(R.drawable.cfop);
-                } else if (stepIcon.contains("file:///")) {
-                    imageView.setImageURI(Uri.parse(stepIcon.substring(6)));
-                } else {
-                    imageView.setImageResource(ctx.getResources().getIdentifier(stepIcon.replace("R.drawable.", str), "drawable", ctx.getPackageName()));
-                }
+            if(stepIcon == null){
+                imageView.setImageResource(R.drawable.cfop);
+            } else if (stepIcon.contains("file:///")) {
+                imageView.setImageURI(Uri.parse(stepIcon.substring(6)));
             }
         }
     }

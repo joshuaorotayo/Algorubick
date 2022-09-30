@@ -33,7 +33,7 @@ public class Steps implements Comparable {
     }
 
     public static ArrayList<Steps> createFakeSteps(int numSteps) {
-        ArrayList<Steps> steps = new ArrayList();
+        ArrayList<Steps> steps = new ArrayList<>();
         for (int i = 1; i <= numSteps; i++) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("Solution_");
