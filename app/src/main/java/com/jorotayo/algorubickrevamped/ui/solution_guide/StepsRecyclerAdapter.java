@@ -1,5 +1,6 @@
 package com.jorotayo.algorubickrevamped.ui.solution_guide;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.data.Steps;
+import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
     private final OnStepListener mOnStepListener;
     private ArrayList<Steps> mSteps = new ArrayList();
     private Solution solution;
+private Context context;
 
     public StepsRecyclerAdapter(ArrayList<Steps> mSteps, OnStepListener mOnStepListener) {
         this.mSteps = mSteps;
@@ -29,7 +32,8 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_step_view, parent, false), this.mOnStepListener);
+        context = parent.getContext();
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_step_view, parent, false), this.mOnStepListener);
     }
 
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -37,8 +41,10 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
         holder.stepName.setText(step.getStepName());
         holder.stepDescription.setText(step.getStepDescription());
         holder.stepAlgorithm.setText(step.getStepAlgorithm());
-        holder.stepImageStart.setImageResource(R.drawable.cfop);
-        holder.stepImageEnd.setImageResource(R.drawable.cfop);
+        UtilMethods.LoadStepIcon(context,holder.stepImageStart, step.stepImageStart);
+        UtilMethods.LoadStepIcon(context,holder.stepImageEnd, step.stepImageEnd);
+//        holder.stepImageStart.setImageResource(R.drawable.cfop);
+//        holder.stepImageEnd.setImageResource(R.drawable.cfop);
     }
 
     public int getItemCount() {

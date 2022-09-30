@@ -5,7 +5,6 @@ import static com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeFragment.acti
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -88,7 +87,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         holder.algorithmCategory.setText(algorithmItem.getCategory());
         String practicedCorrect = String.format("Correct/Practiced: %s / %s", algorithmItem.getPracticed_correctly_int(), algorithmItem.getPracticed_number_int());
         holder.practicedCorrect.setText(practicedCorrect);
-        UtilMethods.loadAlgorithmIcon(ctx.getApplicationContext(), holder.algorithmIcon, algorithmItem);
+        UtilMethods.LoadAlgorithmIcon(ctx.getApplicationContext(), holder.algorithmIcon, algorithmItem);
         holder.favourite_checkbox.setChecked(algorithmItem.isFavourite_alg());
         holder.learnt_checkbox.setChecked(algorithmItem.isLearnt());
         toggleSelectedRow(holder, position);
@@ -104,7 +103,6 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
             holder.algorithm_item_checks.setVisibility(View.GONE);
             holder.algorithm_selected_checks.setVisibility(View.VISIBLE);
             holder.algorithm_selected.setChecked(true);
-            Log.d(TAG, "toggleSelectedRow: Selected = " + holder.algorithmName.getText().toString());
             return;
         }
         holder.algorithmCard.setBackgroundResource(R.color.white);
@@ -115,7 +113,6 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         holder.algorithm_item_checks.setVisibility(View.VISIBLE);
         holder.algorithm_selected_checks.setVisibility(View.GONE);
         holder.algorithm_selected.setChecked(false);
-        Log.d(TAG, "toggleSelectedRow: UnSelected = " + holder.algorithmName.getText().toString());
 
     }
 

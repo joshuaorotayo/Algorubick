@@ -12,7 +12,7 @@ import com.jorotayo.algorubickrevamped.data.Algorithm;
 
 public class UtilMethods {
 
-    public static void loadAlgorithmIcon(Context ctx, ImageView imageView, Algorithm algorithmItem) {
+    public static void LoadAlgorithmIcon(Context ctx, ImageView imageView, Algorithm algorithmItem) {
         if (ctx != null) {
             if (algorithmItem.getAlgorithm_icon() != null) {
                 String str = "";
@@ -23,6 +23,21 @@ public class UtilMethods {
                     imageView.setImageURI(Uri.parse(algorithmItem.getAlgorithm_icon().substring(6)));
                 } else {
                     imageView.setImageResource(ctx.getResources().getIdentifier(algorithmItem.getAlgorithm_icon().replace("R.drawable.", str), "drawable", ctx.getPackageName()));
+                }
+            }
+        }
+    }
+
+    public static void LoadStepIcon(Context ctx, ImageView imageView, String stepIcon) {
+        if (ctx != null) {
+            if (stepIcon != null) {
+                String str = "";
+                if (stepIcon.isEmpty()) {
+                    imageView.setImageResource(R.drawable.cfop);
+                } else if (stepIcon.contains("file:///")) {
+                    imageView.setImageURI(Uri.parse(stepIcon.substring(6)));
+                } else {
+                    imageView.setImageResource(ctx.getResources().getIdentifier(stepIcon.replace("R.drawable.", str), "drawable", ctx.getPackageName()));
                 }
             }
         }

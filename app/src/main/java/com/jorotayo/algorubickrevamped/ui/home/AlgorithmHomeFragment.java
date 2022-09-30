@@ -170,7 +170,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         ImageView dialog_alg_image_icon = caseDialog.findViewById(R.id.dialog_alg_image_icon);
         TextView dialog_alg_image_name = caseDialog.findViewById(R.id.dialog_alg_image_name);
         TextView dialog_alg_image_alg = caseDialog.findViewById(R.id.dialog_alg_image_alg);
-        UtilMethods.loadAlgorithmIcon(getContext(), dialog_alg_image_icon, currentAlg);
+        UtilMethods.LoadAlgorithmIcon(getContext(), dialog_alg_image_icon, currentAlg);
         dialog_alg_image_name.setText(currentAlg.alg_name);
         dialog_alg_image_alg.setText(currentAlg.alg);
         caseDialog.show();

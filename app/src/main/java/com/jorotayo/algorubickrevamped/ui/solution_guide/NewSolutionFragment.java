@@ -98,7 +98,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     }
 
     private void checkEditSolution() {
-        Intent intent = requireActivity().getIntent();
+        intent = requireActivity().getIntent();
         if (intent.hasExtra("edit")) {
             editSolution();
         } else {
@@ -149,6 +149,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             }
             solutionBox.put(newSolution);
             saveSteps(solutionName);
+            requireActivity().finish();
             //return;
         }
     }
@@ -249,7 +250,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         closeSolutionDialog.show();
     }
 
-    public void saveBackPressed(String text) {
+    public void saveBackPressed() {
         requireActivity().onBackPressed();
     }
 }

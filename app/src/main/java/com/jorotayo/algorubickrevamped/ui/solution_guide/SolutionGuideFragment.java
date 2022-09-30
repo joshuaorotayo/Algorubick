@@ -29,7 +29,7 @@ import io.objectbox.Box;
 
 public class SolutionGuideFragment extends Fragment implements OnClickListener, OnSolutionListener, OnItemSelectedListener {
     private View root;
-    private ArrayList solutionArrayList = new ArrayList();
+    private ArrayList<Solution> solutionArrayList = new ArrayList<>();
     private Box<Solution> solutionBox;
     private SolutionRecyclerAdapter solutionRecyclerAdapter;
     private Spinner solution_sort_spinner;
@@ -42,13 +42,11 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
         Button createNewSolutionBtn = this.root.findViewById(R.id.create_new_solution_btn);
         this.solution_sort_spinner = this.root.findViewById(R.id.solution_sort_spinner);
         createNewSolutionBtn.setOnClickListener(this);
-        Box boxFor = ObjectBox.getBoxStore().boxFor(Solution.class);
-        this.solutionBox = boxFor;
-        this.solutionArrayList = (ArrayList) boxFor.getAll();
+        this.solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
+        this.solutionArrayList = (ArrayList<Solution>) solutionBox.getAll();
         this.solutionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.solutionsRecycler.setHasFixedSize(true);
-        SolutionRecyclerAdapter solutionRecyclerAdapter = new SolutionRecyclerAdapter(this.solutionArrayList, this);
-        this.solutionRecyclerAdapter = solutionRecyclerAdapter;
+        solutionRecyclerAdapter = new SolutionRecyclerAdapter(this.solutionArrayList, this);
         this.solutionsRecycler.setAdapter(solutionRecyclerAdapter);
         setupSpinner();
         return this.root;
@@ -62,8 +60,8 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
 
     public void onSolutionClick(int position) {
         Intent intent = new Intent(getContext(), SolutionActivity.class);
-        // TODO: 28/03/2021 change this commented out line beneath 
-        // intent.putExtra("Solution", (long) this.solutionArrayList.get(position).id);
+        Long solutionId = this.solutionArrayList.get(position).id;
+        intent.putExtra("Solution", solutionId);
         startActivity(intent);
     }
 
@@ -75,7 +73,7 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
         Spinner spinner = this.root.findViewById(R.id.solution_sort_spinner);
         this.solution_sort_spinner = spinner;
         spinner.setOnItemSelectedListener(this);
-        ArrayList<String> solution_sort = new ArrayList();
+        ArrayList<String> solution_sort = new ArrayList<>();
         solution_sort.add("Solution Name");
         solution_sort.add("Solution Creator");
         ArrayAdapter<String> solutionAdapter = new ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, solution_sort);
@@ -97,17 +95,17 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
     }
 
     private void sortByName() {
-        this.solutionArrayList = (ArrayList) this.solutionBox.query().order(Solution_.solutionName).build().find();
+        this.solutionArrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionName).build().find();
     }
 
     private void sortByCreator() {
-        this.solutionArrayList = (ArrayList) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
+        this.solutionArrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
     }
 
     public ArrayList<Solution> sortBySteps() {
 
         // TODO: 28/03/2021 uncomment here
-        ArrayList arrayList = (ArrayList) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
+        ArrayList<Solution> arrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
         this.solutionArrayList = arrayList;
         return arrayList;
     }
@@ -117,7 +115,7 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
 
     public void onResume() {
         super.onResume();
-        this.solutionArrayList = (ArrayList) this.solutionBox.getAll();
+        this.solutionArrayList = (ArrayList<Solution>) this.solutionBox.getAll();
         this.solutionsRecycler.setAdapter(new SolutionRecyclerAdapter(this.solutionArrayList, this));
     }
 }

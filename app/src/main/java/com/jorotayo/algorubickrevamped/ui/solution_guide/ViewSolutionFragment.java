@@ -67,14 +67,14 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setSubtitle(this.currentSolution.getSolutionName());
         setupStepsAdapter();
         setupDeleteDialog();
-        StringBuilder stringBuilder = new StringBuilder();
+     /*   StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("StepsBoxSize: ");
         stringBuilder.append(this.stepsBox.getAll().size());
         Log.d("StepsBox", stringBuilder.toString());
         stringBuilder = new StringBuilder();
         stringBuilder.append("onCreateView: ");
         stringBuilder.append(this.stepsArrayList.size());
-        Log.d("StepsArrayList", stringBuilder.toString());
+        Log.d("StepsArrayList", stringBuilder.toString());*/
         ImageView view_solution_image = view.findViewById(R.id.view_solution_image);
         TextView view_solution_creator = view.findViewById(R.id.view_solution_creator);
         TextView view_solution_description = view.findViewById(R.id.view_solution_description);

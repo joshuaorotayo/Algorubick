@@ -142,7 +142,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.new_alg_custom_switch.setChecked(this.currentAlgorithm.isCustom_alg());
         this.new_alg_favourite_switch.setChecked(this.currentAlgorithm.isFavourite_alg());
         this.new_alg_save_btn.setOnClickListener(v -> Fragment_NewAlgorithm.this.saveEditAlgorithm());
-        UtilMethods.loadAlgorithmIcon(getContext(), this.new_alg_image_preview, currentAlgorithm);
+        UtilMethods.LoadAlgorithmIcon(getContext(), this.new_alg_image_preview, currentAlgorithm);
     }
 
     private void createAlertDialog() {
