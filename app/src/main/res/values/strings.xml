@@ -439,4 +439,7 @@
     <string name="add_algorithm_suggestion">Add Algorithm</string>
     <string name="new_alg_image_preview">Preview of New Algorithm Image</string>
     <string name="view_alg_correct_vs_practiced">Correct/Practiced: 0/0</string>
+    <string name="image_start_desc">Image for algorithm start state</string>
+    <string name="add_step_image_end_btn">+ Img End</string>
+    <string name="add_step_image_start_btn">+ Img Start</string>
 </resources>

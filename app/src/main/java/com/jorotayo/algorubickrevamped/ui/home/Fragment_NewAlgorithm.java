@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -72,7 +73,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.view = inflater.inflate(R.layout.fragment_algorithm_new, container, false);
         Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("Create New Algorithm");
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-        ArrayList<String> filter_category = new ArrayList();
+        ArrayList<String> filter_category = new ArrayList<>();
         filter_category.add("Triggers");
         filter_category.add("OLL");
         filter_category.add("PLL");
@@ -147,15 +148,11 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
 
     private void createAlertDialog() {
         CharSequence charSequence = "Cancel";
-        this.alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext()).setTitle("Close without saving?").setMessage("If you carry on the current Algorithm will be closed without saving. Click ok if you are fine to do this.").setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Fragment_NewAlgorithm.this.requireActivity().finish();
-            }
-        }).setNegativeButton(charSequence, (dialog, which) -> dialog.dismiss());
+        this.alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext()).setTitle("Close without saving?").setMessage("If you carry on the current Algorithm will be closed without saving. Click ok if you are fine to do this.").setPositiveButton("Close", (dialog, which) -> Fragment_NewAlgorithm.this.requireActivity().finish()).setNegativeButton(charSequence, (dialog, which) -> dialog.dismiss());
     }
 
     private void openKeyboard() {
-        new KeyboardDialog().newKeyboard(requireContext(), this.new_alg_edit);
+                new KeyboardDialog().newKeyboard(requireContext(), this.new_alg_edit);
     }
 
     public void onClick(View v) {

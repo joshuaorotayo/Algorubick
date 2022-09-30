@@ -42,8 +42,9 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
         Button createNewSolutionBtn = this.root.findViewById(R.id.create_new_solution_btn);
         this.solution_sort_spinner = this.root.findViewById(R.id.solution_sort_spinner);
         createNewSolutionBtn.setOnClickListener(this);
-        this.solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
-        this.solutionArrayList = (ArrayList<Solution>) solutionBox.getAll();
+        Box<Solution> boxFor = ObjectBox.getBoxStore().boxFor(Solution.class);
+        this.solutionBox = boxFor;
+        this.solutionArrayList = (ArrayList<Solution>) boxFor.getAll();
         this.solutionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.solutionsRecycler.setHasFixedSize(true);
         solutionRecyclerAdapter = new SolutionRecyclerAdapter(this.solutionArrayList, this);

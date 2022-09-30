@@ -2,9 +2,11 @@ package com.jorotayo.algorubickrevamped.ui.solution_guide;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,11 +17,15 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jorotayo.algorubickrevamped.KeyboardFragment;
@@ -29,6 +35,7 @@ import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.data.Steps;
 import com.jorotayo.algorubickrevamped.data.Steps_;
+import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +58,12 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     private TextInputLayout til_solution_creator;
     private TextInputLayout til_solution_description;
     private TextInputLayout til_solution_name;
-    private View view;
+    private View view, currentStepView;
+    private ViewGroup main;
+    private ImageView step_start_image_preview, step_end_image_preview;
+    private Uri start_alg_uri, end_alg_uri;
+    private boolean editingStart = true;
+    private int currentIndex = 0;
 
     public static NewSolutionFragment newInstance() {
         return new NewSolutionFragment();
@@ -78,8 +90,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         Button saveNewSolutionBtn = view.findViewById(R.id.save_new_solution_btn);
         pageScroller = view.findViewById(R.id.create_solution_activity_scroller);
         solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
-        Box<Steps> allSteps = ObjectBox.getBoxStore().boxFor(Steps.class);
-        stepsBox = allSteps;
+        stepsBox = ObjectBox.getBoxStore().boxFor(Steps.class);
         addStepBtn.setOnClickListener(this);
         saveNewSolutionBtn.setOnClickListener(this);
         createCloseSolutionDialog();
@@ -89,11 +100,23 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
 
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.add_step_btn) {
-            addStepView();
-        } else if (id == R.id.save_new_solution_btn) {
-            saveSolution();
-            Log.d(TAG, "onClick() returned: Save Solution");
+        switch (id) {
+            case R.id.add_step_btn:
+                addStepView();
+                scrollBottom();
+                return;
+            case R.id.save_new_solution_btn:
+                saveSolution();
+                return;
+            case R.id.new_solution_step_image_start_btn:
+                UtilMethods.ImageSelection(this);
+                Log.d(TAG, "ImageSelection: start");
+                return;
+            case R.id.new_solution_step_image_end_btn:
+                editingStart = false;
+                Toast.makeText(NewSolutionFragment.newInstance().getContext(), "end buton click", Toast.LENGTH_SHORT).show();
+                UtilMethods.ImageSelection(this);
+                Log.d(TAG, "ImageSelection: end");
         }
     }
 
@@ -121,9 +144,19 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             ((ViewGroup) view.findViewById(R.id.step_linear_container)).addView(view2, -1);
             EditText stepDescriptionEditText = view2.findViewById(R.id.item_step_step_description);
             final EditText algorithmInputSpace = view2.findViewById(R.id.item_step_step_algorithm);
+            Button new_solution_step_image_start_btn = view2.findViewById(R.id.new_solution_step_image_start_btn);
+            Button new_solution_step_image_end_btn = view2.findViewById(R.id.new_solution_step_image_end_btn);
+            ImageView step_start_image_preview = view2.findViewById(R.id.step_start_image_preview);
+            ImageView step_end_image_preview = view2.findViewById(R.id.step_end_image_preview);
             ((EditText) view2.findViewById(R.id.item_step_step_name)).setText(editSteps.get(i).getStepName());
             stepDescriptionEditText.setText(editSteps.get(i).getStepDescription());
             algorithmInputSpace.setText(editSteps.get(i).getStepAlgorithm());
+            UtilMethods.LoadStepIcon(getContext(), step_start_image_preview, editSteps.get(i).stepImageStart);
+            UtilMethods.LoadStepIcon(getContext(), step_end_image_preview, editSteps.get(i).stepImageEnd);
+            step_start_image_preview.setTag(editSteps.get(i).stepImageStart);
+            step_end_image_preview.setTag(editSteps.get(i).stepImageEnd);
+            new_solution_step_image_start_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, true, view2));
+            new_solution_step_image_end_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, false, view2));
             algorithmInputSpace.setOnClickListener(v -> NewSolutionFragment.this.openKeyboard(algorithmInputSpace));
             scrollBottom();
         }
@@ -149,9 +182,8 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             }
             solutionBox.put(newSolution);
             saveSteps(solutionName);
-            requireActivity().finish();
-            //return;
         }
+        requireActivity().finish();
     }
 
     private boolean validateSolution() {
@@ -190,18 +222,22 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             Log.d(str, "saveSteps: EDIT");
             stepsBox.remove(this.stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName()).build().find());
         }
-        ViewGroup main = view.findViewById(R.id.step_linear_container);
+        main = view.findViewById(R.id.step_linear_container);
         for (int index = 0; index < main.getChildCount(); index++) {
             View nextChild = main.getChildAt(index);
             EditText stepNameEditText = nextChild.findViewById(R.id.item_step_step_name);
             EditText stepDescriptionEditText = nextChild.findViewById(R.id.item_step_step_description);
             EditText stepAlgorithmEditText = nextChild.findViewById(R.id.item_step_step_algorithm);
+            ImageView step_start_image_preview = nextChild.findViewById(R.id.step_start_image_preview);
+            ImageView step_end_image_preview = nextChild.findViewById(R.id.step_end_image_preview);
             Steps steps = new Steps();
             steps.setSolutionName(solutionName);
             steps.setStepNumber(index);
             steps.setStepName(stepNameEditText.getText().toString());
             steps.setStepDescription(stepDescriptionEditText.getText().toString());
             steps.setStepAlgorithm(stepAlgorithmEditText.getText().toString());
+            steps.setStepImageStart(step_start_image_preview.getTag().toString());
+            steps.setStepImageEnd(step_end_image_preview.getTag().toString());
             if (!(steps.stepDescription.isEmpty() || steps.stepName.isEmpty())) {
                 stepsBox.put(steps);
             }
@@ -211,22 +247,65 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
 
     private void addStepView() {
         View view2 = getLayoutInflater().inflate(R.layout.item_step, null);
-        view2.setTag("stepView");
+        main = view.findViewById(R.id.step_linear_container);
+        int currentIndex = main.getChildCount();
+        view2.setTag("stepView, " + currentIndex);
         ((ViewGroup) view.findViewById(R.id.step_linear_container)).addView(view2, -1);
         final EditText algorithmInputSpace = view2.findViewById(R.id.item_step_step_algorithm);
-        algorithmInputSpace.setOnClickListener(v -> NewSolutionFragment.this.openKeyboard(algorithmInputSpace));
-        scrollBottom();
+        algorithmInputSpace.setOnClickListener(v -> openKeyboard(algorithmInputSpace));
+        Button new_solution_step_image_start_btn = view2.findViewById(R.id.new_solution_step_image_start_btn);
+        Button new_solution_step_image_end_btn = view2.findViewById(R.id.new_solution_step_image_end_btn);
+        new_solution_step_image_start_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, true, view2));
+        new_solution_step_image_end_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, false, view2));
+    }
+
+    private void StepImageSelection(Fragment fragment, int currentImgIndex, boolean editingStartImg, View currentView) {
+        currentIndex = currentImgIndex;
+        editingStart = editingStartImg;
+        currentStepView = currentView;
+        String[] mimeTypes = {"image/png", "image/jpg", "image/jpeg"};
+        ImagePicker.Companion.with(fragment)
+                .crop()
+                .compress(1024)
+                .galleryMimeTypes(  //Exclude gif images
+                        mimeTypes
+                )
+                .start();
+    }
+
+    @Override
+    public final void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            step_start_image_preview = currentStepView.findViewById(R.id.step_start_image_preview);
+            step_end_image_preview = currentStepView.findViewById(R.id.step_end_image_preview);
+            if (editingStart) {
+                start_alg_uri = data.getData();
+                this.step_start_image_preview.setImageURI(start_alg_uri);
+                this.step_start_image_preview.setTag(start_alg_uri.toString());
+            } else {
+                end_alg_uri = data.getData();
+                this.step_end_image_preview.setImageURI(end_alg_uri);
+                this.step_end_image_preview.setTag(end_alg_uri.toString());
+            }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(getActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Image selection cancelled", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void scrollBottom() {
+        //only scrolls to the bottom if a new step has been added
         pageScroller.postDelayed(() -> NewSolutionFragment.this.pageScroller.fullScroll(130), 5);
     }
 
     private void openKeyboard(EditText editText) {
+        closeKeyboard();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.add(R.id.new_solution_keyboard_space, new KeyboardFragment(editText));
         ft.commit();
-        closeKeyboard();
         scrollBottom();
     }
 

@@ -73,13 +73,13 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         btn_s_b.setOnClickListener(this);
         btn_s_u.setOnClickListener(this);
         btn_s_d.setOnClickListener(this);
-        // keyboard_close_btn = btn_x2;
-        //keyboard_close_btn.setOnClickListener(this);
+        btn_x.setOnClickListener(this);
         btn_y.setOnClickListener(this);
         btn_z.setOnClickListener(this);
         btn_e.setOnClickListener(this);
         btn_s.setOnClickListener(this);
         btn_m.setOnClickListener(this);
+        keyboard_close_btn.setOnClickListener(this);
         this.btn_2.setOnClickListener(this);
         this.btn_prime.setOnClickListener(this);
         btn_backspace.setOnClickListener(this);
@@ -104,7 +104,9 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
 
     public void onClick(View v) {
         int id = v.getId();
-        if (id != R.id.shift_btn) {
+        if (id == R.id.keyboard_close_btn) {
+            this.rootView.dismiss();
+        } else if (id != R.id.shift_btn) {
             switch (id) {
                 case R.id.btn_2 /*2131361951*/:
                     this.modified = Boolean.valueOf(true);
@@ -191,10 +193,10 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
                     enter("Z");
                     return;
                 default:
-                    return;
             }
+        } else {
+            enter("^");
         }
-        enter("^");
     }
 
     private void enter(String keypressed) {

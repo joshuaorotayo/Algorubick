@@ -2,6 +2,7 @@ package com.jorotayo.algorubickrevamped;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 public class KeyboardDialog implements OnClickListener, View.OnLongClickListener {
-    static final /* synthetic */ boolean $assertionsDisabled = false;
-    private String backSpaceAlg = "";
     private TextView btn_2;
     private TextView btn_prime;
     private Context ctx;
@@ -34,7 +33,7 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
         wlp.width = -1;
         wlp.height = -2;
         keyboardDialog.getWindow().clearFlags(2);
-        wlp.gravity = 80;
+        wlp.gravity = Gravity.BOTTOM;
         window.setAttributes(wlp);
         this.rootView = keyboardDialog;
         this.inputSpace = editText;
@@ -98,18 +97,29 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
         btn_backspace.setOnLongClickListener(this);
         keyboard_close_btn.setOnClickListener(this);
 
-        btn_r = btn_shift;
-        TextView finalBtn_r = btn_r;
-        btn_r.setOnClickListener(v -> {
+//        btn_r = btn_shift;
+//        TextView finalBtn_r = btn_r;
+//        btn_r.setOnClickListener(v -> {
+//            if (KeyboardDialog.this.single_face_moves.getVisibility() == View.VISIBLE) {
+//                KeyboardDialog.this.single_face_moves.setVisibility(View.GONE);
+//                KeyboardDialog.this.double_face_moves.setVisibility(View.VISIBLE);
+//                finalBtn_r.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorRed, null));
+//                return;
+//            }
+//            KeyboardDialog.this.single_face_moves.setVisibility(View.VISIBLE);
+//            KeyboardDialog.this.double_face_moves.setVisibility(View.GONE);
+//            finalBtn_r.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorPrimary, null));
+//        });
+        btn_shift.setOnClickListener(v -> {
             if (KeyboardDialog.this.single_face_moves.getVisibility() == View.VISIBLE) {
                 KeyboardDialog.this.single_face_moves.setVisibility(View.GONE);
                 KeyboardDialog.this.double_face_moves.setVisibility(View.VISIBLE);
-                finalBtn_r.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorRed, null));
+                btn_shift.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorRed, null));
                 return;
             }
             KeyboardDialog.this.single_face_moves.setVisibility(View.VISIBLE);
             KeyboardDialog.this.double_face_moves.setVisibility(View.GONE);
-            finalBtn_r.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorPrimary, null));
+            btn_shift.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorPrimary, null));
         });
     }
 
@@ -248,29 +258,34 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
     }
 
     private void backspace() {
-        String obj = this.inputSpace.getText().toString();
-        this.backSpaceAlg = obj;
+        String newAlg = this.inputSpace.getText().toString();
+        String backSpaceAlg = newAlg;
         String str = "";
-        if (obj.isEmpty()) {
-            this.backSpaceAlg = str;
+        if (newAlg.isEmpty()) {
+            backSpaceAlg = str;
         } else {
             String str2 = ",";
-            if (this.backSpaceAlg.contains(str2)) {
-                obj = this.backSpaceAlg;
-                this.backSpaceAlg = obj.substring(0, obj.lastIndexOf(str2));
+            if (backSpaceAlg.contains(str2)) {
+                newAlg = backSpaceAlg;
+                backSpaceAlg = newAlg.substring(0, newAlg.lastIndexOf(str2));
             } else {
-                this.backSpaceAlg = str;
+                backSpaceAlg = str;
             }
         }
-        this.inputSpace.setText(this.backSpaceAlg);
-        obj = this.backSpaceAlg;
-        this.wholeAlg = obj;
-        this.current_alg_text.setText(obj);
+        this.inputSpace.setText(backSpaceAlg);
+        newAlg = backSpaceAlg;
+        wholeAlg = newAlg;
+        if(newAlg.length() > 0){
+            this.current_alg_text.setText(newAlg);
+        }else  {
+            this.current_alg_text.setText("Text for Algorithm");
+        }
     }
 
     @Override
     public boolean onLongClick(View v) {
         this.inputSpace.setText("");
+        this.current_alg_text.setText("Text for Algorithm");
         return true;
     }
 }
