@@ -83,10 +83,6 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
                 StatisticsRecyclerAdapter.this.mOnSolveListener.onSolveDeleteClick(getAdapterPosition());
             } else if (id == R.id.solve_row) {
                 StatisticsRecyclerAdapter.this.mOnSolveListener.onSolveClick(getAdapterPosition());
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("onClick: ");
-                stringBuilder.append(getAdapterPosition());
-                Log.d(Constraints.TAG, stringBuilder.toString());
             }
         }
     }

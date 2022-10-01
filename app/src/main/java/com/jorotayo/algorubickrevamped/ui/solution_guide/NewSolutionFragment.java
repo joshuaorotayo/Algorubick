@@ -220,7 +220,6 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     private void saveSteps(String solutionName) {
         String str = "Debug";
         if (((SolutionActivity) getActivity()).getSupportActionBar().getTitle().toString().contains("Edit")) {
-            Log.d(str, "saveSteps: EDIT");
             stepsBox.remove(this.stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName()).build().find());
         }
         main = view.findViewById(R.id.step_linear_container);
@@ -246,7 +245,6 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             if (!(steps.stepDescription.isEmpty() || steps.stepName.isEmpty())) {
                 stepsBox.put(steps);
             }
-            Log.d(str, "saveSteps: NEW");
         }
     }
 

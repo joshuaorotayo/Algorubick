@@ -185,11 +185,12 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         alg.setFavourite_alg();
         algorithmBox.put(alg);
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
+        algorithmRecyclerAdapter.notifyItemChanged(position);
+     algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
-        Context context = getContext();
+        /*   Context context = getContext();
         String stringBuilder = "Favourite" + position;
-        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();*/
     }
 
     public void onAlgorithmLearntClick(int position, View v) {

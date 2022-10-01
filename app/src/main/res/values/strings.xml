@@ -62,7 +62,7 @@
     <string name="anticlockwise_r">Right Anti-clockwise: R\'\nAnti Clockwise turn of the right layer</string>
     <string name="anticlockwise_u">Up Anti-clockwise: U\'\nAnti Clockwise turn of the up layer</string>
     <string name="app_icon_description">Icon for App Algorubick</string>
-    <string name="app_name">AlgorubickRevamped</string>
+    <string name="app_name">Algorubick</string>
     <string name="app_name_short">Algorubick</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="application_open_text">Sound for application open:</string>

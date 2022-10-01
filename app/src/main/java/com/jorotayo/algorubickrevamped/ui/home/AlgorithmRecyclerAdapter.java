@@ -189,35 +189,19 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
 
         public void onClick(View view) {
             int id = view.getId();
-            String str = "onLearnClick: ";
-            String str2 = Constraints.TAG;
-            StringBuilder stringBuilder;
             if (actionMode != null) actionMode.finish();
             switch (id) {
                 case R.id.algorithm_card /*2131361910*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmClick(getAdapterPosition());
-                    stringBuilder = new StringBuilder();
-                    stringBuilder.append("onClick: ");
-                    stringBuilder.append(getAdapterPosition());
-                    Log.d(str2, stringBuilder.toString());
                     return;
                 case R.id.algorithm_icon /*2131361912*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmImageClick(getAdapterPosition(), view);
-                    stringBuilder = new StringBuilder();
-                    stringBuilder.append("onImageClick: ");
-                    stringBuilder.append(getAdapterPosition());
-                    Log.d(str2, stringBuilder.toString());
                     return;
                 case R.id.favourite_checkbox /*2131362073*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmFavouriteClick(getAdapterPosition(), view);
-
                     return;
                 case R.id.learnt_checkbox /*2131362144*/:
                     AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmLearntClick(getAdapterPosition(), view);
-                    stringBuilder = new StringBuilder();
-                    stringBuilder.append(str);
-                    stringBuilder.append(getAdapterPosition());
-                    Log.d(str2, stringBuilder.toString());
                     return;
                 default:
             }

@@ -113,7 +113,6 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         if (resultCode == Activity.RESULT_OK) {
 
             alg_Uri = data.getData();
-            Log.d(TAG, "onActivityResult: " + alg_Uri.toString());
 
             this.new_alg_image_preview.setImageURI(alg_Uri);
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
