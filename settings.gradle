@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Algorubickv2"
+rootProject.name = "Algorubick"
