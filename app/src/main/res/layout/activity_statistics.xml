@@ -85,7 +85,13 @@
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5" />
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/solve_table_position_header"
+                    android:layout_weight="1"
+                    android:text="No."
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <TextView
                     android:id="@+id/solve_table_size_header"
@@ -108,7 +114,7 @@
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5" />
+                    android:layout_weight="1" />
             </TableRow>
 
             <androidx.recyclerview.widget.RecyclerView

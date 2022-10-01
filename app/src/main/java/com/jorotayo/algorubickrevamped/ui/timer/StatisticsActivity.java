@@ -45,22 +45,25 @@ public class StatisticsActivity extends AppCompatActivity implements OnSolveList
             this.statisticsRecycler.setLayoutManager(new LinearLayoutManager(this));
             this.statisticsRecycler.setHasFixedSize(true);
         }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void onSolveClick(int position) {
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     public void onSolveDeleteClick(final int position) {
         String str = "No";
-        AlertDialog deleteDialog = new Builder(this).setTitle("Delete Solve").setMessage("Are you sure you want to delete the current Solve").setPositiveButton("Yes", new OnClickListener() {
+        new Builder(this).setTitle("Delete Solve").setMessage("Are you sure you want to delete the current Solve").setPositiveButton("Yes", new OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 StatisticsActivity.this.DeleteSolve(position);
             }
-        }).setNegativeButton(str, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).setIcon(R.drawable.incorrect_48_r).setCancelable(true).show();
+        }).setNegativeButton(str, (dialog, which) -> dialog.dismiss()).setIcon(R.drawable.incorrect_48_r).setCancelable(true).show();
     }
 
     public void DeleteSolve(int position) {

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter.ViewHolder> {
     private OnSolveListener mOnSolveListener;
-    private ArrayList<Solve> mSolve = new ArrayList();
+    private ArrayList<Solve> mSolve;
 
     public StatisticsRecyclerAdapter(ArrayList<Solve> mSolve, OnSolveListener mOnSolveListener) {
         this.mSolve = mSolve;
