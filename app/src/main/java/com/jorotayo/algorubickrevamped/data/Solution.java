@@ -15,10 +15,15 @@ public class Solution {
     public String solutionIconLocation;
     public String solutionName;
 
-    public Solution(String solutionName, String solutionCreator, String solutionDescription) {
+    public Solution(String solutionName, String solutionCreator, String solutionDescription, String solutionIconLocation) {
         this.solutionName = solutionName;
         this.solutionCreator = solutionCreator;
         this.solutionDescription = solutionDescription;
+        this.solutionIconLocation = solutionIconLocation;
+    }
+
+    public Solution(){
+
     }
 
     public static ArrayList<Solution> createSolutionList(int numSolutions) {
@@ -33,7 +38,7 @@ public class Solution {
             StringBuilder stringBuilder3 = new StringBuilder();
             stringBuilder3.append("Creator Name_");
             stringBuilder3.append(lastCreatorID);
-            contacts.add(new Solution(stringBuilder2, stringBuilder3.toString(), "Description of the solution that will be created and listed"));
+            contacts.add(new Solution(stringBuilder2, stringBuilder3.toString(), "Description of the solution that will be created and listed",""));
         }
         return contacts;
     }

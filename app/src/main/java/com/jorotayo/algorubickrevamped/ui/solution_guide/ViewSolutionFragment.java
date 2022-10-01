@@ -27,6 +27,7 @@ import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.data.Steps;
 import com.jorotayo.algorubickrevamped.data.Steps_;
 import com.jorotayo.algorubickrevamped.ui.solution_guide.StepsRecyclerAdapter.OnStepListener;
+import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,14 +68,6 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setSubtitle(this.currentSolution.getSolutionName());
         setupStepsAdapter();
         setupDeleteDialog();
-     /*   StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("StepsBoxSize: ");
-        stringBuilder.append(this.stepsBox.getAll().size());
-        Log.d("StepsBox", stringBuilder.toString());
-        stringBuilder = new StringBuilder();
-        stringBuilder.append("onCreateView: ");
-        stringBuilder.append(this.stepsArrayList.size());
-        Log.d("StepsArrayList", stringBuilder.toString());*/
         ImageView view_solution_image = view.findViewById(R.id.view_solution_image);
         TextView view_solution_creator = view.findViewById(R.id.view_solution_creator);
         TextView view_solution_description = view.findViewById(R.id.view_solution_description);
@@ -84,7 +77,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         stringBuilder2.append("");
         stringBuilder2.append(this.currentSolution.getSolutionDescription());
         view_solution_description.setText(stringBuilder2.toString());
-        view_solution_image.setImageResource(R.drawable.cfop);
+        UtilMethods.LoadStepIcon(getContext(), view_solution_image, this.currentSolution.solutionIconLocation);
         this.view_solution_steps_recycler = view.findViewById(R.id.view_solution_steps_recycler);
         this.view_solution_steps_recycler.setAdapter(new StepsRecyclerAdapter(this.stepsArrayList, this));
         this.view_solution_steps_recycler.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -1,7 +1,5 @@
 package com.jorotayo.algorubickrevamped.ui.solution_guide;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,10 +58,10 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     private TextInputLayout til_solution_name;
     private View view, currentStepView;
     private ViewGroup main;
-    private ImageView step_start_image_preview, step_end_image_preview;
-    private Uri start_alg_uri, end_alg_uri;
     private boolean editingStart = true;
+    private boolean editingSolutionIcon = false;
     private int currentIndex = 0;
+    private ImageView add_solution_icon_preview;
 
     public static NewSolutionFragment newInstance() {
         return new NewSolutionFragment();
@@ -81,6 +79,8 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         view = inflater.inflate(R.layout.fragment_solution_new, container, false);
         ((SolutionActivity) requireActivity()).getSupportActionBar().setTitle("Create New Solution");
         Button addStepBtn = view.findViewById(R.id.add_step_btn);
+        ImageView add_new_solution_icon_btn = view.findViewById(R.id.add_new_solution_icon_btn);
+        add_solution_icon_preview = view.findViewById(R.id.new_solution_icon_preview);
         new_solution_name = view.findViewById(R.id.new_solution_name);
         new_solution_creator = view.findViewById(R.id.new_solution_creator);
         new_solution_description = view.findViewById(R.id.new_solution_description);
@@ -92,6 +92,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
         stepsBox = ObjectBox.getBoxStore().boxFor(Steps.class);
         addStepBtn.setOnClickListener(this);
+        add_new_solution_icon_btn.setOnClickListener(this);
         saveNewSolutionBtn.setOnClickListener(this);
         createCloseSolutionDialog();
         checkEditSolution();
@@ -105,18 +106,13 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
                 addStepView();
                 scrollBottom();
                 return;
+            case R.id.add_new_solution_icon_btn:
+                editingSolutionIcon = true;
+                UtilMethods.ImageSelection(this);
+                return;
             case R.id.save_new_solution_btn:
                 saveSolution();
                 return;
-            case R.id.new_solution_step_image_start_btn:
-                UtilMethods.ImageSelection(this);
-                Log.d(TAG, "ImageSelection: start");
-                return;
-            case R.id.new_solution_step_image_end_btn:
-                editingStart = false;
-                Toast.makeText(NewSolutionFragment.newInstance().getContext(), "end buton click", Toast.LENGTH_SHORT).show();
-                UtilMethods.ImageSelection(this);
-                Log.d(TAG, "ImageSelection: end");
         }
     }
 
@@ -136,6 +132,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         new_solution_name.setText(solution.getSolutionName());
         new_solution_creator.setText(this.currentSolution.getSolutionCreator());
         new_solution_description.setText(this.currentSolution.getSolutionDescription());
+        UtilMethods.LoadStepIcon(getContext(), add_solution_icon_preview, currentSolution.solutionIconLocation);
         List<Steps> editSteps = stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName()).build().find();
         int currentStep = editSteps.size();
         for (int i = 0; i < currentStep; i++) {
@@ -158,7 +155,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             new_solution_step_image_start_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, true, view2));
             new_solution_step_image_end_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, false, view2));
             algorithmInputSpace.setOnClickListener(v -> NewSolutionFragment.this.openKeyboard(algorithmInputSpace));
-            scrollBottom();
+            //scrollBottom();
         }
     }
 
@@ -175,8 +172,12 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         String solutionName = new_solution_name.getText().toString();
         String solutionCreator = new_solution_creator.getText().toString();
         String solutionDescription = new_solution_description.getText().toString();
+        String solutionImage = "";
+        if(add_solution_icon_preview.getTag() != null ){
+            add_solution_icon_preview.getTag().toString();
+        }
         if (validateSolution()) {
-            Solution newSolution = new Solution(solutionName, solutionCreator, solutionDescription);
+            Solution newSolution = new Solution(solutionName, solutionCreator, solutionDescription, solutionImage);
             if (Objects.requireNonNull(Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).getTitle()).toString().contains("Edit")) {
                 newSolution.id = currentSolution.id;
             }
@@ -236,8 +237,12 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             steps.setStepName(stepNameEditText.getText().toString());
             steps.setStepDescription(stepDescriptionEditText.getText().toString());
             steps.setStepAlgorithm(stepAlgorithmEditText.getText().toString());
-            steps.setStepImageStart(step_start_image_preview.getTag().toString());
-            steps.setStepImageEnd(step_end_image_preview.getTag().toString());
+            if(step_start_image_preview.getTag() != null){
+                steps.setStepImageStart(step_start_image_preview.getTag().toString());
+            }
+            if(step_end_image_preview.getTag() != null){
+                steps.setStepImageEnd(step_end_image_preview.getTag().toString());
+            }
             if (!(steps.stepDescription.isEmpty() || steps.stepName.isEmpty())) {
                 stepsBox.put(steps);
             }
@@ -263,6 +268,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         currentIndex = currentImgIndex;
         editingStart = editingStartImg;
         currentStepView = currentView;
+        editingSolutionIcon = false;
         String[] mimeTypes = {"image/png", "image/jpg", "image/jpeg"};
         ImagePicker.Companion.with(fragment)
                 .crop()
@@ -278,16 +284,25 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            step_start_image_preview = currentStepView.findViewById(R.id.step_start_image_preview);
-            step_end_image_preview = currentStepView.findViewById(R.id.step_end_image_preview);
-            if (editingStart) {
-                start_alg_uri = data.getData();
-                this.step_start_image_preview.setImageURI(start_alg_uri);
-                this.step_start_image_preview.setTag(start_alg_uri.toString());
+            ImageView step_start_image_preview;
+            if (editingSolutionIcon) {
+                Uri solution_alg_uri = data.getData();
+                add_solution_icon_preview.setImageURI(solution_alg_uri);
+                if(solution_alg_uri == null) {
+                    add_solution_icon_preview.setTag("");
+                } else {
+                    add_solution_icon_preview.setTag(solution_alg_uri.toString());
+                }
+            } else if (editingStart) {
+                Uri start_alg_uri = data.getData();
+                step_start_image_preview = currentStepView.findViewById(R.id.step_start_image_preview);
+                step_start_image_preview.setImageURI(start_alg_uri);
+                step_start_image_preview.setTag(start_alg_uri.toString());
             } else {
-                end_alg_uri = data.getData();
-                this.step_end_image_preview.setImageURI(end_alg_uri);
-                this.step_end_image_preview.setTag(end_alg_uri.toString());
+                Uri end_alg_uri = data.getData();
+                ImageView step_end_image_preview = currentStepView.findViewById(R.id.step_end_image_preview);
+                step_end_image_preview.setImageURI(end_alg_uri);
+                step_end_image_preview.setTag(end_alg_uri.toString());
             }
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(getActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();

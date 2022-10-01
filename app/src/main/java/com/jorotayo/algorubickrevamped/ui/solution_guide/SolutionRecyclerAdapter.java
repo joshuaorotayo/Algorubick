@@ -1,5 +1,6 @@
 package com.jorotayo.algorubickrevamped.ui.solution_guide;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,14 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
+import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 
 public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.ViewHolder> {
     private final OnSolutionListener mOnSolutionListener;
     private ArrayList<Solution> mSolutions;
+    private Context context;
 
     public SolutionRecyclerAdapter(ArrayList<Solution> mSolutions, OnSolutionListener mOnSolutionListener) {
         this.mSolutions = mSolutions;
@@ -27,7 +30,8 @@ public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.Vie
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solution, parent, false), this.mOnSolutionListener);
+        context = parent.getContext();
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_solution, parent, false), this.mOnSolutionListener);
     }
 
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -35,7 +39,8 @@ public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.Vie
         holder.solutionName.setText(solution.getSolutionName());
         holder.solutionCreator.setText(solution.getSolutionCreator());
         holder.solutionDescription.setText(solution.getSolutionDescription());
-        holder.solutionImage.setImageResource(R.drawable.rubiks_cube_scrambled);
+//        holder.solutionImage.setImageResource(R.drawable.rubiks_cube_scrambled);
+        UtilMethods.LoadStepIcon(context, holder.solutionImage, solution.getSolutionIconLocation());
     }
 
     public int getItemCount() {

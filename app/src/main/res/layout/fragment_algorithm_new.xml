@@ -18,7 +18,6 @@
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/new_alg_image_preview"
                     android:layout_marginTop="20dp"
                     android:layout_width="160dp"
