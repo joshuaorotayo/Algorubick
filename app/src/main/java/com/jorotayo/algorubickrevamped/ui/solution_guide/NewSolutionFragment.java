@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -283,6 +282,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             ImageView step_start_image_preview;
+            assert data != null;
             if (editingSolutionIcon) {
                 Uri solution_alg_uri = data.getData();
                 add_solution_icon_preview.setImageURI(solution_alg_uri);

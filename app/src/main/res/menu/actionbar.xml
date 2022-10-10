@@ -7,17 +7,13 @@
         android:title="@string/searchview"
         android:visible="false"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionbar_statistics"
-        android:icon="@drawable/icons8_timesheet_24"
-        android:iconTintMode="screen"
+        android:icon="@drawable/icons8_timesheet_50"
+        app:itemIconSize="48dp"
         android:title="@string/actionbar_statistics"
+        app:iconTint="@color/white"
         android:visible="false"
-        app:showAsAction="always" />
-
-   <!-- <item
-        android:id="@+id/actionbar_settings"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/action_settings" />-->
+        app:showAsAction="ifRoom" />
 </menu>

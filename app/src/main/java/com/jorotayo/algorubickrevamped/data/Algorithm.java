@@ -19,8 +19,9 @@ public class Algorithm {
     public boolean favourite_alg;
     public boolean selected_alg;
     public boolean learnt;
+    public long createdTime;
 
-    public Algorithm(String alg_name, String alg, String alg_description, String algorithm_icon, String category, int practiced_correctly_int, int practiced_number_int, boolean custom_alg, boolean favourite_alg, boolean selected_alg, boolean learnt) {
+    public Algorithm(String alg_name, String alg, String alg_description, String algorithm_icon, String category, int practiced_correctly_int, int practiced_number_int, boolean custom_alg, boolean favourite_alg, boolean selected_alg, boolean learnt, long createdTime) {
         this.alg_name = alg_name;
         this.alg = alg;
         this.alg_description = alg_description;
@@ -32,6 +33,7 @@ public class Algorithm {
         this.favourite_alg = favourite_alg;
         this.selected_alg = selected_alg;
         this.learnt = learnt;
+        this.createdTime = createdTime;
     }
 
     public Algorithm() {
@@ -141,4 +143,8 @@ public class Algorithm {
     public void setFavourite_alg() {
         this.favourite_alg ^= favourite_alg;
     }
+
+    public void setCreatedTime() { this.createdTime = System.currentTimeMillis(); }
+
+    public Long getCreatedTime() { return this.createdTime;}
 }

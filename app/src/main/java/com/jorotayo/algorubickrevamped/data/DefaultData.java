@@ -17,7 +17,7 @@ public class DefaultData {
         ArrayList<Algorithm> algorithmArrayList = new ArrayList<>();
         for (int i = 0; i < this.alg_names.size(); i++) {
             // Algorithm algorithm = new Algorithm((String) this.alg_names.get(i), this.algs.get(i), (String) this.descriptions.get(i), (String) this.categories.get(i), false, true, false, 0, 0, false, (String) this.images.get(i));
-            Algorithm algorithm = new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i), 0, 0, false, false, false, false);
+            Algorithm algorithm = new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i), 0, 0, false, false, false, false,0);
         }
         return algorithmArrayList;
     }

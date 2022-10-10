@@ -21,7 +21,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
     private TextView current_alg_text;
     private TableLayout double_face_moves;
     private ViewSwitcher keyboardSwitcher;
-    private Boolean modified = Boolean.valueOf(false);
+    private Boolean modified = Boolean.FALSE;
     private Dialog rootView;
     private TableLayout single_face_moves;
     private String wholeAlg;

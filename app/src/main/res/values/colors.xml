@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="abc_decor_view_status_guard">#ff000000</color>
     <color name="abc_decor_view_status_guard_light">#ffffffff</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
@@ -32,41 +32,41 @@
     <color name="colorPrimary">#124559</color>
     <color name="colorPrimaryDark">#0c3545</color>
     <color name="colorRed">#e41d0e</color>
-    <color name="design_bottom_navigation_shadow_color">#14000000</color>
-    <color name="design_dark_default_color_background">#121212</color>
-    <color name="design_dark_default_color_error">#cf6679</color>
-    <color name="design_dark_default_color_on_background">#ffffff</color>
-    <color name="design_dark_default_color_on_error">#000000</color>
-    <color name="design_dark_default_color_on_primary">#000000</color>
-    <color name="design_dark_default_color_on_secondary">#000000</color>
-    <color name="design_dark_default_color_on_surface">#ffffff</color>
-    <color name="design_dark_default_color_primary">#ba86fc</color>
-    <color name="design_dark_default_color_primary_dark">#000000</color>
-    <color name="design_dark_default_color_primary_variant">#3700b3</color>
-    <color name="design_dark_default_color_secondary">#03dac6</color>
-    <color name="design_dark_default_color_secondary_variant">#03dac6</color>
-    <color name="design_dark_default_color_surface">#121212</color>
+    <color name="design_bottom_navigation_shadow_color" tools:ignore="PrivateResource">#14000000</color>
+    <color name="design_dark_default_color_background" tools:ignore="PrivateResource">#121212</color>
+    <color name="design_dark_default_color_error" tools:ignore="PrivateResource">#cf6679</color>
+    <color name="design_dark_default_color_on_background" tools:ignore="PrivateResource">#ffffff</color>
+    <color name="design_dark_default_color_on_error" tools:ignore="PrivateResource">#000000</color>
+    <color name="design_dark_default_color_on_primary" tools:ignore="PrivateResource">#000000</color>
+    <color name="design_dark_default_color_on_secondary" tools:ignore="PrivateResource">#000000</color>
+    <color name="design_dark_default_color_on_surface" tools:ignore="PrivateResource">#ffffff</color>
+    <color name="design_dark_default_color_primary" tools:ignore="PrivateResource">#ba86fc</color>
+    <color name="design_dark_default_color_primary_dark" tools:ignore="PrivateResource">#000000</color>
+    <color name="design_dark_default_color_primary_variant" tools:ignore="PrivateResource">#3700b3</color>
+    <color name="design_dark_default_color_secondary" tools:ignore="PrivateResource">#03dac6</color>
+    <color name="design_dark_default_color_secondary_variant" tools:ignore="PrivateResource">#03dac6</color>
+    <color name="design_dark_default_color_surface" tools:ignore="PrivateResource">#121212</color>
     <color name="design_default_color_background">#ffffff</color>
     <color name="design_default_color_error">#b00020</color>
-    <color name="design_default_color_on_background">#000000</color>
-    <color name="design_default_color_on_error">#ffffff</color>
+    <color name="design_default_color_on_background" tools:ignore="PrivateResource">#000000</color>
+    <color name="design_default_color_on_error" tools:ignore="PrivateResource">#ffffff</color>
     <color name="design_default_color_on_primary">#ffffff</color>
     <color name="design_default_color_on_secondary">#000000</color>
-    <color name="design_default_color_on_surface">#000000</color>
+    <color name="design_default_color_on_surface" tools:ignore="PrivateResource">#000000</color>
     <color name="design_default_color_primary">#6200ee</color>
     <color name="design_default_color_primary_dark">#3700b3</color>
     <color name="design_default_color_primary_variant">#3700b3</color>
     <color name="design_default_color_secondary">#03dac6</color>
     <color name="design_default_color_secondary_variant">#018786</color>
     <color name="design_default_color_surface">#ffffff</color>
-    <color name="design_fab_shadow_end_color">@android:color/transparent</color>
-    <color name="design_fab_shadow_mid_color">#14000000</color>
-    <color name="design_fab_shadow_start_color">#44000000</color>
-    <color name="design_fab_stroke_end_inner_color">#0a000000</color>
-    <color name="design_fab_stroke_end_outer_color">#0f000000</color>
-    <color name="design_fab_stroke_top_inner_color">#1affffff</color>
-    <color name="design_fab_stroke_top_outer_color">#2effffff</color>
-    <color name="design_snackbar_background_color">#323232</color>
+    <color name="design_fab_shadow_end_color" tools:ignore="PrivateResource">@android:color/transparent</color>
+    <color name="design_fab_shadow_mid_color" tools:ignore="PrivateResource">#14000000</color>
+    <color name="design_fab_shadow_start_color" tools:ignore="PrivateResource">#44000000</color>
+    <color name="design_fab_stroke_end_inner_color" tools:ignore="PrivateResource">#0a000000</color>
+    <color name="design_fab_stroke_end_outer_color" tools:ignore="PrivateResource">#0f000000</color>
+    <color name="design_fab_stroke_top_inner_color" tools:ignore="PrivateResource">#1affffff</color>
+    <color name="design_fab_stroke_top_outer_color" tools:ignore="PrivateResource">#2effffff</color>
+    <color name="design_snackbar_background_color" tools:ignore="PrivateResource">#323232</color>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
@@ -90,14 +90,14 @@
     <color name="material_grey_800">#ff424242</color>
     <color name="material_grey_850">#ff303030</color>
     <color name="material_grey_900">#ff212121</color>
-    <color name="mtrl_btn_text_color_disabled">#61000000</color>
-    <color name="mtrl_btn_transparent_bg_color">#00ffffff</color>
-    <color name="mtrl_scrim_color">#52000000</color>
-    <color name="mtrl_textinput_default_box_stroke_color">#6b000000</color>
-    <color name="mtrl_textinput_disabled_color">#1f000000</color>
-    <color name="mtrl_textinput_filled_box_default_background_color">#0a000000</color>
-    <color name="mtrl_textinput_focused_box_stroke_color">#00000000</color>
-    <color name="mtrl_textinput_hovered_box_stroke_color">#de000000</color>
+    <color name="mtrl_btn_text_color_disabled" tools:ignore="PrivateResource">#61000000</color>
+    <color name="mtrl_btn_transparent_bg_color" tools:ignore="PrivateResource">#00ffffff</color>
+    <color name="mtrl_scrim_color" tools:ignore="PrivateResource">#52000000</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:ignore="PrivateResource">#6b000000</color>
+    <color name="mtrl_textinput_disabled_color" tools:ignore="PrivateResource">#1f000000</color>
+    <color name="mtrl_textinput_filled_box_default_background_color" tools:ignore="PrivateResource">#0a000000</color>
+    <color name="mtrl_textinput_focused_box_stroke_color" tools:ignore="PrivateResource">#00000000</color>
+    <color name="mtrl_textinput_hovered_box_stroke_color" tools:ignore="PrivateResource">#de000000</color>
     <color name="notification_action_color_filter">
         @color/androidx_core_secondary_text_default_material_light
     </color>

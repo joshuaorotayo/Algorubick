@@ -36,6 +36,7 @@ import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -139,6 +140,29 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, algorithm_filter);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         algorithms_filter_spinner.setAdapter(dataAdapter);
+        /*algorithms_filter_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch ((int) id) {
+                    case 0:
+                        algorithmArrayList.sort(Comparator.comparing(Algorithm::getCreatedTime));
+                        break;
+                    case 1:
+                        algorithmArrayList.sort(Comparator.comparing(Algorithm::getPracticed_number_int));
+                        break;
+                    case 2:
+                        algorithmArrayList.sort(Comparator.comparing(Algorithm::getPracticed_correctly_int));
+                        break;
+                }
+                Toast.makeText(getContext(), "" + algorithmArrayList.size(), Toast.LENGTH_SHORT).show();
+                algorithmRecyclerAdapter.setFilter(algorithmArrayList);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
         algorithms_filter_text = algorithms_filter_spinner.getSelectedItem().toString();
     }
 
@@ -182,15 +206,10 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void onAlgorithmFavouriteClick(int position, View v) {
         Algorithm alg = algorithmArrayList.get(position);
-        alg.setFavourite_alg();
+        alg.favourite_alg = !alg.favourite_alg;
         algorithmBox.put(alg);
-        algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        algorithmRecyclerAdapter.notifyItemChanged(position);
-     algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
-        /*   Context context = getContext();
-        String stringBuilder = "Favourite" + position;
-        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();*/
     }
 
     public void onAlgorithmLearntClick(int position, View v) {
@@ -272,7 +291,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     public void getDefaultAlgs() {
         for (int i = 0; i < alg_names.size(); i++) {
-            algorithmBox.put(new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i), 0, 0, false, false, false, false));
+            algorithmBox.put(new Algorithm(alg_names.get(i), algs.get(i), descriptions.get(i), images.get(i), categories.get(i), 0, 0, false, false, false, false, 0));
         }
     }
 

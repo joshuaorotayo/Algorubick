@@ -1,11 +1,9 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
-import static android.content.ContentValues.TAG;
 import static com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeFragment.actionMode;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.jorotayo.algorubickrevamped.R;

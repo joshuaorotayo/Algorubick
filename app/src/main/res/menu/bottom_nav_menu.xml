@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/navigation_notation"
-        android:icon="@drawable/icons8_help_black_24dp"
+        android:icon="@drawable/icons8_help_50"
+        app:itemIconSize="24dp"
         android:title="@string/title_notation_help" />
     <item
         android:id="@+id/navigation_solution_guide"
-        android:icon="@drawable/icons8_route_black_24dp"
+        android:icon="@drawable/icons8_route_50"
+        app:itemIconSize="24dp"
         android:title="@string/title_solution_guide" />
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/icons8_home_24_black"
+        android:icon="@drawable/icons8_home_50"
+        app:itemIconSize="24dp"
         android:title="@string/title_home" />
     <item
         android:id="@+id/navigation_timer"
-        android:icon="@drawable/icons8_stopwatch_black_24dp"
+        android:icon="@drawable/icons8_stopwatch_48"
+        app:itemIconSize="24dp"
         android:title="@string/title_timer" />
 </menu>

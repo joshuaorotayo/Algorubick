@@ -1,6 +1,5 @@
 package com.jorotayo.algorubickrevamped.ui.timer;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.jorotayo.algorubickrevamped.R;

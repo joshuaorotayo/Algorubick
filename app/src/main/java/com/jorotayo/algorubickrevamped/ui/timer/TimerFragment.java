@@ -9,7 +9,6 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.Constraints;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 

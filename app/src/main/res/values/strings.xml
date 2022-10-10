@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="abc_capital_off">OFF</string>
     <string name="abc_capital_on">ON</string>
     <string name="abc_menu_alt_shortcut_label">Alt+</string>
@@ -112,13 +112,13 @@
     <string name="case_name">Case Name</string>
     <string name="case_name_header">Enter a name for the new case</string>
     <string name="case_name_text">Unnamed case</string>
-    <string name="character_counter_content_description">Characters entered %1$d of %2$d</string>
-    <string name="character_counter_overflowed_content_description">Character limit exceeded %1$d of %2$d</string>
-    <string name="character_counter_pattern">%1$d / %2$d</string>
+    <string name="character_counter_content_description" tools:ignore="PrivateResource">Characters entered %1$d of %2$d</string>
+    <string name="character_counter_overflowed_content_description" tools:ignore="PrivateResource">Character limit exceeded %1$d of %2$d</string>
+    <string name="character_counter_pattern" tools:ignore="PrivateResource">%1$d / %2$d</string>
     <string name="check_alg">Check Algorithm</string>
     <string name="check_correct_btn">Check Alg</string>
-    <string name="chip_text">Chip text</string>
-    <string name="clear_text_end_icon_content_description">Clear text</string>
+    <string name="chip_text" tools:ignore="PrivateResource">Chip text</string>
+    <string name="clear_text_end_icon_content_description" tools:ignore="PrivateResource">Clear text</string>
     <string name="clockwise_b">Back clockwise: B\nClockwise turn of the back layer</string>
     <string name="clockwise_d">Down clockwise: D\nClockwise turn of the down layer</string>
     <string name="clockwise_f">Front clockwise: F\nClockwise turn of the front layer</string>
@@ -173,11 +173,11 @@
     <string name="e_slice">E-Layer Slice: E\n\nLayers between the Up and Down layers</string>
     <string name="edit_alg_icon_description">Edit Current Algorithm</string>
     <string name="edit_solution_menu_icon">Edit Solution</string>
-    <string name="error_icon_content_description">Error</string>
+    <string name="error_icon_content_description" tools:ignore="PrivateResource">Error</string>
     <string name="every_incorrect_practice_text">Sound for every incorrect practice:</string>
     <string name="every_practice_text">Sound for every correct practice:</string>
     <string name="expand_button_title">Advanced</string>
-    <string name="exposed_dropdown_menu_content_description">Show dropdown menu</string>
+    <string name="exposed_dropdown_menu_content_description" tools:ignore="PrivateResource">Show dropdown menu</string>
     <string name="extra_description">Anti clockwise slices are noted with the slice move followed by an apostrophe e.g. M\'\n\n Double slice moves are noted with the slice move followed by the number 2 e.g. M2</string>
     <string name="extra_header">Extra Information:</string>
     <string name="fab_transformation_scrim_behavior">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
@@ -197,7 +197,7 @@
     <string name="hide_btn">▼</string>
     <string name="home_total_algs">Total Algs:</string>
     <string name="home_total_number">X</string>
-    <string name="icon_content_description">Dialog Icon</string>
+    <string name="icon_content_description" tools:ignore="PrivateResource">Dialog Icon</string>
     <string name="info_learn_description">Input in the algorithm below to learn the algorithm</string>
     <string name="input_algorithm">Input Algorithm</string>
     <string name="input_algorithm_hint">R, U, R\', U, R…</string>
@@ -252,8 +252,8 @@
     <string name="moves_subhead">This section will detail possible moves that can be made on the cube.</string>
     <string name="nav_about_page">Notation Help</string>
     <string name="nav_all_algorithms">All Algorithms</string>
-    <string name="nav_app_bar_navigate_up_description">Navigate up</string>
-    <string name="nav_app_bar_open_drawer_description">Open navigation drawer</string>
+    <string name="nav_app_bar_navigate_up_description" tools:ignore="PrivateResource">Navigate up</string>
+    <string name="nav_app_bar_open_drawer_description" tools:ignore="PrivateResource">Open navigation drawer</string>
     <string name="nav_cube_simulator">Cube Simulator</string>
     <string name="nav_cube_timer">Cube Timer</string>
     <string name="nav_settings">Settings</string>
@@ -290,7 +290,7 @@
     <string name="objectbox_objectBrowserNotificationText">Running on port %1$d. Tap to open in the device\'s browser. Or run adb forward tcp:%1$d tcp:%1$d to forward the port to your host.</string>
     <string name="objectbox_objectBrowserNotificationTitle">ObjectBox Browser</string>
     <string name="orange_text">Orange:</string>
-    <string name="password_toggle_content_description">Toggle password visibility</string>
+    <string name="password_toggle_content_description" tools:ignore="PrivateResource">Toggle password visibility</string>
     <string name="personal_settings_header">Personal Settings</string>
     <string name="plus_2_button">+2</string>
     <string name="plus_2_description">Add 2 Seconds</string>

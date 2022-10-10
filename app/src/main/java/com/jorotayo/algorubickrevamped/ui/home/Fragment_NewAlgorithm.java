@@ -1,19 +1,14 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -179,6 +174,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
             if(alg_Uri != null){
                 this.currentAlgorithm.setAlgorithm_icon(alg_Uri.toString());
             }
+            this.currentAlgorithm.setCreatedTime();
             this.algorithmBox.put(this.currentAlgorithm);
             List<Algorithm> algorithmList = this.algorithmBox.getAll();
             StringBuilder stringBuilder = new StringBuilder();

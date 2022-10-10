@@ -6,11 +6,11 @@ android {
     compileSdkVersion 32
 
     defaultConfig {
-        applicationId "com.jorotayo.algorubickrevamped"
+        applicationId 'com.jorotayo.algorubickrevamped'
         minSdkVersion 31
         targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "1.05"
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
@@ -23,8 +23,15 @@ android {
     }
 
     signingConfigs {
+        debug {
+            storeFile file('D:\\Documents\\Creating\\Code\\Algorubick_key.jks')
+            storePassword 'Laughter12!'
+            keyPassword 'Laughter12!'
+            keyAlias 'algorubik_key'
+        }
+
         release {
-            storeFile file('../../../Algorubick_key.jks')
+            storeFile file('D:\\Documents\\Creating\\Code\\Algorubick_key.jks')
             storePassword 'Laughter12!'
             keyAlias 'algorubik_key'
             keyPassword 'Laughter12!'
@@ -34,8 +41,9 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
