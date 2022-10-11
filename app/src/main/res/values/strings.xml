@@ -442,4 +442,9 @@
     <string name="image_start_desc">Image for algorithm start state</string>
     <string name="add_step_image_end_btn">+ Img End</string>
     <string name="add_step_image_start_btn">+ Img Start</string>
+    <string name="solution_name_error">Solution name cannot be blank</string>
+    <string name="solution_description_error">Solution description cannot be blank</string>
+    <string name="solution_creator_error">"            Solution creator cannot be blank"</string>
+    <string name="no_image_selected">No Image Selected</string>
+    <string name="image_selection_cancelled">Image selection cancelled</string>
 </resources>

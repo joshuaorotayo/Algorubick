@@ -104,7 +104,6 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
     }
 
     public ArrayList<Solution> sortBySteps() {
-
         // TODO: 28/03/2021 uncomment here
         ArrayList<Solution> arrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
         this.solutionArrayList = arrayList;

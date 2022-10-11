@@ -154,7 +154,6 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
             new_solution_step_image_start_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, true, view2));
             new_solution_step_image_end_btn.setOnClickListener(v -> StepImageSelection(this, currentIndex, false, view2));
             algorithmInputSpace.setOnClickListener(v -> NewSolutionFragment.this.openKeyboard(algorithmInputSpace));
-            //scrollBottom();
         }
     }
 
@@ -173,7 +172,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         String solutionDescription = new_solution_description.getText().toString();
         String solutionImage = "";
         if(add_solution_icon_preview.getTag() != null ){
-            add_solution_icon_preview.getTag().toString();
+            solutionImage = add_solution_icon_preview.getTag().toString();
         }
         if (validateSolution()) {
             Solution newSolution = new Solution(solutionName, solutionCreator, solutionDescription, solutionImage);
@@ -190,15 +189,15 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         boolean valid = true;
         clearErrors();
         if (new_solution_name.getText().toString().isEmpty()) {
-            til_solution_name.setError("Solution Name cannot be blank");
+            til_solution_name.setError(getText(R.string.solution_name_error));
             valid = false;
         }
         if (new_solution_creator.getText().toString().isEmpty()) {
-            til_solution_creator.setError("Solution creator cannot be blank");
+            til_solution_name.setError(getText(R.string.solution_creator_error));
             valid = false;
         }
         if (new_solution_description.getText().toString().isEmpty()) {
-            til_solution_description.setError("Solution Description cannot be blank");
+            til_solution_name.setError(getText(R.string.solution_description_error));
             valid = false;
         }
         if (valid) {
@@ -303,9 +302,9 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
                 step_end_image_preview.setTag(end_alg_uri.toString());
             }
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            Toast.makeText(getActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getText(R.string.no_image_selected), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Image selection cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getText(R.string.image_selection_cancelled), Toast.LENGTH_SHORT).show();
         }
     }
 
