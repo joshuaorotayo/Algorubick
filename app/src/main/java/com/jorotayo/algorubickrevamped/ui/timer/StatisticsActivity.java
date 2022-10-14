@@ -22,7 +22,7 @@ import io.objectbox.Box;
 
 public class StatisticsActivity extends AppCompatActivity implements OnSolveListener {
     LinearLayout noSolvesAlert;
-    ArrayList<Solve> solveArrayList = new ArrayList();
+    ArrayList<Solve> solveArrayList = new ArrayList<>();
     Box<Solve> solveBox;
     RecyclerView statisticsRecycler;
     StatisticsRecyclerAdapter statisticsRecyclerAdapter;
@@ -31,18 +31,18 @@ public class StatisticsActivity extends AppCompatActivity implements OnSolveList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        this.statisticsRecycler = findViewById(R.id.statistics_recycler);
-        Box boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
+        this.statisticsRecycler = findViewById(R.id.solve_grid);
+        Box<Solve> boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
         this.solveBox = boxFor;
-        this.solveArrayList = (ArrayList) boxFor.getAll();
+        this.solveArrayList = (ArrayList<Solve>) boxFor.getAll();
         this.noSolvesAlert = findViewById(R.id.no_solves_alert);
         if (!this.solveArrayList.isEmpty()) {
             this.noSolvesAlert.setVisibility(View.GONE);
             StatisticsRecyclerAdapter statisticsRecyclerAdapter = new StatisticsRecyclerAdapter(this.solveArrayList, this);
             this.statisticsRecyclerAdapter = statisticsRecyclerAdapter;
             this.statisticsRecycler.setAdapter(statisticsRecyclerAdapter);
-            this.statisticsRecycler.setLayoutManager(new LinearLayoutManager(this));
-            this.statisticsRecycler.setHasFixedSize(true);
+           /* this.statisticsRecycler.setLayoutManager(new LinearLayoutManager(this));
+            this.statisticsRecycler.setHasFixedSize(true);*/
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

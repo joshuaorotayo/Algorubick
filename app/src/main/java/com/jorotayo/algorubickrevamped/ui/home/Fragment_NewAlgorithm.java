@@ -1,6 +1,7 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,15 +31,18 @@ import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
+import com.jorotayo.algorubickrevamped.data.Algorithm_;
+import com.jorotayo.algorubickrevamped.data.Category;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import io.objectbox.Box;
 
-public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, OnItemSelectedListener, OnBackPressed {
+public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.OnCategoryListener, OnClickListener, OnItemSelectedListener, OnBackPressed {
     MaterialAlertDialogBuilder alertDialogBuilder;
     Button new_alg_save_btn;
     View view;
@@ -53,6 +56,12 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
     private TextInputLayout til_alg, til_alg_description, til_alg_name;
     private ImageView new_add_new_alg_image, new_alg_image_preview;
     private Uri alg_Uri;
+    Box<Category> categoryBox;
+    ArrayList<Category> categories;
+    AlertDialog categoryConfirmDeleteDialog;
+    Category deleteCategory = new Category();
+    CategoryAdapter categoryAdapter;
+    private String selectedCategory = "Default";
 
     static Fragment_NewAlgorithm newInstance() {
         return new Fragment_NewAlgorithm();
@@ -61,6 +70,9 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
+        this.categoryBox = ObjectBox.getBoxStore().boxFor(Category.class);
+//        categories = categoryBox.query().build().property(Category_.category_name).findStrings();
+        categories = (ArrayList<Category>) categoryBox.getAll();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,16 +80,11 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.view = inflater.inflate(R.layout.fragment_algorithm_new, container, false);
         Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("Create New Algorithm");
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-        ArrayList<String> filter_category = new ArrayList<>();
-        filter_category.add("Triggers");
-        filter_category.add("OLL");
-        filter_category.add("PLL");
-        filter_category.add("F2L");
-        filter_category.add("Cross");
-        filter_category.add("EOLL");
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, filter_category);
-        categoryAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
+       /* ArrayAdapter<String> categoryAdapter = new ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, categories);
+        categoryAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);*/
+
+        categoryAdapter = new CategoryAdapter(requireContext(), R.id.category_spinner_label, categories, this);
         this.new_alg_name_edit = this.view.findViewById(R.id.new_alg_name_edit);
         this.new_alg_edit = this.view.findViewById(R.id.new_alg_edit);
         this.new_alg_description_edit = this.view.findViewById(R.id.new_alg_description_edit);
@@ -89,14 +96,12 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.new_alg_favourite_switch = this.view.findViewById(R.id.new_alg_favourite_switch);
         this.new_alg_custom_switch = this.view.findViewById(R.id.new_alg_custom_switch);
         this.new_alg_save_btn = this.view.findViewById(R.id.new_alg_save_btn);
-
-        Spinner spinner = this.view.findViewById(R.id.new_alg_category_spinner);
-        this.new_alg_category_spinner = spinner;
-        spinner.setOnItemSelectedListener(this);
+        this.new_alg_category_spinner = this.view.findViewById(R.id.new_alg_category_spinner);
         this.new_alg_edit.setOnClickListener(v -> Fragment_NewAlgorithm.this.openKeyboard());
         this.new_alg_save_btn.setOnClickListener(this);
         this.new_add_new_alg_image.setOnClickListener(v -> UtilMethods.ImageSelection(this));
         this.new_alg_category_spinner.setAdapter(categoryAdapter);
+        buildCategoryDeleteDialog();
         createAlertDialog();
         checkEditAlgorithm();
         return this.view;
@@ -106,9 +111,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
     public final void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-
             alg_Uri = data.getData();
-
             this.new_alg_image_preview.setImageURI(alg_Uri);
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(getActivity(), "No Image Selected", Toast.LENGTH_SHORT).show();
@@ -133,11 +136,20 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
         this.new_alg_name_edit.setText(this.currentAlgorithm.getAlg_name());
         this.new_alg_edit.setText(this.currentAlgorithm.getAlg());
         this.new_alg_description_edit.setText(this.currentAlgorithm.getAlg_description());
-        this.new_alg_category_spinner.setSelected(this.currentAlgorithm.getSelected_alg());
+        this.new_alg_category_spinner.setSelection(findSelection(this.currentAlgorithm.getCategory()));
         this.new_alg_custom_switch.setChecked(this.currentAlgorithm.isCustom_alg());
         this.new_alg_favourite_switch.setChecked(this.currentAlgorithm.isFavourite_alg());
         this.new_alg_save_btn.setOnClickListener(v -> Fragment_NewAlgorithm.this.saveEditAlgorithm());
         UtilMethods.LoadAlgorithmIcon(getContext(), this.new_alg_image_preview, currentAlgorithm);
+    }
+
+    private int findSelection(String category) {
+        for(int i=0; i< categories.size(); i++){
+            if(Objects.equals(categories.get(i).category_name, category)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void createAlertDialog() {
@@ -146,7 +158,7 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
     }
 
     private void openKeyboard() {
-                new KeyboardDialog().newKeyboard(requireContext(), this.new_alg_edit);
+        new KeyboardDialog().newKeyboard(requireContext(), this.new_alg_edit);
     }
 
     public void onClick(View v) {
@@ -168,10 +180,10 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
             this.currentAlgorithm.setAlg_name(this.new_alg_name_edit.getText().toString());
             this.currentAlgorithm.setAlg(this.new_alg_edit.getText().toString());
             this.currentAlgorithm.setAlg_description(this.new_alg_description_edit.getText().toString());
-            this.currentAlgorithm.setCategory(this.new_alg_category_spinner.getSelectedItem().toString());
+            this.currentAlgorithm.setCategory(selectedCategory);
             this.currentAlgorithm.custom_alg = this.new_alg_custom_switch.isChecked();
             this.currentAlgorithm.favourite_alg = this.new_alg_favourite_switch.isChecked();
-            if(alg_Uri != null){
+            if (alg_Uri != null) {
                 this.currentAlgorithm.setAlgorithm_icon(alg_Uri.toString());
             }
             this.currentAlgorithm.setCreatedTime();
@@ -191,10 +203,12 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
             newAlg.setAlg_name(this.new_alg_name_edit.getText().toString());
             newAlg.setAlg(this.new_alg_edit.getText().toString());
             newAlg.setAlg_description(this.new_alg_description_edit.getText().toString());
-            newAlg.setCategory(this.new_alg_category_spinner.getSelectedItem().toString());
+            newAlg.setCategory(selectedCategory);
             newAlg.custom_alg = this.new_alg_custom_switch.isChecked();
             newAlg.favourite_alg = this.new_alg_favourite_switch.isChecked();
-            newAlg.setAlgorithm_icon(this.alg_Uri.toString());
+            if (alg_Uri != null) {
+                newAlg.setAlgorithm_icon(alg_Uri.toString());
+            }
             newAlg.setPracticed_correctly_int(0);
             newAlg.setPracticed_number_int(0);
             this.algorithmBox.put(newAlg);
@@ -241,6 +255,78 @@ public class Fragment_NewAlgorithm extends Fragment implements OnClickListener, 
 
     public void customBackPressed() {
         this.alertDialogBuilder.show();
+    }
+
+
+    public void categoryLabelClick(long position) {
+        int selectedIndex = 0;
+        for (int i = 0; i < categories.size(); i++) {
+            if (categories.get(i).id == position) {
+                selectedIndex = i;
+            }
+        }
+        new_alg_category_spinner.setSelection(selectedIndex, true);
+        selectedCategory = categories.get(selectedIndex).category_name;
+        hideSpinnerDropDown(new_alg_category_spinner);
+    }
+    /**
+     * Hides a spinner's drop down.
+     */
+    public static void hideSpinnerDropDown(Spinner spinner) {
+        try {
+            Method method = Spinner.class.getDeclaredMethod("onDetachedFromWindow");
+            method.setAccessible(true);
+            method.invoke(spinner);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void categoryDeleteClick(long position) {
+        for (int i = 0; i < categories.size(); i++) {
+            if (categories.get(i).id == position) {
+                deleteCategory = categories.get(i);
+            }
+        }
+        categoryConfirmDeleteDialog.show();
+    }
+
+    public void buildCategoryDeleteDialog() {
+        categoryConfirmDeleteDialog = new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.spinner_category_delete_title))
+                .setMessage(getString(R.string.spinner_delete_confirmation, categories.get(0).category_name))
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    dialog.dismiss();
+                    deleteCategory();
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .create();
+    }
+
+    public void deleteCategory() {
+        if (categories.size() >= 2) {
+            //query all algorithms and change any with same category is changed to "Default"
+            List<Algorithm> algorithmList = ObjectBox.getBoxStore().boxFor(Algorithm.class).query().equal(Algorithm_.category, deleteCategory.category_name).build().find();
+
+            //remove from box
+            categoryBox.remove(deleteCategory);
+
+            //reinitialise list of categories (deleted category will now be gone)
+            categories = (ArrayList<Category>) categoryBox.getAll();
+
+            //set the name of any that had that category to 'default'
+            for (Algorithm algorithm : algorithmList) {
+                algorithm.setCategory(categories.get(0).category_name);
+            }
+
+            //put all the changed ones back in
+            algorithmBox.put(algorithmList);
+            categoryAdapter = new CategoryAdapter(getContext(), R.id.category_spinner_label, categories, this);
+            new_alg_category_spinner.setAdapter(categoryAdapter);
+        } else {
+            Toast.makeText(getContext(), "At least one category is needed", Toast.LENGTH_SHORT).show();
+        }
+        hideSpinnerDropDown(new_alg_category_spinner);
     }
 
 }

@@ -447,4 +447,19 @@
     <string name="solution_creator_error">"            Solution creator cannot be blank"</string>
     <string name="no_image_selected">No Image Selected</string>
     <string name="image_selection_cancelled">Image selection cancelled</string>
+    <string name="solve_card">Solve Card</string>
+    <string name="top_solve_heart_desc">Fastest solve for current cube size</string>
+    <string name="delete_solve_btn">Delete Solve</string>
+    <string name="searchview_description">Search algorithms by name, algorithm or description</string>
+    <string name="solution_creator_description">Name of solution creator</string>
+    <string name="alg_home_count">%1$d</string>
+    <string name="home_sort_by">Sort by: </string>
+    <string name="spinner_description">Algorithm sort by spinner</string>
+    <string name="delete_category_icon">Delete category icon</string>
+    <string name="category_spinner_label">category_spinner_label</string>
+    <string name="category_dropdown_delete">category_dropdown_delete</string>
+    <string name="spinner_delete_confirmation">Deleting the category will reset any algorithm with this category to the first category (%1$s)</string>
+    <string name="spinner_category_delete_title">Delete Category?</string>
+    <string name="info_statistics_description">Info icon for statistics</string>
+    <string name="no">No.</string>
 </resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/dropdownListPreferredItemHeight"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/category_spinner_label"
+        android:tag="@string/category_spinner_label"
+        style="?attr/spinnerDropDownItemStyle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAlignment="center" />
+
+    <ImageButton
+        android:id="@+id/dropdown_delete"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:tag="@string/category_dropdown_delete"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:contentDescription="@string/delete_category_icon"
+        android:src="@drawable/icons8_clear_symbol_24"
+        app:tint="@color/material_grey_850" />
+
+
+</LinearLayout>

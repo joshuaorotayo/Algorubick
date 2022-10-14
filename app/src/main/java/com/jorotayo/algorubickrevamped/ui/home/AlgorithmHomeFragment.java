@@ -36,6 +36,7 @@ import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -54,6 +55,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     private Box<Algorithm> algorithmBox;
     private RecyclerView algorithmRecycler;
     private AlgorithmRecyclerAdapter algorithmRecyclerAdapter;
+    private Spinner algorithms_filter_spinner;
 
     private final Callback actionModeCallback = new Callback() {
 
@@ -107,9 +109,8 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         home_algs_number = inflate.findViewById(R.id.home_total_number);
         root.findViewById(R.id.create_new_algorithm_btn).setOnClickListener(this);
         algorithmRecycler = root.findViewById(R.id.algorithm_recycler);
-        Box<Algorithm> boxFor = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-        algorithmBox = boxFor;
-        if (boxFor.isEmpty()) {
+        this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
+        if (algorithmBox.isEmpty()) {
             getDefaultAlgs();
         }
         algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
@@ -119,6 +120,8 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
         algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         algorithmRecycler.setHasFixedSize(true);
+
+
         setupHomeSpinner();
         return root;
     }
@@ -131,39 +134,45 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     }
 
     private void setupHomeSpinner() {
-        Spinner algorithms_filter_spinner = root.findViewById(R.id.algorithms_filter_spinner);
-        algorithms_filter_spinner.setGravity(View.TEXT_ALIGNMENT_CENTER);
-        List<String> algorithm_filter = new ArrayList<>();
-        algorithm_filter.add("Recently Created");
-        algorithm_filter.add("Most Practiced");
-        algorithm_filter.add("Most Correct");
+        algorithms_filter_spinner = root.findViewById(R.id.algorithms_filter_spinner);
+        List<String> algorithm_filter = Arrays.asList("Created Date","Algorithm Name","Category");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, algorithm_filter);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         algorithms_filter_spinner.setAdapter(dataAdapter);
-        /*algorithms_filter_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        algorithms_filter_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch ((int) id) {
-                    case 0:
-                        algorithmArrayList.sort(Comparator.comparing(Algorithm::getCreatedTime));
+
+                algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
+                switch (parent.getItemAtPosition(position).toString()) {
+                    case "Algorithm Name":
+                        Collections.sort(algorithmArrayList, new Algorithm.CompareAlgorithmName());
+                        algorithmRecyclerAdapter.setFilter(algorithmArrayList);
+                        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
                         break;
-                    case 1:
-                        algorithmArrayList.sort(Comparator.comparing(Algorithm::getPracticed_number_int));
+                    case "Category":
+                        Collections.sort(algorithmArrayList, new Algorithm.CompareCategory());
+                        algorithmRecyclerAdapter.setFilter(algorithmArrayList);
+                        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
                         break;
-                    case 2:
-                        algorithmArrayList.sort(Comparator.comparing(Algorithm::getPracticed_correctly_int));
+                    case "Created Date":
+                        Collections.sort(algorithmArrayList, new Algorithm.CompareCreatedDate());
+                        algorithmRecyclerAdapter.setFilter(algorithmArrayList);
+                        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
+                        break;
+                    default:
                         break;
                 }
-                Toast.makeText(getContext(), "" + algorithmArrayList.size(), Toast.LENGTH_SHORT).show();
-                algorithmRecyclerAdapter.setFilter(algorithmArrayList);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });*/
+        });
         algorithms_filter_text = algorithms_filter_spinner.getSelectedItem().toString();
+        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
     }
 
     public void onClick(View v) {
@@ -231,17 +240,6 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        algorithms_filter_text = parent.getItemAtPosition(position).toString();
-        Context context = parent.getContext();
-        String stringBuilder = "Selected: " +
-                algorithms_filter_text;
-        Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();
-    }
-
-    public void onNothingSelected(AdapterView<?> adapterView) {
-    }
-
     public void onPrepareOptionsMenu(Menu menu) {
         SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
         searchView.setImeOptions(6);
@@ -275,7 +273,7 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     private void clearSelected() {
         for (Integer selected : algorithmRecyclerAdapter.getSelectedItems()) {
             Objects.requireNonNull(algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.setBackgroundResource(R.color.white);
-            LinearLayout card = algorithmRecycler.findViewHolderForAdapterPosition(selected).itemView.findViewById(R.id.algorithm_card_texts);
+            LinearLayout card = Objects.requireNonNull(algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.findViewById(R.id.algorithm_card_texts);
 
             for (int i = 0; i < card.getChildCount(); i++) {
                 View v = card.getChildAt(i);
@@ -283,9 +281,8 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
                     ((TextView) v).setTextColor(Color.rgb(0, 0, 0));
                 }
             }
-            algorithmRecycler.findViewHolderForAdapterPosition(selected).itemView.findViewById(R.id.algorithm_item_checks).setVisibility(View.VISIBLE);
-            algorithmRecycler.findViewHolderForAdapterPosition(selected).itemView.findViewById(R.id.algorithm_selected_checks).setVisibility(View.GONE);
-
+            Objects.requireNonNull(algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.findViewById(R.id.algorithm_item_checks).setVisibility(View.VISIBLE);
+            Objects.requireNonNull(algorithmRecycler.findViewHolderForAdapterPosition(selected)).itemView.findViewById(R.id.algorithm_selected_checks).setVisibility(View.GONE);
         }
     }
 

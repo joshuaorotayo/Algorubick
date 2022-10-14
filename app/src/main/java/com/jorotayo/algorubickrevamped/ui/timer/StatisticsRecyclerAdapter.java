@@ -25,16 +25,11 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solve_view, parent, false), this.mOnSolveListener);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solve_view2, parent, false), this.mOnSolveListener);
     }
 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Solve solve = this.mSolve.get(position);
-        TextView textView = holder.solvePosition;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("");
-        stringBuilder.append(position);
-        textView.setText(stringBuilder.toString());
         holder.solveCubeSize.setText(solve.getSolve_cube_size());
         holder.solveTime.setText(solve.getSolve_time());
         holder.solveDate.setText(solve.getSolve_date());
@@ -54,8 +49,6 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
         TextView solveCubeSize;
         TextView solveDate;
         ImageButton solveDeleteIcon;
-        TextView solvePosition;
-        TableRow solveRow;
         TextView solveTime;
 
         public ViewHolder(View itemView) {
@@ -64,23 +57,22 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
 
         public ViewHolder(View view, OnSolveListener onSolveListener) {
             super(view);
-            this.solvePosition = view.findViewById(R.id.item_solve_position);
             this.solveCubeSize = view.findViewById(R.id.item_solve_cube_size);
             this.solveTime = view.findViewById(R.id.item_solve_time);
             this.solveDate = view.findViewById(R.id.item_solve_date);
             this.solveDeleteIcon = view.findViewById(R.id.item_solve_delete_icon);
-            this.solveRow = view.findViewById(R.id.solve_row);
             StatisticsRecyclerAdapter.this.mOnSolveListener = onSolveListener;
             this.solveDeleteIcon.setOnClickListener(this);
-            this.solveRow.setOnClickListener(this);
+
+//            this.solvePosition = view.findViewById(R.id.item_solve_position);
+//            this.solveRow = view.findViewById(R.id.solve_row);
+//            this.solveRow.setOnClickListener(this);
         }
 
         public void onClick(View view) {
             int id = view.getId();
             if (id == R.id.item_solve_delete_icon) {
                 StatisticsRecyclerAdapter.this.mOnSolveListener.onSolveDeleteClick(getAdapterPosition());
-            } else if (id == R.id.solve_row) {
-                StatisticsRecyclerAdapter.this.mOnSolveListener.onSolveClick(getAdapterPosition());
             }
         }
     }

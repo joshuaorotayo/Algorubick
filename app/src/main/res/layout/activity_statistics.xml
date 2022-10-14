@@ -67,15 +67,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:src="@drawable/icons8_info_24_blue" />
+                    android:src="@drawable/icons8_info_24_blue"
+                    android:contentDescription="@string/info_statistics_description"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/solve_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"/>
 
         <TableLayout
             android:id="@+id/solve_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:visibility="gone">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -90,7 +101,7 @@
                 <TextView
                     android:id="@+id/solve_table_position_header"
                     android:layout_weight="1"
-                    android:text="No."
+                    android:text="@string/no"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <TextView

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/solve_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/solve_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:elevation="8dp"
+        android:paddingTop="35dp"
+        app:cardCornerRadius="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/primary_dark_gradient"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="5dp"
+            android:tag="@string/solve_card">
+
+            <TextView
+                android:id="@+id/item_solve_cube_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="@string/item_solve_cube_size"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/item_solve_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="@string/item_solve_date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/item_solve_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/item_solve_time"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/item_solve_delete_icon"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:contentDescription="@string/delete_solve_btn"
+                android:elevation="10dp"
+                android:gravity="end|center_vertical"
+                android:scaleType="fitXY"
+                android:src="@drawable/icons8_remove_50w" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/top_solve_star"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="@+id/solve_card"
+        android:layout_gravity="center"
+        android:layout_marginTop="145dp"
+        android:contentDescription="@string/top_solve_heart_desc"
+        android:elevation="40dp"
+        android:gravity="end|center_vertical"
+        android:src="@drawable/icons8_star_48"
+       />
+
+</RelativeLayout>

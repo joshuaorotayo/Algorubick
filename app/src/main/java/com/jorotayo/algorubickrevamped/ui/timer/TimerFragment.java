@@ -39,7 +39,6 @@ import com.jorotayo.algorubickrevamped.data.Solve_;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -49,7 +48,7 @@ import io.objectbox.Box;
 public class TimerFragment extends Fragment implements OnClickListener, OnLongClickListener, OnItemSelectedListener {
     private final ArrayList<String> faceMoves = new ArrayList(Arrays.asList("R", "L", "U", "D", "F", "B", "R'", "L'", "U'", "D'", "F'", "B'", "R2", "L2", "U2", "D2", "F2", "B2", "R2", "L2", "U2", "D2", "F2", "B2", "r", "l", "u", "d", "f", "b"));
     private final Handler mIncomingHandler = new Handler(new IncomingHandlerCallback(this, null));
-    private final ArrayList<String> scramble = new ArrayList();
+    private final ArrayList<String> scramble = new ArrayList<>();
     private CardView command_bar;
     private int counter;
     private Spinner cube_size_spinner;
@@ -57,18 +56,13 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
     private CardView cube_timer_options;
     private ImageButton delete_solve_btn;
     private ImageButton dnf_solve_btn;
-    private int milliseconds;
-    private int mins;
+    private int milliseconds, mins, secs, solve_milliseconds, solved_count;
     private ImageButton plus_2_btn;
     private View root;
     private boolean running;
-    private TextView scrambleSpace;
+    private TextView scrambleSpace, solve_time;
     private LinearLayout scramble_card;
-    private int secs;
     private Box<Solve> solveBox;
-    private int solve_milliseconds;
-    private TextView solve_time;
-    private int solved_count;
     private long startTime;
     private final Runnable updateTimerThread = new Runnable() {
         public void run() {
@@ -80,15 +74,16 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
                 TimerFragment.this.secs = TimerFragment.this.secs % 60;
                 TimerFragment.this.milliseconds = (int) (updatedTime % 100);
                 TimerFragment.this.solve_time.setTextColor(-16711936);
-                TextView access$600 = TimerFragment.this.solve_time;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(String.format(Locale.getDefault(), str, Integer.valueOf(TimerFragment.this.mins)));
-                stringBuilder.append(":");
-                stringBuilder.append(String.format(Locale.getDefault(), str, Integer.valueOf(TimerFragment.this.secs)));
-                stringBuilder.append(".");
-                stringBuilder.append(String.format(Locale.getDefault(), str, Integer.valueOf(TimerFragment.this.milliseconds)));
-                access$600.setText(stringBuilder.toString());
+                TextView solve_time_view = TimerFragment.this.solve_time;
+                String standardTime = "%02d:%02d.%02d";
+                String solveTime = "" +
+                        String.format(Locale.getDefault(), str, mins) +
+                        ":" +
+                        String.format(Locale.getDefault(), str, secs) +
+                        "." +
+                        String.format(Locale.getDefault(), str, milliseconds);
+                String formattedStandardTime = String.format(Locale.getDefault(),standardTime, mins, secs, milliseconds);
+                solve_time_view.setText(formattedStandardTime);
                 TimerFragment.this.mIncomingHandler.postDelayed(this, 0);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,7 +117,7 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         this.dnf_solve_btn.setOnClickListener(this);
         this.plus_2_btn.setOnClickListener(this);
         this.cube_size_spinner.setOnItemSelectedListener(this);
-        List<String> cube_size = new ArrayList();
+        List<String> cube_size = new ArrayList<>();
         cube_size.add("3x3");
         cube_size.add("2x2");
         cube_size.add("4x4");
@@ -138,25 +133,21 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         this.cube_size_spinner.setAdapter(dataAdapter);
         this.cube_size_text = this.cube_size_spinner.getSelectedItem().toString();
         createScramble();
-        this.scrambleSpace.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                TimerFragment.this.createScramble();
-                Toast.makeText(TimerFragment.this.getContext(), "New Scramble", Toast.LENGTH_SHORT).show();
-            }
+        this.scrambleSpace.setOnClickListener(v -> {
+            TimerFragment.this.createScramble();
+            Toast.makeText(TimerFragment.this.getContext(), "New Scramble", Toast.LENGTH_SHORT).show();
         });
-        Box boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
+        Box<Solve> boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
         this.solveBox = boxFor;
-        ArrayList<Solve> solves = (ArrayList) boxFor.getAll();
+        ArrayList<Solve> solves = (ArrayList<Solve>) boxFor.getAll();
         setUpStatistics();
         return this.root;
     }
 
     public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.actionbar_statistics).setVisible(true).setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                TimerFragment.this.startActivity(new Intent(TimerFragment.this.getContext(), StatisticsActivity.class));
-                return true;
-            }
+        menu.findItem(R.id.actionbar_statistics).setVisible(true).setOnMenuItemClickListener(item -> {
+            TimerFragment.this.startActivity(new Intent(TimerFragment.this.getContext(), StatisticsActivity.class));
+            return true;
         });
         super.onPrepareOptionsMenu(menu);
     }
@@ -179,7 +170,6 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
                 timer();
                 return;
             default:
-                return;
         }
     }
 
@@ -188,36 +178,36 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         Solve currentSolve = new Solve();
         currentSolve.setSolve_cube_size(this.cube_size_text);
         currentSolve.setSolve_date(s.toString());
-        currentSolve.setSolve_time(this.solve_time.getText().toString());
+        String formattedTime;
+        String savedTime;
+
+        String stringSecs, stringMins;
+
+        if (secs <= 9) {
+            stringSecs = "0" + secs;
+        } else {
+            stringSecs = "" + secs;
+        }
+        if (mins <= 9) {
+            stringMins = "0" + mins;
+        } else {
+            stringMins = "" + mins;
+        }
+
+        if (mins == 0) {
+            savedTime = "{0}.{1}s";
+            formattedTime = java.text.MessageFormat.format(savedTime, stringSecs, milliseconds/10);
+        } else {
+            savedTime = "{0}m {1}.{2}s";
+            formattedTime = java.text.MessageFormat.format(savedTime, stringMins, stringSecs, milliseconds);
+        }
+        currentSolve.setSolve_time(formattedTime);
         currentSolve.setSolve_milliseconds(getMilliseconds(this.mins, this.secs, this.milliseconds));
         currentSolve.setSolve_scramble(this.scrambleSpace.getText().toString());
-        StringBuilder stringBuilder = new StringBuilder();
-        String str = "saveSolve: ";
-        stringBuilder.append(str);
-        stringBuilder.append(this.cube_size_text);
-        String stringBuilder2 = stringBuilder.toString();
-        stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        stringBuilder.append(s);
-        stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        stringBuilder.append(this.solve_time.getText().toString());
-        stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        stringBuilder.append(this.solve_milliseconds);
-        stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        stringBuilder.append(this.scrambleSpace.getText().toString());
         this.solveBox.put(currentSolve);
         this.cube_size_text = this.cube_size_spinner.getSelectedItem().toString();
-        stringBuilder2 = this.solve_time.getText().toString();
-        Context context = getContext();
-        StringBuilder stringBuilder3 = new StringBuilder();
-        stringBuilder3.append("Saved time: ");
-        stringBuilder3.append(stringBuilder2);
-        stringBuilder3.append(" for ");
-        stringBuilder3.append(this.cube_size_text);
-        Toast.makeText(context, stringBuilder3.toString(), Toast.LENGTH_SHORT).show();
+        String formattedToast = "Saved time: {0} for {1}";
+        Toast.makeText(getContext(), java.text.MessageFormat.format(formattedToast, formattedTime, cube_size_text), Toast.LENGTH_SHORT).show();
         setUpStatistics();
         this.command_bar.setVisibility(View.INVISIBLE);
     }
@@ -230,60 +220,46 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
 
     private void deleteSolve() {
         CharSequence charSequence = "No";
-        new MaterialAlertDialogBuilder(requireContext()).setTitle("Delete Solve").setMessage("Are you sure you want to delete your current solve time?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                TimerFragment.this.solve_time.setText("00:00.00");
-                TimerFragment.this.command_bar.setVisibility(View.INVISIBLE);
-                dialog.cancel();
-            }
-        }).setNegativeButton(charSequence, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
+        new MaterialAlertDialogBuilder(requireContext()).setTitle("Delete Solve").setMessage("Are you sure you want to delete your current solve time?").setPositiveButton("Yes", (dialog, which) -> {
+            TimerFragment.this.solve_time.setText("00:00.00");
+            TimerFragment.this.command_bar.setVisibility(View.INVISIBLE);
+            dialog.cancel();
+        }).setNegativeButton(charSequence, (dialog, which) -> dialog.cancel()).show();
     }
 
     private void dnfSolve() {
         CharSequence charSequence = "No";
-        new MaterialAlertDialogBuilder(requireContext()).setTitle("DNF Solve").setMessage("Mark as DNF?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                TimerFragment.this.solve_time.setText("DNF");
-                TimerFragment.this.solve_time.setGravity(17);
-                TimerFragment.this.dnf_solve_btn.setVisibility(View.INVISIBLE);
-                dialog.cancel();
-            }
-        }).setNegativeButton(charSequence, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
+        new MaterialAlertDialogBuilder(requireContext()).setTitle("DNF Solve").setMessage("Mark as DNF?").setPositiveButton("Yes", (dialog, which) -> {
+            TimerFragment.this.solve_time.setText("DNF");
+            TimerFragment.this.solve_time.setGravity(17);
+            TimerFragment.this.dnf_solve_btn.setVisibility(View.INVISIBLE);
+            dialog.cancel();
+        }).setNegativeButton(charSequence, (dialog, which) -> dialog.cancel()).show();
     }
 
     private void plus2Solve() {
         CharSequence charSequence = "No";
-        new MaterialAlertDialogBuilder(requireContext()).setTitle("Solve Penalty").setMessage("Add Penalty to solve?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                TimerFragment timerFragment = TimerFragment.this;
-                timerFragment.secs = timerFragment.secs + 2;
-                TextView access$600 = TimerFragment.this.solve_time;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                String str = "%02d";
-                stringBuilder.append(String.format(Locale.getDefault(), str, Integer.valueOf(TimerFragment.this.mins)));
-                stringBuilder.append(":");
-                stringBuilder.append(String.format(Locale.getDefault(), str, Integer.valueOf(TimerFragment.this.secs)));
-                stringBuilder.append(".");
-                stringBuilder.append(String.format(Locale.getDefault(), "%03d", Integer.valueOf(TimerFragment.this.milliseconds)));
-                access$600.setText(stringBuilder.toString());
-                Toast.makeText(TimerFragment.this.getContext(), "+2 Penalty", Toast.LENGTH_SHORT).show();
-                TimerFragment.this.plus_2_btn.setVisibility(View.INVISIBLE);
-                dialog.cancel();
+        new MaterialAlertDialogBuilder(requireContext()).setTitle("Solve Penalty").setMessage("Add Penalty to solve?").setPositiveButton("Yes", (dialog, which) -> {
+            TimerFragment timerFragment = TimerFragment.this;
+            timerFragment.secs = timerFragment.secs + 2;
+            String plus2SolveTime = "{0}:{1}.{2}";
+            String stringSecs, stringMins;
+
+            if (secs <= 9) {
+                stringSecs = "0" + secs;
+            } else {
+                stringSecs = "" + secs;
             }
-        }).setNegativeButton(charSequence, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+            if (mins <= 9) {
+                stringMins = "0" + mins;
+            } else {
+                stringMins = "" + mins;
             }
-        }).show();
+            solve_time.setText(java.text.MessageFormat.format(plus2SolveTime, stringMins, stringSecs, milliseconds));
+            Toast.makeText(TimerFragment.this.getContext(), "+2 Penalty", Toast.LENGTH_SHORT).show();
+            TimerFragment.this.plus_2_btn.setVisibility(View.INVISIBLE);
+            dialog.cancel();
+        }).setNegativeButton(charSequence, (dialog, which) -> dialog.cancel()).show();
     }
 
     public boolean onLongClick(View v) {
@@ -378,15 +354,13 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         TextView avg_50 = this.root.findViewById(R.id.avg_50);
         TextView avg_100 = this.root.findViewById(R.id.avg_100);
         ArrayList<Solve> solves = getSolvesByCubeSize();
-        ArrayList<Integer> solve_times = new ArrayList();
-        Iterator it = solves.iterator();
-        while (it.hasNext()) {
-            solve_times.add(Integer.valueOf(((Solve) it.next()).solve_milliseconds));
+        ArrayList<Integer> solve_times = new ArrayList<>();
+        for (Solve solve : solves) {
+            solve_times.add(solve.solve_milliseconds);
         }
         int total_time = 0;
-        Iterator it2 = solves.iterator();
-        while (it2.hasNext()) {
-            total_time += ((Solve) it2.next()).solve_milliseconds;
+        for (Solve solve : solves) {
+            total_time += solve.solve_milliseconds;
         }
         this.solved_count = solves.size();
         if (solves.isEmpty()) {
@@ -402,16 +376,8 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         }
         best_time_time.setText(getFastestSolveByCubeSize(solve_times));
         worst_time_time.setText(getWorstSolveByCubeSize(solve_times));
-        StringBuilder stringBuilder = new StringBuilder();
-        String str = "";
-        stringBuilder.append(str);
-        stringBuilder.append(getMeanTimeByCubeSize(total_time, solves.size()));
-        mean_time_time.setText(stringBuilder.toString());
-        stringBuilder = new StringBuilder();
-        stringBuilder.append(str);
-        stringBuilder.append(getSolvesByCubeSize().size());
-        stringBuilder.append(" Solves");
-        count_time_time.setText(stringBuilder.toString());
+        mean_time_time.setText(String.format("%s", getMeanTimeByCubeSize(total_time, solves.size())));
+        count_time_time.setText(String.format(Locale.getDefault(), "%d Solves", getSolvesByCubeSize().size()));
         avg_5.setText(solveAvg(total_time, 5));
         avg_12.setText(solveAvg(total_time, 12));
         avg_50.setText(solveAvg(total_time, 50));
@@ -419,15 +385,15 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
     }
 
     private ArrayList<Solve> getSolvesByCubeSize() {
-        return (ArrayList) this.solveBox.query().equal(Solve_.solve_cube_size, this.cube_size_text).build().find();
+        return (ArrayList<Solve>) this.solveBox.query().equal(Solve_.solve_cube_size, this.cube_size_text).build().find();
     }
 
     private String getFastestSolveByCubeSize(ArrayList<Integer> solve_times) {
         String fastest_time = "";
-        int temp = solve_times.get(0).intValue();
+        int temp = solve_times.get(0);
         for (int i = 1; i < solve_times.size(); i++) {
-            if (temp > solve_times.get(i).intValue()) {
-                temp = solve_times.get(i).intValue();
+            if (temp > solve_times.get(i)) {
+                temp = solve_times.get(i);
             }
         }
         return formatTime(temp);
@@ -435,10 +401,10 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
 
     private String getWorstSolveByCubeSize(ArrayList<Integer> solve_times) {
         String worst_time = "";
-        int temp = solve_times.get(0).intValue();
+        int temp = solve_times.get(0);
         for (int i = 1; i < solve_times.size(); i++) {
-            if (temp < solve_times.get(i).intValue()) {
-                temp = solve_times.get(i).intValue();
+            if (temp < solve_times.get(i)) {
+                temp = solve_times.get(i);
             }
         }
         return formatTime(temp);
@@ -464,12 +430,12 @@ public class TimerFragment extends Fragment implements OnClickListener, OnLongCl
         int stats_ms = milliseconds_time % 100;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("");
-        stringBuilder.append(String.format(Locale.getDefault(), getString(R.string.two_decimals), Integer.valueOf(stats_mins)));
+        stringBuilder.append(String.format(Locale.getDefault(), getString(R.string.two_decimals), stats_mins));
         stringBuilder.append(":");
-        stringBuilder.append(String.format(Locale.getDefault(), getString(R.string.two_decimals), Integer.valueOf(stats_secs)));
+        stringBuilder.append(String.format(Locale.getDefault(), getString(R.string.two_decimals), stats_secs));
         stringBuilder.append(".");
-        stringBuilder.append(String.format(Locale.getDefault(), getString(R.string.two_decimals), Integer.valueOf(stats_ms)));
-        return stringBuilder.toString();
+        stringBuilder.append(String.format(Locale.getDefault(), getString(R.string.two_decimals), stats_ms));
+        return String.format(java.util.Locale.getDefault(), "%02d:%02d.%02d", stats_mins, stats_secs, stats_ms);
     }
 
     private class IncomingHandlerCallback implements Callback {

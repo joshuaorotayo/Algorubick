@@ -35,7 +35,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
     Filter filter = new Filter() {
         /* Access modifiers changed, original: protected */
         public FilterResults performFiltering(CharSequence text) {
-            ArrayList<Algorithm> filteredAlgorithms = new ArrayList();
+            ArrayList<Algorithm> filteredAlgorithms = new ArrayList<>();
             if (text == null || text.length() == 0) {
                 filteredAlgorithms.addAll(mAlgorithmsAll);
             } else {
@@ -57,7 +57,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
         /* Access modifiers changed, original: protected */
         public void publishResults(CharSequence charSequence, FilterResults filterResults) {
             AlgorithmRecyclerAdapter.this.mAlgorithms.clear();
-            AlgorithmRecyclerAdapter.this.mAlgorithms.addAll((ArrayList) filterResults.values);
+            AlgorithmRecyclerAdapter.this.mAlgorithms.addAll((ArrayList<Algorithm>) filterResults.values);
             AlgorithmRecyclerAdapter.this.notifyDataSetChanged();
         }
     };
@@ -67,7 +67,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
 
     public AlgorithmRecyclerAdapter(ArrayList<Algorithm> mAlgorithms, OnAlgorithmListener mOnAlgorithmListener, Context ctx) {
         this.mAlgorithms = mAlgorithms;
-        this.mAlgorithmsAll = new ArrayList(mAlgorithms);
+        this.mAlgorithmsAll = new ArrayList<>(mAlgorithms);
         this.mOnAlgorithmListener = mOnAlgorithmListener;
         this.selected_items = new SparseBooleanArray();
         this.ctx = ctx;
@@ -127,7 +127,7 @@ public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.V
     }
 
     public List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList(this.selected_items.size());
+        List<Integer> items = new ArrayList<>(this.selected_items.size());
         for (int i = 0; i < this.selected_items.size(); i++) {
             items.add(this.selected_items.keyAt(i));
         }

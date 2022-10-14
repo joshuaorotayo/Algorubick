@@ -6,6 +6,7 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/searchview"
         android:visible="false"
+        android:contentDescription="@string/searchview_description"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="ifRoom" />
     <item
