@@ -9,8 +9,8 @@ android {
         applicationId 'com.jorotayo.algorubickrevamped'
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 7
-        versionName "1.06"
+        versionCode 8
+        versionName "1.07"
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }

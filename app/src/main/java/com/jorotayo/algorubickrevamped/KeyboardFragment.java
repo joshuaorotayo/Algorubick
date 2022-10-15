@@ -50,6 +50,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         TextView btn_e = rootView.findViewById(R.id.btn_e);
         TextView btn_s = rootView.findViewById(R.id.btn_s);
         TextView btn_m = rootView.findViewById(R.id.btn_m);
+        TextView btn_w = rootView.findViewById(R.id.btn_w);
         this.btn_2 = rootView.findViewById(R.id.btn_2);
         TextView btn_backspace = rootView.findViewById(R.id.btn_backspace);
         this.btn_prime = rootView.findViewById(R.id.btn_prime);
@@ -79,6 +80,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         btn_e.setOnClickListener(this);
         btn_s.setOnClickListener(this);
         btn_m.setOnClickListener(this);
+        btn_w.setOnClickListener(this);
         keyboard_close_btn.setOnClickListener(this);
         this.btn_2.setOnClickListener(this);
         this.btn_prime.setOnClickListener(this);
@@ -88,7 +90,7 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
         this.btn_2.setClickable(false);
         this.btn_2.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
         this.btn_prime.setTextColor(getContext().getResources().getColor(R.color.colorPrimary, null));
-        btn_shift.setOnClickListener(v -> {
+        /*btn_shift.setOnClickListener(v -> {
             if (KeyboardFragment.this.single_face_moves.getVisibility() == View.VISIBLE) {
                 KeyboardFragment.this.single_face_moves.setVisibility(View.GONE);
                 KeyboardFragment.this.double_face_moves.setVisibility(View.VISIBLE);
@@ -98,6 +100,18 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
             KeyboardFragment.this.single_face_moves.setVisibility(View.VISIBLE);
             KeyboardFragment.this.double_face_moves.setVisibility(View.GONE);
             btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorAccent, null));
+        });*/
+
+        btn_shift.setOnClickListener(v -> {
+            if (KeyboardFragment.this.single_face_moves.getVisibility() == View.VISIBLE) {
+                KeyboardFragment.this.single_face_moves.setVisibility(View.GONE);
+                KeyboardFragment.this.double_face_moves.setVisibility(View.VISIBLE);
+                btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorRed, null));
+            } else {
+                KeyboardFragment.this.single_face_moves.setVisibility(View.VISIBLE);
+                KeyboardFragment.this.double_face_moves.setVisibility(View.GONE);
+                btn_shift.setTextColor(KeyboardFragment.this.getContext().getResources().getColor(R.color.colorAccent, null));
+            }
         });
         return rootView;
     }
@@ -179,6 +193,10 @@ public class KeyboardFragment extends Fragment implements OnClickListener, View.
                 case R.id.btn_u /*2131361968*/:
                     this.modified = Boolean.valueOf(false);
                     enter("U");
+                    return;
+                case R.id.btn_w:
+                    this.modified = Boolean.valueOf(false);
+                    enter("W");
                     return;
                 case R.id.btn_x /*2131361969*/:
                     this.modified = Boolean.valueOf(false);

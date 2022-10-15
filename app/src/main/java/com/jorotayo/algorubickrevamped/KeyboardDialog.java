@@ -62,6 +62,7 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
         TextView btn_e = dialog.findViewById(R.id.btn_e);
         TextView btn_s = dialog.findViewById(R.id.btn_s);
         TextView btn_m = dialog.findViewById(R.id.btn_m);
+        TextView btn_w = dialog.findViewById(R.id.btn_w);
         this.btn_2 = dialog.findViewById(R.id.btn_2);
         TextView btn_backspace = dialog.findViewById(R.id.btn_backspace);
         this.btn_prime = dialog.findViewById(R.id.btn_prime);
@@ -90,6 +91,7 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
         btn_e.setOnClickListener(this);
         btn_s.setOnClickListener(this);
         btn_m.setOnClickListener(this);
+        btn_w.setOnClickListener(this);
 
         this.btn_2.setOnClickListener(this);
         this.btn_prime.setOnClickListener(this);
@@ -97,20 +99,7 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
         btn_backspace.setOnLongClickListener(this);
         keyboard_close_btn.setOnClickListener(this);
 
-//        btn_r = btn_shift;
-//        TextView finalBtn_r = btn_r;
-//        btn_r.setOnClickListener(v -> {
-//            if (KeyboardDialog.this.single_face_moves.getVisibility() == View.VISIBLE) {
-//                KeyboardDialog.this.single_face_moves.setVisibility(View.GONE);
-//                KeyboardDialog.this.double_face_moves.setVisibility(View.VISIBLE);
-//                finalBtn_r.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorRed, null));
-//                return;
-//            }
-//            KeyboardDialog.this.single_face_moves.setVisibility(View.VISIBLE);
-//            KeyboardDialog.this.double_face_moves.setVisibility(View.GONE);
-//            finalBtn_r.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorPrimary, null));
-//        });
-        btn_shift.setOnClickListener(v -> {
+      /*  btn_shift.setOnClickListener(v -> {
             if (KeyboardDialog.this.single_face_moves.getVisibility() == View.VISIBLE) {
                 KeyboardDialog.this.single_face_moves.setVisibility(View.GONE);
                 KeyboardDialog.this.double_face_moves.setVisibility(View.VISIBLE);
@@ -120,6 +109,18 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
             KeyboardDialog.this.single_face_moves.setVisibility(View.VISIBLE);
             KeyboardDialog.this.double_face_moves.setVisibility(View.GONE);
             btn_shift.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorPrimary, null));
+        });*/
+
+        btn_shift.setOnClickListener(v -> {
+            if (KeyboardDialog.this.single_face_moves.getVisibility() == View.VISIBLE) {
+                KeyboardDialog.this.single_face_moves.setVisibility(View.GONE);
+                KeyboardDialog.this.double_face_moves.setVisibility(View.VISIBLE);
+                btn_shift.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorRed, null));
+            } else {
+                KeyboardDialog.this.single_face_moves.setVisibility(View.VISIBLE);
+                KeyboardDialog.this.double_face_moves.setVisibility(View.GONE);
+                btn_shift.setTextColor(KeyboardDialog.this.ctx.getResources().getColor(R.color.colorAccent, null));
+            }
         });
     }
 
@@ -200,6 +201,10 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
                 case R.id.btn_u /*2131361968*/:
                     this.modified = Boolean.FALSE;
                     enter("U");
+                    return;
+                case R.id.btn_w:
+                    this.modified = Boolean.valueOf(false);
+                    enter("W");
                     return;
                 case R.id.btn_x /*2131361969*/:
                     this.modified = Boolean.FALSE;
