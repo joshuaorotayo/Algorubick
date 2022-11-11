@@ -43,32 +43,60 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"
-                android:orientation="horizontal">
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/statistics_dropdown_header"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="4dp"
                     android:layout_weight="1"
                     android:text="@string/statistics_dropdown_header"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/colorPrimary" />
 
-                <Spinner
+                <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/statistics_spinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_gravity="center"
+                    android:layout_weight="1.5" />
+                <!--
 
-                <ImageView
-                    android:id="@+id/statistics_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:src="@drawable/icons8_info_24_blue"
-                    android:contentDescription="@string/info_statistics_description"/>
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="3">
+
+                                    &lt;!&ndash; Inside text input layout add
+                                          an auto complete text view
+                                            and make its input type to none&ndash;&gt;
+                                    <AutoCompleteTextView
+                                        android:id="@+id/statistics_spinner"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="none"
+                                        android:padding="4dp"
+                                        android:text="Sorting By:" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                -->
+
+                <ImageButton
+                    android:id="@+id/filter_solves"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/filter_unfilled" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -79,60 +107,6 @@
             android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"/>
-
-        <TableLayout
-            android:id="@+id/solve_table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8sp">
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/solve_table_position_header"
-                    android:layout_weight="1"
-                    android:text="@string/no"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <TextView
-                    android:id="@+id/solve_table_size_header"
-                    android:layout_weight="1"
-                    android:text="@string/solve_table_size_header"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <TextView
-                    android:id="@+id/solve_table_time_header"
-                    android:layout_weight="1"
-                    android:text="@string/solve_table_time_header"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <TextView
-                    android:id="@+id/solve_table_date_header"
-                    android:layout_weight="1"
-                    android:text="@string/solve_table_date_header"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </TableRow>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/statistics_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp" />
-        </TableLayout>
+            app:spanCount="2" />
     </LinearLayout>
 </LinearLayout>

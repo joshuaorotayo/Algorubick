@@ -4,15 +4,15 @@
     android:id="@+id/solve_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/solve_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_margin="8dp"
         android:elevation="8dp"
+        app:cardElevation="8dp"
         android:paddingTop="35dp"
         app:cardCornerRadius="20dp">
 
@@ -29,9 +29,9 @@
                 android:id="@+id/item_solve_cube_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:layout_gravity="center"
                 android:layout_marginStart="10dp"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/item_solve_cube_size"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@color/white" />
@@ -88,6 +88,6 @@
         android:elevation="40dp"
         android:gravity="end|center_vertical"
         android:src="@drawable/icons8_star_48"
-       />
+       android:visibility="gone"/>
 
 </RelativeLayout>

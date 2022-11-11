@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.objectbox.Box;
+import io.objectbox.query.QueryBuilder;
 
 public class NewSolutionFragment extends Fragment implements OnClickListener, OnBackPressed {
     private static final String ARG_PARAM1 = "param1";
@@ -132,7 +133,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         new_solution_creator.setText(this.currentSolution.getSolutionCreator());
         new_solution_description.setText(this.currentSolution.getSolutionDescription());
         UtilMethods.LoadStepIcon(getContext(), add_solution_icon_preview, currentSolution.solutionIconLocation);
-        List<Steps> editSteps = stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName()).build().find();
+        List<Steps> editSteps = stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName(), QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find();
         int currentStep = editSteps.size();
         for (int i = 0; i < currentStep; i++) {
             View view2 = getLayoutInflater().inflate(R.layout.item_step, null);
@@ -218,7 +219,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     private void saveSteps(String solutionName) {
         String str = "Debug";
         if (((SolutionActivity) getActivity()).getSupportActionBar().getTitle().toString().contains("Edit")) {
-            stepsBox.remove(this.stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName()).build().find());
+            stepsBox.remove(this.stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName(), QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find());
         }
         main = view.findViewById(R.id.step_linear_container);
         for (int index = 0; index < main.getChildCount(); index++) {

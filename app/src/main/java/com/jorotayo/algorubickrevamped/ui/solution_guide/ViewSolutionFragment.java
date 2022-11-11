@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import io.objectbox.Box;
+import io.objectbox.query.QueryBuilder;
 
 public class ViewSolutionFragment extends Fragment implements OnClickListener, OnStepListener, OnBackPressed {
     static final /* synthetic */ boolean $assertionsDisabled = false;
@@ -107,7 +108,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
     }
 
     private void setupStepsAdapter() {
-        ArrayList arrayList = (ArrayList) this.stepsBox.query().equal(Steps_.solutionName, this.currentSolution.getSolutionName()).build().find();
+        ArrayList arrayList = (ArrayList) this.stepsBox.query().equal(Steps_.solutionName, this.currentSolution.getSolutionName(), QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find();
         this.stepsArrayList = arrayList;
         Collections.sort(arrayList);
     }
@@ -155,7 +156,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
 
     public void onResume() {
         super.onResume();
-        ArrayList arrayList = (ArrayList) this.stepsBox.query().equal(Steps_.solutionName, this.currentSolution.getSolutionName()).build().find();
+        ArrayList arrayList = (ArrayList) this.stepsBox.query().equal(Steps_.solutionName, this.currentSolution.getSolutionName(), QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find();
         this.stepsArrayList = arrayList;
         Collections.sort(arrayList);
         this.view_solution_steps_recycler.setAdapter(new StepsRecyclerAdapter(this.stepsArrayList, this));

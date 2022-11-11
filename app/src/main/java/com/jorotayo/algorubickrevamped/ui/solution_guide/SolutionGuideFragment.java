@@ -103,11 +103,8 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
         this.solutionArrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
     }
 
-    public ArrayList<Solution> sortBySteps() {
-        // TODO: 28/03/2021 uncomment here
-        ArrayList<Solution> arrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
-        this.solutionArrayList = arrayList;
-        return arrayList;
+    public void sortBySteps() {
+        this.solutionArrayList = (ArrayList<Solution>) this.solutionBox.query().order(Solution_.solutionCreator).build().find();
     }
 
     public void onNothingSelected(AdapterView<?> adapterView) {

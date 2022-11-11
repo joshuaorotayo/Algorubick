@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,7 +17,7 @@ import com.jorotayo.algorubickrevamped.data.Solve;
 
 import java.util.ArrayList;
 
-public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter.ViewHolder> {
+public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter.ViewHolder> implements Filterable {
     private OnSolveListener mOnSolveListener;
     private ArrayList<Solve> mSolve;
 
@@ -25,7 +27,7 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solve_view2, parent, false), this.mOnSolveListener);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_solve_view3, parent, false), this.mOnSolveListener);
     }
 
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -37,6 +39,11 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
 
     public int getItemCount() {
         return this.mSolve.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 
     public interface OnSolveListener {
@@ -63,10 +70,6 @@ public class StatisticsRecyclerAdapter extends Adapter<StatisticsRecyclerAdapter
             this.solveDeleteIcon = view.findViewById(R.id.item_solve_delete_icon);
             StatisticsRecyclerAdapter.this.mOnSolveListener = onSolveListener;
             this.solveDeleteIcon.setOnClickListener(this);
-
-//            this.solvePosition = view.findViewById(R.id.item_solve_position);
-//            this.solveRow = view.findViewById(R.id.solve_row);
-//            this.solveRow.setOnClickListener(this);
         }
 
         public void onClick(View view) {

@@ -9,8 +9,8 @@ android {
         applicationId 'com.jorotayo.algorubickrevamped'
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 8
-        versionName "1.07"
+        versionCode 9
+        versionName "1.08"
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
@@ -65,16 +65,19 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.activity:activity:1.4.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
     def nav_version = "2.3.0"
 
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
-    debugImplementation("io.objectbox:objectbox-android-objectbrowser:$objectboxVersion")
+    debugImplementation("io.objectbox:objectbox-android-objectbrowser:3.3.1")
     releaseImplementation("io.objectbox:objectbox-android:$objectboxVersion")
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
     implementation 'androidx.work:work-runtime:2.7.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'org.apache.commons:commons-lang3:3.9'
 }
 
 

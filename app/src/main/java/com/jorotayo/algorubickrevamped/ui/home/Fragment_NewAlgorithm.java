@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.objectbox.Box;
+import io.objectbox.query.QueryBuilder;
 
 public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.OnCategoryListener, OnClickListener, OnItemSelectedListener, OnBackPressed {
     MaterialAlertDialogBuilder alertDialogBuilder;
@@ -306,7 +307,7 @@ public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.O
     public void deleteCategory() {
         if (categories.size() >= 2) {
             //query all algorithms and change any with same category is changed to "Default"
-            List<Algorithm> algorithmList = ObjectBox.getBoxStore().boxFor(Algorithm.class).query().equal(Algorithm_.category, deleteCategory.category_name).build().find();
+            List<Algorithm> algorithmList = ObjectBox.getBoxStore().boxFor(Algorithm.class).query().equal(Algorithm_.category, deleteCategory.category_name, QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find();
 
             //remove from box
             categoryBox.remove(deleteCategory);
