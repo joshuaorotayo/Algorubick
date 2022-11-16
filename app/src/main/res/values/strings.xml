@@ -467,8 +467,10 @@
     <string name="no">No.</string>
     <string name="btn_w">W</string>
     <string name="add_cube_size">Add Cube Size</string>
+    <string name="add_cube_size_desc">Enter the shape/size</string>
     <string name="add_cube_size_add_btn">Add</string>
     <string name="add_cube_size_img_description">Add Cube Size Image</string>
     <string name="delete_cube_size_icon">Delete Cube Size Icon</string>
     <string name="cube_size_spinner_label">Cube Size spinner label</string>
+    <string name="sort_statistics_spinner">Sort statistics spinner</string>
 </resources>

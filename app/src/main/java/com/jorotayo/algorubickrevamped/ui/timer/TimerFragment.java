@@ -18,8 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -56,7 +54,7 @@ import java.util.Random;
 import io.objectbox.Box;
 import io.objectbox.query.QueryBuilder;
 
-public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSizeListener, OnClickListener, OnLongClickListener, OnItemSelectedListener, MenuProvider {
+public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSizeListener, OnClickListener, OnLongClickListener, MenuProvider {
     private final ArrayList<String> faceMoves = new ArrayList<>(Arrays.asList("R", "L", "U", "D", "F", "B", "R'", "L'", "U'", "D'", "F'", "B'", "R2", "L2", "U2", "D2", "F2", "B2", "R2", "L2", "U2", "D2", "F2", "B2"));
     private final Handler mIncomingHandler = new Handler(new IncomingHandlerCallback(this, null));
     private final ArrayList<String> scramble = new ArrayList<>();
@@ -76,7 +74,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
     private ArrayList<String> cube_size = new ArrayList<>();
     private SharedPreferences settings;
     private Dialog addCubeSizeDialog;
-    private EditText cubeSize;
+    private EditText cubeSize_editText;
     private Button cancel_btn, confirm_btn;
     private CubeSizeAdapter cubeSizeAdapter;
     private AlertDialog cubeConfirmDeleteDialog;
@@ -136,10 +134,6 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
             getCubeSizes(settings);
         }
         cube_size_spinner.setSelection(0, false);
-        //this.cube_size_spinner.setOnItemSelectedListener(this);
-       /* ArrayAdapter<String> dataAdapter = new ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, cube_size);
-        this.cube_size_spinner.setAdapter(dataAdapter);*/
-
         cubeSizeAdapter = new CubeSizeAdapter(requireContext(), R.id.cube_size_spinner_label, cube_size, this);
         cube_size_spinner.setAdapter(cubeSizeAdapter);
 
@@ -163,7 +157,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
 
     private void loadDefaultCubeSizes(SharedPreferences settings) {
         Gson gson = new Gson();
-        cube_size = new ArrayList<> (Arrays.asList("3x3", "4x4", "5x5", "6x6", "Megaminx", "Pyraminx", "Add Cube Size +"));
+        cube_size = new ArrayList<> (Arrays.asList("3x3", "2x2","4x4", "5x5", "6x6","7x7","8x8","9x9", "Megaminx", "Pyraminx", "Add Cube Size +"));
         String jsonText = gson.toJson(cube_size);
         settings.edit().putString("CUBE_SIZES", jsonText).apply();
         settings.edit().putBoolean("CUBE_SIZES_SET", true).apply();
@@ -319,22 +313,13 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
         this.scramble.clear();
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String selected = cube_size_spinner.getSelectedItem().toString();
-        if (selected.equals("Add Cube Size +")) {
-            addCubeSizeDialog.show();
-        } else {
-            setUpStatistics();
-        }
-    }
-
     public void createCubeSizeDialog() {
 
         addCubeSizeDialog = new Dialog(requireContext());
         final View dialogView = getActivity().getLayoutInflater().inflate(R.layout.add_cube_size_dialog, (ViewGroup) getView(), false);
         addCubeSizeDialog.setContentView(dialogView);
         final TextInputLayout cubeSizeTIL = dialogView.findViewById(R.id.cube_size_til);
-        cubeSize = dialogView.findViewById(R.id.cube_size_edit_text);
+        cubeSize_editText = dialogView.findViewById(R.id.cube_size_edit_text);
         cancel_btn = dialogView.findViewById(R.id.add_cube_size_cancel_btn);
         confirm_btn = dialogView.findViewById(R.id.add_cube_size_confirm_btn);
 
@@ -343,12 +328,11 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
         });
 
         confirm_btn.setOnClickListener(v -> {
-            if (StringUtils.isNotBlank(cubeSize.getText())) {
-                verifyCubeSize(cubeSize.getText().toString());
+            if (StringUtils.isNotBlank(cubeSize_editText.getText())) {
+                verifyCubeSize(cubeSize_editText.getText().toString());
                 addCubeSizeDialog.dismiss();
             }
         });
-
         addCubeSizeDialog.create();
     }
 
@@ -390,9 +374,6 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
         this.plus_2_btn.setVisibility(View.VISIBLE);
         this.statistics_container.setVisibility(View.VISIBLE);
         this.cube_timer_options.setVisibility(View.VISIBLE);
-    }
-
-    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     private void setUpStatistics() {
@@ -504,7 +485,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
     @Override
     public void cubeSizeLabelClick(int position) {
         String selected = cube_size.get(position);
-        if (selected.equals("Add Cube Size")) {
+        if (selected.equals("Add Cube Size +")) {
             addCubeSizeDialog.show();
         } else {
             cube_size_spinner.setSelection(position);
@@ -524,6 +505,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
             Toast.makeText(getContext(), cube_size_text + " already present", Toast.LENGTH_SHORT).show();
         } else {
             addCubeSize(cube_size_text);
+            cube_size_spinner.setSelection(cube_size.size() - 2);
         }
     }
 
@@ -533,7 +515,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
         cube_size.add(secondToLast, cube_size_text);
         String jsonText = gson.toJson(cube_size);
         settings.edit().putString("CUBE_SIZES", jsonText).apply();
-        cube_size_spinner.setSelection(cube_size.size() - 1);
+        cubeSize_editText.setText("");
     }
 
     /**
@@ -555,9 +537,6 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
             buildCubeSizeDeleteDialog(position);
             cubeConfirmDeleteDialog.show();
           }
-       /* else {
-            Toast.makeText(getContext(), "At least one cube size is needed", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     public void buildCubeSizeDeleteDialog(int position) {
@@ -578,7 +557,6 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
         String jsonText = gson.toJson(cube_size);
         settings.edit().putString("CUBE_SIZES", jsonText).apply();
         cube_size_spinner.setSelection(0);
-
         hideSpinnerDropDown(cube_size_spinner);
     }
 
