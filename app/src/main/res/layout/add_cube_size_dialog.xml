@@ -4,90 +4,68 @@
     android:layout_width="260dp"
     android:layout_height="wrap_content"
     android:elevation="8dp"
-    android:padding="10dp">
+    app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="260dp"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icons8_rubiks_cube_black_24dp"
-                android:contentDescription="@string/add_cube_size_img_description" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/add_cube_size"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="@string/add_cube_size"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:drawableStartCompat="@drawable/icons8_rubiks_cube_black_24dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/cube_size_til"
-            android:layout_width="260dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:hint="@string/add_cube_size"
-            android:textColorHint="@color/colorPrimary"
-            app:boxStrokeColor="@color/white"
+            android:layout_marginHorizontal="10dp"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeColor="@color/colorPrimary"
+            android:hint="@string/add_cube_size_desc"
+            app:hintTextColor="@color/colorPrimary"
             app:counterEnabled="true"
             app:counterMaxLength="30"
-            app:counterTextColor="@color/black"
-            app:helperTextTextColor="@color/black"
-            app:hintTextColor="@color/white">
+            app:counterTextColor="@color/black">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/cube_size_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="30"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="10dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginVertical="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_cube_size_cancel_btn"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
                 android:text="@string/cancel"
                 android:textColor="@color/accent_material_dark" />
 
-            <Space
-                android:layout_width="50dp"
-                android:layout_height="match_parent"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_cube_size_confirm_btn"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:text="@string/add_cube_size_add_btn" />
 
         </LinearLayout>

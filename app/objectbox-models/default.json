@@ -1,0 +1,242 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8708974287848997890",
+      "lastPropertyId": "13:2478956408124544062",
+      "name": "Algorithm",
+      "properties": [
+        {
+          "id": "1:248454540769870205",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9104567198779642877",
+          "name": "alg_name",
+          "type": 9
+        },
+        {
+          "id": "3:3926619604965930892",
+          "name": "alg",
+          "type": 9
+        },
+        {
+          "id": "4:50916335162953027",
+          "name": "alg_description",
+          "type": 9
+        },
+        {
+          "id": "5:6920975838014546123",
+          "name": "algorithm_icon",
+          "type": 9
+        },
+        {
+          "id": "6:6255354811462922510",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "7:3720949979029583508",
+          "name": "practiced_correctly_int",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "8:8897021819187485513",
+          "name": "practiced_number_int",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:6400455693396783974",
+          "name": "custom_alg",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "10:8137620155272460201",
+          "name": "favourite_alg",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "11:1625919552026187351",
+          "name": "selected_alg",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "12:5734324959947057917",
+          "name": "learnt",
+          "type": 1,
+          "flags": 4
+        },
+        {
+          "id": "13:2478956408124544062",
+          "name": "createdTime",
+          "type": 6,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7766067707016127977",
+      "lastPropertyId": "2:276011704238547758",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:7251190883769149213",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:276011704238547758",
+          "name": "category_name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:7416515667147907823",
+      "lastPropertyId": "5:1288309524395957645",
+      "name": "Solution",
+      "properties": [
+        {
+          "id": "1:1592561516921137698",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1410687355502534687",
+          "name": "solutionCreator",
+          "type": 9
+        },
+        {
+          "id": "3:1326375561971660541",
+          "name": "solutionDescription",
+          "type": 9
+        },
+        {
+          "id": "4:6327817323696244060",
+          "name": "solutionIconLocation",
+          "type": 9
+        },
+        {
+          "id": "5:1288309524395957645",
+          "name": "solutionName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:2935931048518502866",
+      "lastPropertyId": "6:8071665847568735365",
+      "name": "Solve",
+      "properties": [
+        {
+          "id": "1:1138785447725403712",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2660451035754568730",
+          "name": "solve_cube_size",
+          "type": 9
+        },
+        {
+          "id": "3:2580722006695663",
+          "name": "solve_date",
+          "type": 9
+        },
+        {
+          "id": "4:7638829498627878487",
+          "name": "solve_milliseconds",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "5:5076866578935600325",
+          "name": "solve_scramble",
+          "type": 9
+        },
+        {
+          "id": "6:8071665847568735365",
+          "name": "solve_time",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5751838382510640534",
+      "lastPropertyId": "8:4921650868284350814",
+      "name": "Steps",
+      "properties": [
+        {
+          "id": "1:3331593432937597456",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7519024267601671614",
+          "name": "solutionName",
+          "type": 9
+        },
+        {
+          "id": "3:3198841534851766774",
+          "name": "stepAlgorithm",
+          "type": 9
+        },
+        {
+          "id": "4:2240437303571618888",
+          "name": "stepDescription",
+          "type": 9
+        },
+        {
+          "id": "5:8344514973342431303",
+          "name": "stepImageEnd",
+          "type": 9
+        },
+        {
+          "id": "6:3705680628915201160",
+          "name": "stepImageStart",
+          "type": 9
+        },
+        {
+          "id": "7:5944559972086397705",
+          "name": "stepName",
+          "type": 9
+        },
+        {
+          "id": "8:4921650868284350814",
+          "name": "stepNumber",
+          "type": 5,
+          "flags": 4
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "5:5751838382510640534",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

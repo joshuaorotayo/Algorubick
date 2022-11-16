@@ -14,9 +14,8 @@ import com.jorotayo.algorubickrevamped.R;
 
 public class CubeSizeAdapter extends ArrayAdapter {
     private ArrayList<String> cubeSize;
-
-    TextView cubeSize_spinner_label;
-    ImageView dropdown_delete, dropdown_add;
+    private TextView cubeSize_spinner_label;
+    private ImageView dropdown_delete, dropdown_add;
     private OnCubeSizeListener onCubeSizeListener;
 
     public CubeSizeAdapter(Context context, int textViewResourceId, ArrayList<String> cubeSize, OnCubeSizeListener cubeSizeListener) {
@@ -58,7 +57,6 @@ public class CubeSizeAdapter extends ArrayAdapter {
     public View getCustomView(final int position, View convertView, ViewGroup parent) {
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.cube_size_spinner_dropdown_item, parent, false);
         cubeSize_spinner_label = row.findViewById(R.id.cube_size_spinner_label);
-
         dropdown_delete = row.findViewById(R.id.dropdown_delete);
         Spinner parentSpinner = parent.findViewById(R.id.cube_size_spinner);
         cubeSize_spinner_label.setText(cubeSize.get(position));
@@ -74,7 +72,6 @@ public class CubeSizeAdapter extends ArrayAdapter {
             dropdown_delete.setEnabled(false);
         }
         return row;
-
     }
 
     public void onClick(View view) {
