@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,8 +22,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.view.ActionMode.Callback;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +46,7 @@ import java.util.Objects;
 
 import io.objectbox.Box;
 
-public class AlgorithmHomeFragment extends Fragment implements OnClickListener, AlgorithmRecyclerAdapter.OnAlgorithmListener, OnBackPressed {
+public class AlgorithmHomeFragment extends Fragment implements OnClickListener, AlgorithmRecyclerAdapter.OnAlgorithmListener, OnBackPressed, MenuProvider {
     public static ActionMode actionMode;
     private final ArrayList<Integer> selectedList = new ArrayList<>();
     ArrayList<String> alg_names = new ArrayList<>(Arrays.asList("Right Sexy Move", "Left Sexy Move", "H-Perm", "Z-Perm", "T-Perm", "J1-Perm", "J2-Perm", "N1-Perm", "N2-Perm", "V-Perm", "Y-Perm", "E-perm", "F-Perm", "R1-Perm", "R2-Perm"));
@@ -56,6 +59,65 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
     private RecyclerView algorithmRecycler;
     private AlgorithmRecyclerAdapter algorithmRecyclerAdapter;
     private Spinner algorithms_filter_spinner;
+    private String algorithms_filter_text;
+    private TextView home_algs_number;
+    private View root;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View inflate = inflater.inflate(R.layout.fragment_home, container, false);
+        root = inflate;
+        home_algs_number = inflate.findViewById(R.id.home_total_number);
+        root.findViewById(R.id.create_new_algorithm_btn).setOnClickListener(this);
+        algorithmRecycler = root.findViewById(R.id.algorithm_recycler);
+        this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
+        if (algorithmBox.isEmpty()) {
+            getDefaultAlgs();
+        }
+        algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
+        TextView textView = home_algs_number;
+        textView.setText("" + algorithmBox.getAll().size());
+        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
+        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
+        algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        algorithmRecycler.setHasFixedSize(true);
+
+        requireActivity().addMenuProvider(this);
+
+        setupHomeSpinner();
+        return root;
+    }
+
+    @Override
+    public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+        menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
+        searchView.setImeOptions(6);
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+            public boolean onQueryTextSubmit(String query) {
+                algorithmRecyclerAdapter.getFilter().filter(query);
+                TextView access$100 = home_algs_number;
+                String stringBuilder = "" +
+                        algorithmRecyclerAdapter.getItemCount();
+                access$100.setText(stringBuilder);
+                return true;
+            }
+
+            public boolean onQueryTextChange(String newText) {
+                algorithmRecyclerAdapter.getFilter().filter(newText);
+                TextView access$100 = home_algs_number;
+                String stringBuilder = "" +
+                        algorithmRecyclerAdapter.getItemCount();
+                access$100.setText(stringBuilder);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+        menuItem.getItemId();
+        return true;
+    }
 
     private final Callback actionModeCallback = new Callback() {
 
@@ -98,33 +160,6 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
         }
     };
 
-    private String algorithms_filter_text;
-    private TextView home_algs_number;
-    private View root;
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        View inflate = inflater.inflate(R.layout.fragment_home, container, false);
-        root = inflate;
-        home_algs_number = inflate.findViewById(R.id.home_total_number);
-        root.findViewById(R.id.create_new_algorithm_btn).setOnClickListener(this);
-        algorithmRecycler = root.findViewById(R.id.algorithm_recycler);
-        this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-        if (algorithmBox.isEmpty()) {
-            getDefaultAlgs();
-        }
-        algorithmArrayList = (ArrayList<Algorithm>) algorithmBox.getAll();
-        TextView textView = home_algs_number;
-        textView.setText("" + algorithmBox.getAll().size());
-        algorithmRecyclerAdapter = new AlgorithmRecyclerAdapter(algorithmArrayList, this, getContext());
-        algorithmRecycler.setAdapter(algorithmRecyclerAdapter);
-        algorithmRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        algorithmRecycler.setHasFixedSize(true);
-
-
-        setupHomeSpinner();
-        return root;
-    }
 
     public void onResume() {
         super.onResume();
@@ -238,36 +273,6 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     private void loadAlgorithmIcon(Algorithm currentAlg) {
 
-    }
-
-    public void onPrepareOptionsMenu(Menu menu) {
-        SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
-        searchView.setImeOptions(6);
-        searchView.setOnQueryTextListener(new OnQueryTextListener() {
-            public boolean onQueryTextSubmit(String query) {
-                algorithmRecyclerAdapter.getFilter().filter(query);
-                TextView access$100 = home_algs_number;
-                String stringBuilder = "" +
-                        algorithmRecyclerAdapter.getItemCount();
-                access$100.setText(stringBuilder);
-                return true;
-            }
-
-            public boolean onQueryTextChange(String newText) {
-                algorithmRecyclerAdapter.getFilter().filter(newText);
-                TextView access$100 = home_algs_number;
-                String stringBuilder = "" +
-                        algorithmRecyclerAdapter.getItemCount();
-                access$100.setText(stringBuilder);
-                return true;
-            }
-        });
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        menuItem.getItemId();
-        return super.onOptionsItemSelected(menuItem);
     }
 
     private void clearSelected() {

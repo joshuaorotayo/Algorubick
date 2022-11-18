@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
     private Button cancel_btn, confirm_btn;
     private CubeSizeAdapter cubeSizeAdapter;
     private AlertDialog cubeConfirmDeleteDialog;
+    private MenuItem actionBarStatistics;
 
 
     private final Runnable updateTimerThread = new Runnable() {
@@ -143,14 +145,14 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
             TimerFragment.this.createScramble();
             Toast.makeText(TimerFragment.this.getContext(), "New Scramble", Toast.LENGTH_SHORT).show();
         });
-        Box<Solve> boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
-        this.solveBox = boxFor;
-        ArrayList<Solve> solves = (ArrayList<Solve>) boxFor.getAll();
+        this.solveBox = ObjectBox.getBoxStore().boxFor(Solve.class);
         setUpStatistics();
 
         if (addCubeSizeDialog == null) {
             createCubeSizeDialog();
         }
+
+        requireActivity().addMenuProvider(this);
 
         return this.root;
     }
@@ -336,8 +338,6 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
         addCubeSizeDialog.create();
     }
 
-
-
     private void timer() {
         if (this.running) {
             requireActivity().getWindow().clearFlags(128);
@@ -471,8 +471,11 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        menu.findItem(R.id.actionbar_statistics).setVisible(true).setOnMenuItemClickListener(item -> {
-            TimerFragment.this.startActivity(new Intent(TimerFragment.this.getContext(), StatisticsActivity.class));
+        menu.findItem(R.id.actionbar_search).setVisible(false);
+        actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
+        actionBarStatistics.setVisible(true);
+        actionBarStatistics.setOnMenuItemClickListener(item -> {
+            TimerFragment.this.startActivity(new Intent(getContext(), StatisticsActivity.class));
             return true;
         });
     }

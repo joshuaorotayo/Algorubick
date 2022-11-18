@@ -3,6 +3,9 @@ package com.jorotayo.algorubickrevamped.ui.solution_guide;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -13,6 +16,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +32,7 @@ import java.util.ArrayList;
 
 import io.objectbox.Box;
 
-public class SolutionGuideFragment extends Fragment implements OnClickListener, OnSolutionListener, OnItemSelectedListener {
+public class SolutionGuideFragment extends Fragment implements OnClickListener, OnSolutionListener, OnItemSelectedListener, MenuProvider {
     private View root;
     private ArrayList<Solution> solutionArrayList = new ArrayList<>();
     private Box<Solution> solutionBox;
@@ -50,9 +55,21 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
         solutionRecyclerAdapter = new SolutionRecyclerAdapter(this.solutionArrayList, this);
         this.solutionsRecycler.setAdapter(solutionRecyclerAdapter);
         setupSpinner();
+
+        requireActivity().addMenuProvider(this);
         return this.root;
     }
 
+    @Override
+    public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+        menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        menu.findItem(R.id.actionbar_search).setVisible(false);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+        return false;
+    }
     public void onClick(View v) {
         if (v.getId() == R.id.create_new_solution_btn) {
             startActivity(new Intent(getContext(), SolutionActivity.class));
