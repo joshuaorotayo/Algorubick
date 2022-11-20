@@ -46,8 +46,14 @@ public class SolutionActivity extends AppCompatActivity implements MenuProvider 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
         // TODO: 18/11/2022 implement search for solutions
-        menu.findItem(R.id.actionbar_search).setVisible(false);
-        menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        MenuItem actionBarSearch = menu.findItem(R.id.actionbar_search);
+        MenuItem actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
+        if (actionBarSearch != null){
+            menu.findItem(R.id.actionbar_search).setVisible(false);
+        }
+        if( actionBarStatistics != null){
+            menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        }
     }
 
     @Override

@@ -89,7 +89,10 @@ public class AlgorithmHomeFragment extends Fragment implements OnClickListener, 
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        MenuItem actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
+        if( actionBarStatistics != null){
+            menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        }
         SearchView searchView = (SearchView) menu.findItem(R.id.actionbar_search).setVisible(true).getActionView();
         searchView.setImeOptions(6);
         searchView.setOnQueryTextListener(new OnQueryTextListener() {

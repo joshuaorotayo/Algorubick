@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -159,7 +158,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
 
     private void loadDefaultCubeSizes(SharedPreferences settings) {
         Gson gson = new Gson();
-        cube_size = new ArrayList<> (Arrays.asList("3x3", "2x2","4x4", "5x5", "6x6","7x7","8x8","9x9", "Megaminx", "Pyraminx", "Add Cube Size +"));
+        cube_size = new ArrayList<>(Arrays.asList("3x3", "2x2", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "Megaminx", "Pyraminx", "Add Cube Size +"));
         String jsonText = gson.toJson(cube_size);
         settings.edit().putString("CUBE_SIZES", jsonText).apply();
         settings.edit().putBoolean("CUBE_SIZES_SET", true).apply();
@@ -471,7 +470,11 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        menu.findItem(R.id.actionbar_search).setVisible(false);
+        MenuItem actionBarSearch = menu.findItem(R.id.actionbar_search);
+
+        if (actionBarSearch != null) {
+            actionBarSearch.setVisible(false);
+        }
         actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
         actionBarStatistics.setVisible(true);
         actionBarStatistics.setOnMenuItemClickListener(item -> {
@@ -536,10 +539,10 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
 
     @Override
     public void cubeSizeDeleteClick(int position) {
-        if(cube_size.size() > 1){
+        if (cube_size.size() > 1) {
             buildCubeSizeDeleteDialog(position);
             cubeConfirmDeleteDialog.show();
-          }
+        }
     }
 
     public void buildCubeSizeDeleteDialog(int position) {
@@ -554,7 +557,7 @@ public class TimerFragment extends Fragment implements CubeSizeAdapter.OnCubeSiz
                 .create();
     }
 
-    public void confirmCubeSizeDelete(int position){
+    public void confirmCubeSizeDelete(int position) {
         Gson gson = new Gson();
         cube_size.remove(position);
         String jsonText = gson.toJson(cube_size);

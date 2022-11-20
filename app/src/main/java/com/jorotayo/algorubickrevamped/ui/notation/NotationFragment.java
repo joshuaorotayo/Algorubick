@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuAdapter;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -30,8 +29,14 @@ public class NotationFragment extends Fragment implements MenuProvider {
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        menu.findItem(R.id.actionbar_search).setVisible(false);
-        menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        MenuItem actionBarSearch = menu.findItem(R.id.actionbar_search);
+        MenuItem actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
+        if (actionBarSearch != null){
+            menu.findItem(R.id.actionbar_search).setVisible(false);
+        }
+        if( actionBarStatistics != null){
+            menu.findItem(R.id.actionbar_statistics).setVisible(false);
+        }
     }
 
     @Override

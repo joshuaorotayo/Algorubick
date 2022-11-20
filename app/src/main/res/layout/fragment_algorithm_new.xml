@@ -23,9 +23,8 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/alg_image_placeholder"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#000000" />
+                    android:elevation="8dp"
+                    android:src="@drawable/alg_image_placeholder"/>
 
                 <ImageView
                     android:id="@+id/new_add_new_alg_image"

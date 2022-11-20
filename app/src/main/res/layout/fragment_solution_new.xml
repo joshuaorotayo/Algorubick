@@ -23,8 +23,7 @@
                 android:layout_height="130dp"
                 android:layout_gravity="center"
                 android:src="@drawable/solution_image_placeholder"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#000000" />
+                android:elevation="8dp" />
 
             <ImageView
                 android:id="@+id/add_new_solution_icon_btn"
