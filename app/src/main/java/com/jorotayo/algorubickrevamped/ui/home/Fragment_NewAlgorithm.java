@@ -33,6 +33,7 @@ import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 import com.jorotayo.algorubickrevamped.data.Algorithm_;
 import com.jorotayo.algorubickrevamped.data.Category;
+import com.jorotayo.algorubickrevamped.ui.solution_guide.NewSolutionFragment;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.lang.reflect.Method;
@@ -72,7 +73,7 @@ public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.O
         super.onCreate(savedInstanceState);
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
         this.categoryBox = ObjectBox.getBoxStore().boxFor(Category.class);
-//        categories = categoryBox.query().build().property(Category_.category_name).findStrings();
+
         categories = (ArrayList<Category>) categoryBox.getAll();
     }
 
@@ -81,9 +82,6 @@ public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.O
         this.view = inflater.inflate(R.layout.fragment_algorithm_new, container, false);
         Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("Create New Algorithm");
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
-
-       /* ArrayAdapter<String> categoryAdapter = new ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, categories);
-        categoryAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);*/
 
         categoryAdapter = new CategoryAdapter(requireContext(), R.id.category_spinner_label, categories, this);
         this.new_alg_name_edit = this.view.findViewById(R.id.new_alg_name_edit);

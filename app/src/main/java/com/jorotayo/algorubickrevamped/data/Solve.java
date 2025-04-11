@@ -122,6 +122,7 @@ public class Solve {
                 solve2Date = new Date(0);
             }
 
+            assert solve1Date != null;
             return solve1Date.compareTo(solve2Date);
         }
     }

@@ -100,15 +100,14 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     }
 
     public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
+        switch (v.getId()) {
             case R.id.add_step_btn:
                 addStepView();
                 scrollBottom();
                 return;
             case R.id.add_new_solution_icon_btn:
                 editingSolutionIcon = true;
-                UtilMethods.ImageSelection(this);
+                ImageSelection(this);
                 return;
             case R.id.save_new_solution_btn:
                 saveSolution();
@@ -218,7 +217,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
 
     private void saveSteps(String solutionName) {
         String str = "Debug";
-        if (((SolutionActivity) getActivity()).getSupportActionBar().getTitle().toString().contains("Edit")) {
+        if (Objects.requireNonNull(Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).getTitle()).toString().contains("Edit")) {
             stepsBox.remove(this.stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName(), QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find());
         }
         main = view.findViewById(R.id.step_linear_container);
@@ -275,6 +274,20 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
                 )
                 .start();
     }
+
+    public void ImageSelection(Fragment fragment) {
+        editingSolutionIcon = false;
+        String[] mimeTypes = {"image/png", "image/jpg", "image/jpeg"};
+        ImagePicker.Companion.with(fragment)
+                .crop()
+                .compress(1024)
+                .galleryMimeTypes(  //Exclude gif images
+                        mimeTypes
+                )
+                .start();
+    }
+
+
 
     @Override
     public final void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
