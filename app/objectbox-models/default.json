@@ -42,44 +42,37 @@
         {
           "id": "7:3720949979029583508",
           "name": "practiced_correctly_int",
-          "type": 5,
-          "flags": 4
+          "type": 5
         },
         {
           "id": "8:8897021819187485513",
           "name": "practiced_number_int",
-          "type": 5,
-          "flags": 4
+          "type": 5
         },
         {
           "id": "9:6400455693396783974",
           "name": "custom_alg",
-          "type": 1,
-          "flags": 4
+          "type": 1
         },
         {
           "id": "10:8137620155272460201",
           "name": "favourite_alg",
-          "type": 1,
-          "flags": 4
+          "type": 1
         },
         {
           "id": "11:1625919552026187351",
           "name": "selected_alg",
-          "type": 1,
-          "flags": 4
+          "type": 1
         },
         {
           "id": "12:5734324959947057917",
           "name": "learnt",
-          "type": 1,
-          "flags": 4
+          "type": 1
         },
         {
           "id": "13:2478956408124544062",
           "name": "createdTime",
-          "type": 6,
-          "flags": 4
+          "type": 6
         }
       ],
       "relations": []
@@ -161,8 +154,7 @@
         {
           "id": "4:7638829498627878487",
           "name": "solve_milliseconds",
-          "type": 5,
-          "flags": 4
+          "type": 5
         },
         {
           "id": "5:5076866578935600325",
@@ -221,8 +213,7 @@
         {
           "id": "8:4921650868284350814",
           "name": "stepNumber",
-          "type": 5,
-          "flags": 4
+          "type": 5
         }
       ],
       "relations": []
