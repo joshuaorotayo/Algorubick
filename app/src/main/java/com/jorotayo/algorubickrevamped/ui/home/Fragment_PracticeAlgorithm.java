@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Objects;
 
 import io.objectbox.Box;
 
@@ -202,7 +203,7 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
     private void startSession() {
         if (sessionPosition >= session.size()) {
             Toast.makeText(getContext(), "Do you want to start this session again", Toast.LENGTH_SHORT).show();
-            getActivity().onBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
             return;
         }
         Algorithm algorithm = session.get(sessionPosition);

@@ -356,6 +356,6 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
     }
 
     public void saveBackPressed() {
-        requireActivity().onBackPressed();
+        requireActivity().getOnBackPressedDispatcher().onBackPressed();
     }
 }
