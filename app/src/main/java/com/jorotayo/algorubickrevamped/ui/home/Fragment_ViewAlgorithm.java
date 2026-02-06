@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -99,7 +102,6 @@ public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener,
         return this.view;
     }
 
-
     public void onClick(View v) {
         Intent intent = new Intent(getContext(), Activity_StudyAlgorithm.class);
         this.selectedList.add(((int) this.currentAlg.id) - 1);
@@ -170,7 +172,7 @@ public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener,
 
     private void deleteAlgorithm() {
         this.algorithmBox.remove(this.currentAlg);
-        requireActivity().onBackPressed();
+        requireActivity().getOnBackPressedDispatcher().onBackPressed();
     }
 
     public void customBackPressed() {
@@ -190,7 +192,7 @@ public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener,
                 editAlgorithm();
                 break;
             default:
-                requireActivity().onBackPressed();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
                 break;
         }
         return true;

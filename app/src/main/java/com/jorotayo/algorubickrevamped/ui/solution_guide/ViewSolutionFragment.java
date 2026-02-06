@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -104,7 +107,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
             this.stepsBox.remove((Steps) it.next());
         }
         this.solutionBox.remove(this.currentSolution);
-        requireActivity().onBackPressed();
+        requireActivity().getOnBackPressedDispatcher().onBackPressed();
     }
 
     private void setupStepsAdapter() {
