@@ -7,12 +7,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jorotayo.algorubickrevamped.KeyboardFragment;
 import com.jorotayo.algorubickrevamped.ObjectBox;
@@ -20,17 +25,17 @@ import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import io.objectbox.Box;
 
 public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener {
     private static final String ARG_PARAM1 = "param1";
-    private final ArrayList<Long> mParam2 = new ArrayList();
+    private final ArrayList<Long> mParam2 = new ArrayList<>();
+    private final Random random = new Random();
     HashMap<String, Integer> algImageMap = new HashMap();
-    ArrayList<ImageView> algImages = new ArrayList();
     Algorithm currentAlgorithm;
     private ArrayList algorithmArrayList = new ArrayList();
     private MaterialAlertDialogBuilder correctDialog;
@@ -39,6 +44,7 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     private EditText learn_alg_inputspace;
     private TextView learn_alg_name;
     private View view;
+    private AlgStepAdapter stepAdapter;
 
     public static Fragment_LearnAlgorithm newInstance(ArrayList<Integer> param1) {
         Fragment_LearnAlgorithm fragment = new Fragment_LearnAlgorithm();
@@ -59,30 +65,59 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
         Box<Algorithm> algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
         algorithmBox.getAll();
         algorithmArrayList = (ArrayList) algorithmBox.get(this.mParam2);
+
+        setupHashmap();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_algorithm_learn, container, false);
-        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setTitle("Learn Algorithm");
-        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle("Algorithm Name");
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
+        if (activity != null && activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setTitle("Learn Algorithm");
+            activity.getSupportActionBar().setSubtitle("Algorithm Name");
+        }
+
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.learn_alg_name);
         learn_alg_alg = view.findViewById(R.id.learn_alg_alg);
+
         learn_alg_inputspace.setOnClickListener(this);
-        setupHashmap();
-        setupImageViews();
+        view.findViewById(R.id.check_alg).setOnClickListener(this);
+
+        RecyclerView recyclerView = view.findViewById(R.id.alg_steps_recycler);
+
+// Flexbox layout manager
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
+        layoutManager.setJustifyContent(JustifyContent.CENTER); // center items in each row
+        recyclerView.setLayoutManager(layoutManager);
+
+        stepAdapter = new AlgStepAdapter(getContext(), 6, 3);
+        recyclerView.setAdapter(stepAdapter);
+        recyclerView.setHasFixedSize(true);
+
         Button button = view.findViewById(R.id.check_alg);
         button.setOnClickListener(this);
         setupKeyboard();
         setupDialogs();
         setupAlgorithm(nextAlgorithm());
-        return view;
     }
 
     private void setupKeyboard() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.learn_alg_keyboard_space, new KeyboardFragment(this.learn_alg_inputspace));
-        ft.commit();
+        if (getChildFragmentManager().findFragmentById(R.id.learn_alg_keyboard_space) == null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.learn_alg_keyboard_space, new KeyboardFragment(learn_alg_inputspace))
+                    .commit();
+        }
     }
 
     public void onClick(View v) {
@@ -92,10 +127,14 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     }
 
     private Algorithm nextAlgorithm() {
-        return (Algorithm) algorithmArrayList.get(new Random().nextInt(this.algorithmArrayList.size()));
+        if (algorithmArrayList.isEmpty()) return null;
+        return (Algorithm) algorithmArrayList.get(
+                random.nextInt(algorithmArrayList.size())
+        );
     }
 
     private void setupAlgorithm(Algorithm nextAlgorithm) {
+        if (nextAlgorithm == null) return;
         currentAlgorithm = nextAlgorithm;
         ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
         learn_alg_name.setText(this.currentAlgorithm.getAlg_name());
@@ -104,7 +143,7 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     }
 
     private void checkCorrect() {
-        if (this.learn_alg_inputspace.getText().toString().matches(this.currentAlgorithm.getAlg())) {
+        if (this.learn_alg_inputspace.getText().toString().trim().equals(currentAlgorithm.getAlg())) {
             correctDialog.show();
         } else {
             incorrectDialog.show();
@@ -114,6 +153,7 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     }
 
     private void setupDialogs() {
+        if (getContext() == null) return;
         incorrectDialog = new MaterialAlertDialogBuilder(getContext()).setMessage("Incorrect Algorithm Inputted. Try Again").setTitle("Incorrect").setIcon(R.drawable.incorrect_48_r).setCancelable(true);
         correctDialog = new MaterialAlertDialogBuilder(getContext()).setMessage("Correct Algorithm Inputted. Keep it up").setTitle("Correct").setIcon(R.drawable.correct_48_g).setCancelable(true);
     }
@@ -172,57 +212,17 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
         algImageMap.put("M'", R.drawable.m_prime);
     }
 
-    private void setupImageViews() {
-        ImageView algImage1 = view.findViewById(R.id.algImage1);
-        ImageView algImage2 = view.findViewById(R.id.algImage2);
-        ImageView algImage3 = view.findViewById(R.id.algImage3);
-        ImageView algImage4 = view.findViewById(R.id.algImage4);
-        ImageView algImage5 = view.findViewById(R.id.algImage5);
-        ImageView algImage6 = view.findViewById(R.id.algImage6);
-        ImageView algImage7 = view.findViewById(R.id.algImage7);
-        ImageView algImage8 = view.findViewById(R.id.algImage8);
-        ImageView algImage9 = view.findViewById(R.id.algImage9);
-        ImageView algImage10 = view.findViewById(R.id.algImage10);
-        ImageView algImage11 = view.findViewById(R.id.algImage11);
-        ImageView algImage12 = view.findViewById(R.id.algImage12);
-        ImageView algImage13 = view.findViewById(R.id.algImage13);
-        ImageView algImage14 = view.findViewById(R.id.algImage14);
-        ImageView algImage15 = view.findViewById(R.id.algImage15);
-        ImageView algImage16 = view.findViewById(R.id.algImage16);
-        ImageView algImage17 = view.findViewById(R.id.algImage17);
-        ImageView algImage18 = view.findViewById(R.id.algImage18);
-        ImageView algImage19 = view.findViewById(R.id.algImage19);
-        ImageView algImage20 = view.findViewById(R.id.algImage20);
-        ImageView algImage21 = view.findViewById(R.id.algImage21);
-        ImageView algImage22 = view.findViewById(R.id.algImage22);
-        ImageView algImage23 = view.findViewById(R.id.algImage23);
-        ImageView algImage24 = view.findViewById(R.id.algImage24);
-        ImageView algImage25 = view.findViewById(R.id.algImage25);
-        ImageView algImage26 = view.findViewById(R.id.algImage26);
-        ImageView algImage27 = view.findViewById(R.id.algImage27);
-        ImageView algImage28 = view.findViewById(R.id.algImage28);
-        ImageView algImage29 = view.findViewById(R.id.algImage29);
-        ImageView algImage30 = view.findViewById(R.id.algImage30);
-        ImageView algImage31 = view.findViewById(R.id.algImage31);
-        ImageView algImage32 = view.findViewById(R.id.algImage32);
-        ImageView algImage33 = view.findViewById(R.id.algImage33);
-        ImageView algImage34 = view.findViewById(R.id.algImage34);
-        ImageView algImage35 = view.findViewById(R.id.algImage35);
-        ImageView algImage36 = view.findViewById(R.id.algImage36);
-        algImages.addAll(Arrays.asList(algImage1, algImage2, algImage3, algImage4, algImage5, algImage6, algImage7, algImage8, algImage9, algImage10, algImage11, algImage12, algImage13, algImage14, algImage15, algImage16, algImage17, algImage18, algImage19, algImage20, algImage21, algImage22, algImage23, algImage24, algImage25, algImage26, algImage27, algImage28, algImage29, algImage30, algImage31, algImage32, algImage33, algImage34, algImage35, algImage36));
-    }
-
     private void setupAlgImages() {
-        int i;
-        String[] steps = currentAlgorithm.alg.split(",");
-        ArrayList<Integer> stepIDs = new ArrayList();
+        String[] steps = currentAlgorithm.getAlg().split(",");
+        List<Integer> stepIcons = new ArrayList<>();
+
         for (String step : steps) {
-            stepIDs.add(this.algImageMap.get(step));
+            Integer icon = algImageMap.get(step.trim());
+            if (icon != null) {
+                stepIcons.add(icon);
+            }
         }
-        for (i = 0; i < stepIDs.size(); i++) {
-            ImageView newImage = algImages.get(i);
-            newImage.setImageResource(stepIDs.get(i));
-            newImage.setVisibility(View.VISIBLE);
-        }
+
+        stepAdapter.submitSteps(stepIcons);
     }
 }

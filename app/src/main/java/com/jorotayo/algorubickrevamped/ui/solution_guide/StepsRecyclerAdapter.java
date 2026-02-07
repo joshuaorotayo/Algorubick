@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import com.bumptech.glide.Glide;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.data.Steps;
@@ -29,6 +31,7 @@ private Context context;
         this.mOnStepListener = mOnStepListener;
     }
 
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_step_view, parent, false), this.mOnStepListener);
@@ -41,8 +44,11 @@ private Context context;
         holder.stepAlgorithm.setText(step.getStepAlgorithm());
         UtilMethods.LoadStepIcon(context,holder.stepImageStart, step.stepImageStart);
         UtilMethods.LoadStepIcon(context,holder.stepImageEnd, step.stepImageEnd);
-//        holder.stepImageStart.setImageResource(R.drawable.cfop);
-//        holder.stepImageEnd.setImageResource(R.drawable.cfop);
+    }
+
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        Glide.with(holder.itemView).clear(holder.stepImageStart);
+        Glide.with(holder.itemView).clear(holder.stepImageEnd);
     }
 
     public int getItemCount() {

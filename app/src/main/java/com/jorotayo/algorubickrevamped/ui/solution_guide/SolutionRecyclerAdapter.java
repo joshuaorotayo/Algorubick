@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import com.bumptech.glide.Glide;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
@@ -41,6 +43,10 @@ public class SolutionRecyclerAdapter extends Adapter<SolutionRecyclerAdapter.Vie
         holder.solutionDescription.setText(solution.getSolutionDescription());
 //        holder.solutionImage.setImageResource(R.drawable.rubiks_cube_scrambled);
         UtilMethods.LoadStepIcon(context, holder.solutionImage, solution.getSolutionIconLocation());
+    }
+
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        Glide.with(holder.itemView).clear(holder.solutionImage);
     }
 
     public int getItemCount() {

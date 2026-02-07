@@ -4,8 +4,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Handler.Callback;
-import android.os.Message;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,14 +13,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jorotayo.algorubickrevamped.KeyboardFragment;
 import com.jorotayo.algorubickrevamped.ObjectBox;
@@ -29,12 +32,11 @@ import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import io.objectbox.Box;
 
@@ -43,11 +45,10 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
     private final ArrayList<Long> mParam2 = new ArrayList();
     private final long timeSwapBuff = 0;
     HashMap<String, Integer> algImageMap = new HashMap();
-    ArrayList<ImageView> algImages = new ArrayList();
     int correct = 0;
     int counter;
     Algorithm currentAlgorithm;
-    Handler mIncomingHandler = new Handler(new IncomingHandlerCallback());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     int milliseconds;
     int mins;
     LinearLayout numbers_section;
@@ -70,32 +71,28 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
     private long startTime;
     private long timeInMilliseconds = 0;
     private long updatedTime = 0;
+    private AlgStepAdapter stepAdapter;
+    private static final long TIMER_INTERVAL = 100L;
 
-    private final Runnable updateTimerThread = new Runnable() {
+    private final Runnable updateTimerRunnable = new Runnable() {
+        @Override
         public void run() {
-            String str = "%02d";
-            try {
-                timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-                updatedTime = timeSwapBuff + timeInMilliseconds;
-                secs = (int) (updatedTime / 1000);
-                mins = secs / 60;
-                secs %= 60;
-                milliseconds = (int) (updatedTime % 100);
-                TextView access$500 = practiceAlgorithmTimer;
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("");
-                stringBuilder.append(String.format(Locale.getDefault(), str, mins));
-                stringBuilder.append(":");
-                stringBuilder.append(String.format(Locale.getDefault(), str, secs));
-                stringBuilder.append(".");
-                stringBuilder.append(String.format(Locale.getDefault(), str, milliseconds));
-                access$500.setText(stringBuilder.toString());
-                mIncomingHandler.postDelayed(this, 0);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            long elapsed = SystemClock.uptimeMillis() - startTime;
+
+            int totalSeconds = (int) (elapsed / 1000);
+            int mins = totalSeconds / 60;
+            int secs = totalSeconds % 60;
+            int millis = (int) (elapsed % 1000) / 10;
+
+            practiceAlgorithmTimer.setText(
+                    String.format(Locale.getDefault(),
+                            "%02d:%02d.%02d", mins, secs, millis)
+            );
+
+            handler.postDelayed(this, TIMER_INTERVAL);
         }
     };
+
     private View view;
 
     public static Fragment_PracticeAlgorithm newInstance(ArrayList<Integer> param1) {
@@ -120,10 +117,18 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
         algorithmBox = boxFor;
         boxFor.getAll();
         algorithmArrayList = (ArrayList) algorithmBox.get(mParam2);
+
+        setupHashmap();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_algorithm_practice, container, false);
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setTitle("Practice Algorithm");
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.practice_alg_name);
@@ -133,21 +138,35 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
         checkAlg = view.findViewById(R.id.check_alg);
         numbers_section = view.findViewById(R.id.numbers_section);
         practiceAlgTimerSection = view.findViewById(R.id.practice_alg_timer_section);
-        setupHashmap();
-        setupImageViews();
+
+        RecyclerView recyclerView = view.findViewById(R.id.alg_steps_recycler);
+
+// Flexbox layout manager
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
+        layoutManager.setJustifyContent(JustifyContent.CENTER); // center items in each row
+        recyclerView.setLayoutManager(layoutManager);
+
+        stepAdapter = new AlgStepAdapter(getContext(), 6, 3);
+        recyclerView.setAdapter(stepAdapter);
+        recyclerView.setHasFixedSize(true);
+
         checkAlg.setOnClickListener(this);
         setupKeyboard();
         setupDialogs();
         setupSession();
         startSession();
         startTimer();
-        return view;
     }
 
     private void setupKeyboard() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.learn_alg_keyboard_space, new KeyboardFragment(learn_alg_inputspace));
-        ft.commit();
+        if (getChildFragmentManager().findFragmentById(R.id.learn_alg_keyboard_space) == null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.learn_alg_keyboard_space, new KeyboardFragment(learn_alg_inputspace))
+                    .commit();
+        }
     }
 
     public void onClick(View v) {
@@ -156,8 +175,13 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopTimer();
+    }
     private void checkCorrect() {
-        if (learn_alg_inputspace.getText().toString().matches(currentAlgorithm.getAlg())) {
+        if (learn_alg_inputspace.getText().toString().trim().equals(currentAlgorithm.getAlg())){
             correctDialog.show();
             correct++;
         } else {
@@ -184,14 +208,17 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
         correctDialog = new MaterialAlertDialogBuilder(getContext()).setMessage("Correct Algorithm Inputted. Keep it up").setTitle("Correct").setIcon(R.drawable.correct_48_g).setCancelable(true);
     }
 
+    private void stopTimer() {
+        handler.removeCallbacks(updateTimerRunnable);
+    }
+
     private void setupSession() {
         if (mParam2.size() == 1) {
             sessionLength = 5;
         }
         for (int i = 0; i < sessionLength; i++) {
-            Iterator it = mParam2.iterator();
-            while (it.hasNext()) {
-                Algorithm algorithm = (Algorithm) algorithmBox.get(((Long) it.next()).longValue());
+            for (Long aLong : mParam2) {
+                Algorithm algorithm = (Algorithm) algorithmBox.get(aLong);
                 currentAlgorithm = algorithm;
                 session.add(algorithm);
             }
@@ -202,31 +229,30 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
 
     private void startSession() {
         if (sessionPosition >= session.size()) {
-            Toast.makeText(getContext(), "Do you want to start this session again", Toast.LENGTH_SHORT).show();
             requireActivity().getOnBackPressedDispatcher().onBackPressed();
             return;
         }
-        Algorithm algorithm = session.get(sessionPosition);
-        currentAlgorithm = algorithm;
-        currentAlgorithm = (Algorithm) algorithmBox.get(algorithm.id);
-        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle(currentAlgorithm.getAlg_name());
-        learn_alg_name.setText(currentAlgorithm.alg_name);
-        correct = currentAlgorithm.getPracticed_correctly_int();
-        practiced_count = currentAlgorithm.getPracticed_number_int();
-        TextView textView = learn_alg_correct_practiced_number;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(correct);
-        stringBuilder.append(" / ");
-        stringBuilder.append(practiced_count);
-        textView.setText(stringBuilder.toString());
+
+        currentAlgorithm = session.get(sessionPosition++);
+        bindAlgorithm(currentAlgorithm);
+    }
+
+    private void bindAlgorithm(Algorithm alg) {
+        learn_alg_name.setText(alg.getAlg_name());
+
+        correct = alg.getPracticed_correctly_int();
+        practiced_count = alg.getPracticed_number_int();
+
+        learn_alg_correct_practiced_number.setText(correct + " / " + practiced_count);
+
         setupAlgImages();
+        clearPracticeSpace();
         startTimer();
-        sessionPosition++;
     }
 
     private void clearPracticeSpace() {
         learn_alg_inputspace.setText("");
-        mIncomingHandler.removeCallbacks(updateTimerThread);
+        handler.removeCallbacks(updateTimerRunnable);
         practiceAlgorithmTimer.setText("00:00.00");
         mins = 0;
         secs = 0;
@@ -235,7 +261,7 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
 
     private void startTimer() {
         startTime = SystemClock.uptimeMillis();
-        mIncomingHandler.postDelayed(updateTimerThread, 1000);
+        handler.post(updateTimerRunnable);
     }
 
     private void setupHashmap() {
@@ -292,72 +318,17 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
         algImageMap.put("M'", R.drawable.m_prime);
     }
 
-    private void setupImageViews() {
-        ImageView algImage1 = view.findViewById(R.id.algImage1);
-        ImageView algImage2 = view.findViewById(R.id.algImage2);
-        ImageView algImage3 = view.findViewById(R.id.algImage3);
-        ImageView algImage4 = view.findViewById(R.id.algImage4);
-        ImageView algImage5 = view.findViewById(R.id.algImage5);
-        ImageView algImage6 = view.findViewById(R.id.algImage6);
-        ImageView algImage7 = view.findViewById(R.id.algImage7);
-        ImageView algImage8 = view.findViewById(R.id.algImage8);
-        ImageView algImage9 = view.findViewById(R.id.algImage9);
-        ImageView algImage10 = view.findViewById(R.id.algImage10);
-        ImageView algImage11 = view.findViewById(R.id.algImage11);
-        ImageView algImage12 = view.findViewById(R.id.algImage12);
-        ImageView algImage13 = view.findViewById(R.id.algImage13);
-        ImageView algImage14 = view.findViewById(R.id.algImage14);
-        ImageView algImage15 = view.findViewById(R.id.algImage15);
-        ImageView algImage16 = view.findViewById(R.id.algImage16);
-        ImageView algImage17 = view.findViewById(R.id.algImage17);
-        ImageView algImage18 = view.findViewById(R.id.algImage18);
-        ImageView algImage19 = view.findViewById(R.id.algImage19);
-        ImageView algImage20 = view.findViewById(R.id.algImage20);
-        ImageView algImage21 = view.findViewById(R.id.algImage21);
-        ImageView algImage22 = view.findViewById(R.id.algImage22);
-        ImageView algImage23 = view.findViewById(R.id.algImage23);
-        ImageView algImage24 = view.findViewById(R.id.algImage24);
-        ImageView algImage25 = view.findViewById(R.id.algImage25);
-        ImageView algImage26 = view.findViewById(R.id.algImage26);
-        ImageView algImage27 = view.findViewById(R.id.algImage27);
-        ImageView algImage28 = view.findViewById(R.id.algImage28);
-        ImageView algImage29 = view.findViewById(R.id.algImage29);
-        ImageView algImage30 = view.findViewById(R.id.algImage30);
-        ImageView algImage31 = view.findViewById(R.id.algImage31);
-        ImageView algImage32 = view.findViewById(R.id.algImage32);
-        ImageView algImage33 = view.findViewById(R.id.algImage33);
-        ImageView algImage34 = view.findViewById(R.id.algImage34);
-        ImageView algImage35 = view.findViewById(R.id.algImage35);
-        ImageView algImage36 = view.findViewById(R.id.algImage36);
-        algImages.addAll(Arrays.asList(algImage1, algImage2, algImage3, algImage4, algImage5, algImage6, algImage7, algImage8, algImage9, algImage10, algImage11, algImage12, algImage13, algImage14, algImage15, algImage16, algImage17, algImage18, algImage19, algImage20, algImage21, algImage22, algImage23, algImage24, algImage25, algImage26, algImage27, algImage28, algImage29, algImage30, algImage31, algImage32, algImage33, algImage34, algImage35, algImage36));
-    }
-
     private void setupAlgImages() {
-        int i;
-        String[] steps = currentAlgorithm.alg.split(",");
-        ArrayList<Integer> stepIDs = new ArrayList();
+        String[] steps = currentAlgorithm.getAlg().split(",");
+        List<Integer> stepIcons = new ArrayList<>();
+
         for (String step : steps) {
-            stepIDs.add(algImageMap.get(step));
-        }
-        for (i = 0; i < stepIDs.size(); i++) {
-            ImageView newImage = algImages.get(i);
-            newImage.setImageResource(stepIDs.get(i));
-            newImage.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private class IncomingHandlerCallback implements Callback {
-        private IncomingHandlerCallback() {
+            Integer icon = algImageMap.get(step.trim());
+            if (icon != null) {
+                stepIcons.add(icon);
+            }
         }
 
-        /* synthetic */ IncomingHandlerCallback(Fragment_PracticeAlgorithm fragmentPracticeAlgorithm) {
-            this();
-        }
-
-        public boolean handleMessage(Message message) {
-            practiceAlgorithmTimer.setTextColor(-16711936);
-            practiceAlgorithmTimer.setText(counter);
-            return true;
-        }
+        stepAdapter.submitSteps(stepIcons);
     }
 }
