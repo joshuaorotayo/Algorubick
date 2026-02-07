@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView.Adapter;

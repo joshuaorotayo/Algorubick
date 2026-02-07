@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solve;
-//import com.jorotayo.algorubickrevamped.data;
 import com.jorotayo.algorubickrevamped.data.Solve_;
 import com.jorotayo.algorubickrevamped.ui.timer.StatisticsRecyclerAdapter.OnSolveListener;
 

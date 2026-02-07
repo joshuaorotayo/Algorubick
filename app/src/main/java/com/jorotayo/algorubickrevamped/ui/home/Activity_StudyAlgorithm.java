@@ -19,12 +19,14 @@ public class Activity_StudyAlgorithm extends AppCompatActivity {
         if (getIntent().getExtras().containsKey(str)) {
             newFragment = Fragment_PracticeAlgorithm.newInstance(getIntent().getIntegerArrayListExtra(str));
             transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setReorderingAllowed(true);
             transaction.replace(R.id.study_fragment_space, newFragment);
             transaction.commit();
             return;
         }
         newFragment = Fragment_LearnAlgorithm.newInstance(getIntent().getIntegerArrayListExtra("learn"));
         transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setReorderingAllowed(true);
         transaction.replace(R.id.study_fragment_space, newFragment);
         transaction.commit();
     }

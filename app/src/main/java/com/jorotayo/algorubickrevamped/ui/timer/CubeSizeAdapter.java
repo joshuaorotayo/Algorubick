@@ -8,9 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import java.util.ArrayList;
 
 import com.jorotayo.algorubickrevamped.R;
+
+import java.util.ArrayList;
 
 public class CubeSizeAdapter extends ArrayAdapter {
     private ArrayList<String> cubeSize;

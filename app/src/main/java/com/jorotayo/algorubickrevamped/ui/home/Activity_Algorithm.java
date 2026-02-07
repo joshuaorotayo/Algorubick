@@ -10,7 +10,7 @@ import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 
 public class Activity_Algorithm extends AppCompatActivity {
-    /* Access modifiers changed, original: protected */
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_algorithm);

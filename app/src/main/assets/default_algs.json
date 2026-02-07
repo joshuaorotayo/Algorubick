@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Right Sexy Move",
+    "alg": "R,U,R',U'",
+    "description": "Insert bottom right corner and trigger",
+    "category": "Triggers",
+    "image": "right_edge"
+  },
+  {
+    "name": "Left Sexy Move",
+    "alg": "L',U',L,U",
+    "description": "Insert bottom left corner and trigger",
+    "category": "Triggers",
+    "image": "left_edge"
+  },
+  {
+    "name": "H-Perm",
+    "alg": "M2,U,M2,U2,M2,U,M2",
+    "description": "Swap opposite Edges (4e)",
+    "category": "PLL",
+    "image": "h_perm"
+  },
+  {
+    "name": "Z-Perm",
+    "alg": "M2,U,M2,U,M',U2,M2,U2,M',U2",
+    "description": "Swap adjacent Edges (4e)",
+    "category": "PLL",
+    "image": "z_perm"
+  },
+  {
+    "name": "T-Perm",
+    "alg": "R,U,R',U',R,F,R2,U',R',U',R',U,R',F'",
+    "description": "Swap two opposite edges and two corners (2e2c)",
+    "category": "PLL",
+    "image": "t_perm"
+  },
+  {
+    "name": "J1-Perm",
+    "alg": "R',U,L',U2,R,U',R',U2,R,L,U'",
+    "description": "Swap two opposite corners, swap two adjacent edges (2c2e)",
+    "category": "PLL",
+    "image": "j1_perm"
+  },
+  {
+    "name": "J2-Perm",
+    "alg": "R,U,R',F',R,U,R',U',R',F,R2,U',R',U'",
+    "description": "Swap two corners, swap two adjacent edges (2e2c)",
+    "category": "PLL",
+    "image": "j2_perm"
+  },
+  {
+    "name": "N1-Perm",
+    "alg": "L,U',R,U2,L',U,R',L,U',R,U2,L',U,R',U",
+    "description": "Swap diagonal corner and opposite edge, left to right (2e2c)",
+    "category": "PLL",
+    "image": "n1_perm"
+  },
+  {
+    "name": "N2-Perm",
+    "alg": "R',U,L',U2,R,U',L,R',U,L',U2,R,U',L,U'",
+    "description": "Swap diagonal corner and opposite edge, right to left (2e2c)",
+    "category": "PLL",
+    "image": "n2_perm"
+  },
+  {
+    "name": "V-Perm",
+    "alg": "R',U,R',d',R',F',R2,U',R',U,R',F,R,F",
+    "description": "Swap inline adjacent edge and diagonal corner (2e2c)",
+    "category": "PLL",
+    "image": "v_perm"
+  },
+  {
+    "name": "Y-Perm",
+    "alg": "F,R,U',R',U',R,U,R',F',R,U,R',U',R',F,R,F'",
+    "description": "Cross shaped swap diagonal corner and adjacent edge (2e2c)",
+    "category": "PLL",
+    "image": "y_perm"
+  },
+  {
+    "name": "E-Perm",
+    "alg": "X',R,U',R',D,R,U,R',u2,R',U,R,D,R',U',R",
+    "description": "Swap opposite corners (4c)",
+    "category": "PLL",
+    "image": "e_perm"
+  },
+  {
+    "name": "F-Perm",
+    "alg": "R',U2,R',d',R',F',R2,U',R',U,R',F,R,U',F",
+    "description": "Swap inline 2 edges and 2 corners (2e2c)",
+    "category": "PLL",
+    "image": "f_perm"
+  },
+  {
+    "name": "R1-Perm",
+    "alg": "L,U2,L',U2,L,F',L',U',L,U,L,F,L2,U",
+    "description": "Swap opposite corners and adjacent edge (2e2c)",
+    "category": "PLL",
+    "image": "r1_perm"
+  },
+  {
+    "name": "R2-Perm",
+    "alg": "R',U2,R,U2,R',F,R,U,R',U',R',F',R2,U'",
+    "description": "Swap opposite corners and adjacent edge (2e2c)",
+    "category": "PLL",
+    "image": "r2_perm"
+  }
+]

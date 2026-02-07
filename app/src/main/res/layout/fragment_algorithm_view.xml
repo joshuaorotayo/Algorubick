@@ -137,27 +137,38 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/view_alg_learn_algorithm_btn"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="100dp"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:drawableBottom="@drawable/idea_white_outlined_32"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:text="@string/learn_alg_btn"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    app:icon="@drawable/idea_white_outlined_32"
+                    app:iconGravity="start"
+                    app:iconPadding="8dp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/view_alg_practice_algorithm_btn"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="100dp"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:drawableBottom="@drawable/practice_32_outline_white"
+                    android:maxLines="2"
+                    android:singleLine="false"
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:text="@string/practice_alg_btn"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    app:icon="@drawable/practice_32_outline_white"
+                    app:iconGravity="start"
+                    app:iconPadding="8dp" />
+
             </LinearLayout>
     </LinearLayout>
 </ScrollView>

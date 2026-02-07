@@ -33,7 +33,6 @@ import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 import com.jorotayo.algorubickrevamped.data.Algorithm_;
 import com.jorotayo.algorubickrevamped.data.Category;
-import com.jorotayo.algorubickrevamped.ui.solution_guide.NewSolutionFragment;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.lang.reflect.Method;

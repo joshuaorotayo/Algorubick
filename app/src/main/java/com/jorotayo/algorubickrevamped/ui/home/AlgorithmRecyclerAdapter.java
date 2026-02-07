@@ -1,24 +1,19 @@
 package com.jorotayo.algorubickrevamped.ui.home;
 
-import static com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeFragment.actionMode;
-
 import android.content.Context;
 import android.graphics.Color;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView.Adapter;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
@@ -26,194 +21,211 @@ import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlgorithmRecyclerAdapter extends Adapter<AlgorithmRecyclerAdapter.ViewHolder> implements Filterable {
+public class AlgorithmRecyclerAdapter
+        extends RecyclerView.Adapter<AlgorithmRecyclerAdapter.ViewHolder> {
+
+    /* ---------- callbacks ---------- */
+
+    public interface OnItemClick {
+        void onClick(int position);
+    }
+
+    public interface OnItemViewClick {
+        void onClick(int position, View view);
+    }
+
+    public interface OnItemLongClick {
+        void onLongClick(int position, View view);
+    }
+
+    /* ---------- fields ---------- */
 
     private final Context ctx;
-    private final ArrayList<Algorithm> mAlgorithms;
-    private final ArrayList<Algorithm> mAlgorithmsAll;
+    private final ArrayList<Algorithm> algorithms;
+    private final ArrayList<Algorithm> allAlgorithms;
 
-    Filter filter = new Filter() {
-        /* Access modifiers changed, original: protected */
-        public FilterResults performFiltering(CharSequence text) {
-            ArrayList<Algorithm> filteredAlgorithms = new ArrayList<>();
-            if (text == null || text.length() == 0) {
-                filteredAlgorithms.addAll(mAlgorithmsAll);
-            } else {
-                String filterPattern = text.toString().toLowerCase().trim();
-                for (Algorithm item : mAlgorithmsAll) {
-                    String algorithm = item.alg;
-                    String description = item.alg_description.toLowerCase();
-                    String name = item.alg_name.toLowerCase();
-                    if (algorithm.contains(filterPattern) || description.contains(filterPattern) || name.contains(filterPattern)) {
-                        filteredAlgorithms.add(item);
-                    }
-                }
-            }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredAlgorithms;
-            return filterResults;
-        }
+    private final OnItemClick onCardClick;
+    private final OnItemViewClick onImageClick;
+    private final OnItemViewClick onFavouriteClick;
+    private final OnItemViewClick onLearntClick;
+    private final OnItemLongClick onLongClick;
 
-        /* Access modifiers changed, original: protected */
-        public void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            AlgorithmRecyclerAdapter.this.mAlgorithms.clear();
-            AlgorithmRecyclerAdapter.this.mAlgorithms.addAll((ArrayList<Algorithm>) filterResults.values);
-            AlgorithmRecyclerAdapter.this.notifyDataSetChanged();
-        }
-    };
-    SparseBooleanArray selected_items;
-    private int current_selected = -1;
-    private OnAlgorithmListener mOnAlgorithmListener;
+    /* selection */
+    private final ArrayList<Integer> selectedItems = new ArrayList<>();
 
-    public AlgorithmRecyclerAdapter(ArrayList<Algorithm> mAlgorithms, OnAlgorithmListener mOnAlgorithmListener, Context ctx) {
-        this.mAlgorithms = mAlgorithms;
-        this.mAlgorithmsAll = new ArrayList<>(mAlgorithms);
-        this.mOnAlgorithmListener = mOnAlgorithmListener;
-        this.selected_items = new SparseBooleanArray();
+    /* ---------- constructor ---------- */
+
+    public AlgorithmRecyclerAdapter(
+            ArrayList<Algorithm> algorithms,
+            Context ctx,
+            OnItemClick onCardClick,
+            OnItemViewClick onImageClick,
+            OnItemViewClick onFavouriteClick,
+            OnItemViewClick onLearntClick,
+            OnItemLongClick onLongClick
+    ) {
+        this.algorithms = algorithms;
+        this.allAlgorithms = new ArrayList<>(algorithms);
         this.ctx = ctx;
+        this.onCardClick = onCardClick;
+        this.onImageClick = onImageClick;
+        this.onFavouriteClick = onFavouriteClick;
+        this.onLearntClick = onLearntClick;
+        this.onLongClick = onLongClick;
     }
 
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_algorithm, parent, false), this.mOnAlgorithmListener);
+    /* ---------- adapter ---------- */
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_algorithm, parent, false);
+        return new ViewHolder(v);
     }
 
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Algorithm algorithmItem = this.mAlgorithms.get(position);
-        holder.algorithmName.setText(algorithmItem.getAlg_name());
-        holder.algorithm.setText(algorithmItem.getAlg());
-        holder.algorithmCategory.setText(algorithmItem.getCategory());
-        String practicedCorrect = String.format("Correct/Practiced: %s / %s", algorithmItem.getPracticed_correctly_int(), algorithmItem.getPracticed_number_int());
-        holder.practicedCorrect.setText(practicedCorrect);
-        UtilMethods.LoadAlgorithmIcon(ctx.getApplicationContext(), holder.algorithmIcon, algorithmItem);
-        holder.favourite_checkbox.setChecked(algorithmItem.isFavourite_alg());
-        holder.learnt_checkbox.setChecked(algorithmItem.isLearnt());
-        toggleSelectedRow(holder, position);
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Algorithm alg = algorithms.get(position);
+
+        holder.algorithmName.setText(alg.getAlg_name());
+        holder.algorithm.setText(alg.getAlg());
+        holder.algorithmCategory.setText(alg.getCategory());
+
+        holder.practicedCorrect.setText(
+                "Correct/Practiced: " +
+                        alg.getPracticed_correctly_int() + " / " +
+                        alg.getPracticed_number_int()
+        );
+
+        holder.favourite_checkbox.setChecked(alg.isFavourite_alg());
+        holder.learnt_checkbox.setChecked(alg.isLearnt());
+
+        UtilMethods.LoadAlgorithmIcon(ctx, holder.algorithmIcon, alg);
+
+        applySelectionState(holder, position);
     }
 
-    private void toggleSelectedRow(ViewHolder holder, int position) {
-        if (this.selected_items.get(position, false)) {
-            holder.algorithmCard.setBackgroundResource(R.color.colorPrimaryDark);
-            holder.algorithmName.setTextColor(Color.rgb(255, 255, 255));
-            holder.algorithmCategory.setTextColor(Color.rgb(255, 255, 255));
-            holder.algorithm.setTextColor(Color.rgb(255, 255, 255));
-            holder.practicedCorrect.setTextColor(Color.rgb(255, 255, 255));
-            holder.algorithm_item_checks.setVisibility(View.GONE);
-            holder.algorithm_selected_checks.setVisibility(View.VISIBLE);
-            holder.algorithm_selected.setChecked(true);
-            return;
-        }
-        holder.algorithmCard.setBackgroundResource(R.color.white);
-        holder.algorithmName.setTextColor(Color.rgb(0, 0, 0));
-        holder.algorithmCategory.setTextColor(Color.rgb(0, 0, 0));
-        holder.algorithm.setTextColor(Color.rgb(0, 0, 0));
-        holder.practicedCorrect.setTextColor(Color.rgb(0, 0, 0));
-        holder.algorithm_item_checks.setVisibility(View.VISIBLE);
-        holder.algorithm_selected_checks.setVisibility(View.GONE);
-        holder.algorithm_selected.setChecked(false);
-
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        Glide.with(holder.itemView).clear(holder.algorithmIcon);
     }
 
-    public void clearSelected() {
-        this.selected_items.clear();
-        notifyDataSetChanged();
-    }
-
+    @Override
     public int getItemCount() {
-        return this.mAlgorithms.size();
+        return algorithms.size();
+    }
+
+    /* ---------- selection ---------- */
+
+    private void applySelectionState(ViewHolder h, int position) {
+        boolean selected = selectedItems.contains(position);
+
+        if (selected) {
+            h.algorithmCard.setBackgroundResource(R.color.colorPrimaryDark);
+            setTextColor(h, Color.WHITE);
+            h.algorithm_item_checks.setVisibility(View.GONE);
+            h.algorithm_selected_checks.setVisibility(View.VISIBLE);
+            h.algorithm_selected.setChecked(true);
+        } else {
+            h.algorithmCard.setBackgroundResource(R.color.white);
+            setTextColor(h, Color.BLACK);
+            h.algorithm_item_checks.setVisibility(View.VISIBLE);
+            h.algorithm_selected_checks.setVisibility(View.GONE);
+            h.algorithm_selected.setChecked(false);
+        }
+    }
+
+    private void setTextColor(ViewHolder h, int color) {
+        h.algorithmName.setTextColor(color);
+        h.algorithmCategory.setTextColor(color);
+        h.algorithm.setTextColor(color);
+        h.practicedCorrect.setTextColor(color);
+    }
+
+    public void toggleSelection(int position) {
+        if (selectedItems.contains(position)) {
+            selectedItems.remove((Integer) position);
+        } else {
+            selectedItems.add(position);
+        }
+        notifyItemChanged(position);
+    }
+
+    public void clearSelection() {
+        selectedItems.clear();
+        notifyDataSetChanged();
     }
 
     public int getSelectedItemCount() {
-        return this.selected_items.size();
+        return selectedItems.size();
     }
 
     public List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<>(this.selected_items.size());
-        for (int i = 0; i < this.selected_items.size(); i++) {
-            items.add(this.selected_items.keyAt(i));
-        }
-        return items;
+        return new ArrayList<>(selectedItems);
     }
 
-    public Filter getFilter() {
-        return this.filter;
-    }
-
-    public void setFilter(ArrayList<Algorithm> algorithmArrayList) {
-        this.mAlgorithms.clear();
-        this.mAlgorithms.addAll(algorithmArrayList);
+    public void setFilter(ArrayList<Algorithm> newList) {
+        algorithms.clear();
+        algorithms.addAll(newList);
         notifyDataSetChanged();
     }
 
-    public interface OnAlgorithmListener {
-        void onAlgorithmClick(int i);
+    /* ---------- ViewHolder ---------- */
 
-        void onAlgorithmFavouriteClick(int i, View view);
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        void onAlgorithmImageClick(int i, View view);
-
-        void onAlgorithmLearntClick(int i, View view);
-
-        void onAlgorithmLongClick(int i, View view);
-    }
-
-    public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
         LinearLayout algorithmCard, algorithm_item_checks, algorithm_selected_checks;
         ImageView algorithmIcon;
         TextView algorithmName, algorithmCategory, algorithm, practicedCorrect;
         CheckBox algorithm_selected, favourite_checkbox, learnt_checkbox;
 
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
 
-        public ViewHolder(View view, OnAlgorithmListener onAlgorithmListener) {
-            super(view);
-            this.algorithmName = view.findViewById(R.id.algorithm_item_name_textview);
-            this.algorithm = view.findViewById(R.id.algorithm_item_algorithm);
-            this.algorithmCategory = view.findViewById(R.id.algorithm_category_textview);
-            this.practicedCorrect = view.findViewById(R.id.algorithm_item_practiced_vs_correct);
-            this.algorithmCard = view.findViewById(R.id.algorithm_card);
-            this.algorithmIcon = view.findViewById(R.id.algorithm_icon);
-            this.algorithm_selected = view.findViewById(R.id.algorithm_selected);
-            this.algorithm_item_checks = view.findViewById(R.id.algorithm_item_checks);
-            this.algorithm_selected_checks = view.findViewById(R.id.algorithm_selected_checks);
-            this.favourite_checkbox = view.findViewById(R.id.favourite_checkbox);
-            this.learnt_checkbox = view.findViewById(R.id.learnt_checkbox);
-            AlgorithmRecyclerAdapter.this.mOnAlgorithmListener = onAlgorithmListener;
-            this.favourite_checkbox.setOnClickListener(this);
-            this.learnt_checkbox.setOnClickListener(this);
-            this.algorithmCard.setOnClickListener(this);
-            this.algorithmCard.setOnLongClickListener(this);
-            this.algorithmIcon.setOnClickListener(this);
+            algorithmName = itemView.findViewById(R.id.algorithm_item_name_textview);
+            algorithm = itemView.findViewById(R.id.algorithm_item_algorithm);
+            algorithmCategory = itemView.findViewById(R.id.algorithm_category_textview);
+            practicedCorrect = itemView.findViewById(R.id.algorithm_item_practiced_vs_correct);
+
+            algorithmCard = itemView.findViewById(R.id.algorithm_card);
+            algorithmIcon = itemView.findViewById(R.id.algorithm_icon);
+
+            algorithm_selected = itemView.findViewById(R.id.algorithm_selected);
+            algorithm_item_checks = itemView.findViewById(R.id.algorithm_item_checks);
+            algorithm_selected_checks = itemView.findViewById(R.id.algorithm_selected_checks);
+
+            favourite_checkbox = itemView.findViewById(R.id.favourite_checkbox);
+            learnt_checkbox = itemView.findViewById(R.id.learnt_checkbox);
+
+            algorithmCard.setOnClickListener(v -> click(onCardClick, v));
+            algorithmIcon.setOnClickListener(v -> click(onImageClick, v));
+            favourite_checkbox.setOnClickListener(v -> click(onFavouriteClick, v));
+            learnt_checkbox.setOnClickListener(v -> click(onLearntClick, v));
+
+            algorithmCard.setOnLongClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (pos == RecyclerView.NO_POSITION) return false;
+
+                toggleSelection(pos);
+
+                if (onLongClick != null) {
+                    onLongClick.onLongClick(pos, v);
+                }
+                return true;
+            });
         }
 
-        public void onClick(View view) {
-            int id = view.getId();
-            if (actionMode != null) actionMode.finish();
-            switch (id) {
-                case R.id.algorithm_card /*2131361910*/:
-                    AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmClick(getAdapterPosition());
-                    return;
-                case R.id.algorithm_icon /*2131361912*/:
-                    AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmImageClick(getAdapterPosition(), view);
-                    return;
-                case R.id.favourite_checkbox /*2131362073*/:
-                    AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmFavouriteClick(getAdapterPosition(), view);
-                    return;
-                case R.id.learnt_checkbox /*2131362144*/:
-                    AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmLearntClick(getAdapterPosition(), view);
-                    return;
-                default:
-            }
+        private void click(OnItemViewClick cb, View v) {
+            int pos = getAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION || cb == null) return;
+            cb.onClick(pos, v);
         }
 
-        public boolean onLongClick(View v) {
-            AlgorithmRecyclerAdapter.this.current_selected = getAdapterPosition();
-            if (AlgorithmRecyclerAdapter.this.selected_items.get(current_selected, false)) {
-                AlgorithmRecyclerAdapter.this.selected_items.delete(getAdapterPosition());
-            } else {
-                AlgorithmRecyclerAdapter.this.selected_items.put(getAdapterPosition(), true);
-            }
-            AlgorithmRecyclerAdapter.this.notifyItemChanged(getAdapterPosition());
-            AlgorithmRecyclerAdapter.this.mOnAlgorithmListener.onAlgorithmLongClick(getAdapterPosition(), v);
-            return true;
+        private void click(OnItemClick cb, View v) {
+            int pos = getAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION || cb == null) return;
+            cb.onClick(pos);
         }
     }
 }
