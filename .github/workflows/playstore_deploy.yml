@@ -1,10 +1,15 @@
 name: Deploy to Google Play
 
 on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       track:
-        description: "Google Play Release"
+        description: "Non-production track"
         required: true
         default: internal
         type: choice
@@ -12,7 +17,6 @@ on:
           - internal
           - alpha
           - beta
-          - production
 
 jobs:
   deploy:
@@ -22,6 +26,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Determine track & version
+        id: vars
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG_NAME="${GITHUB_REF#refs/tags/}"
+            echo "track=production" >> $GITHUB_OUTPUT
+            echo "versionName=${TAG_NAME#v}" >> $GITHUB_OUTPUT
+          else
+            echo "track=${{ github.event.inputs.track || 'internal' }}" >> $GITHUB_OUTPUT
+            echo "versionName=dev" >> $GITHUB_OUTPUT
+          fi
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -29,15 +45,13 @@ jobs:
           java-version: 17
 
       - name: Decode keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
 
       - name: Build release AAB
         run: ./gradlew bundleRelease
         env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: ${{ steps.vars.outputs.versionName }}
           KEYSTORE_FILE: keystore.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
@@ -47,7 +61,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.jorotayo.algorubickrevamped
+          packageName: com.yourcompany.yourapp
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: ${{ github.event.inputs.track }}
+          track: ${{ steps.vars.outputs.track }}
           status: completed
