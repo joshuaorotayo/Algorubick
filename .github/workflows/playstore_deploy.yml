@@ -11,7 +11,7 @@ on:
       track:
         description: "Non-production track"
         required: true
-        default: internal
+        default: production
         type: choice
         options:
           - internal
