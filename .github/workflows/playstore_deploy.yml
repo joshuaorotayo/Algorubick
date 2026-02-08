@@ -47,7 +47,10 @@ jobs:
 
       - name: Decode keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
-
+        
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+        
       - name: Build release AAB
         run: ./gradlew bundleRelease
         env:
