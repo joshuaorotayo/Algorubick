@@ -27,7 +27,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Determine track & version
+      - name: Determine track & version name
         id: vars
         run: |
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
@@ -45,16 +45,39 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Find Google Play version Code
+        id: play_version
+        uses: ankurparihar/google-play-version-check@v2.0.2
+        with:
+          packageName: com.jorotayo.algorubickrevamped
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+
+      - name: Calculate Next Version Code
+        id: version_calc
+        run: |
+          # If the action returns a value, use it. If not (first release), default to 0.
+          CURRENT_VERSION=${{ steps.play_version.outputs.latestVersionCode }}
+          if [ -z "$CURRENT_VERSION" ]; then
+            CURRENT_VERSION=0
+          fi
+          
+          NEXT_VERSION=$((CURRENT_VERSION + 1))
+          
+          echo "Previous Version: $CURRENT_VERSION"
+          echo "New Version: $NEXT_VERSION"
+          echo "versionCode=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
       - name: Decode keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
-        
+
       - name: Make gradlew executable
         run: chmod +x gradlew
-        
+
       - name: Build release AAB
         run: ./gradlew bundleRelease
         env:
-          VERSION_CODE: ${{ github.run_number }} 
+          # UPDATE: Uses the calculated version code from the previous step
+          VERSION_CODE: ${{ steps.version_calc.outputs.versionCode }} 
           VERSION_NAME: ${{ steps.vars.outputs.versionName }}
           KEYSTORE_FILE: Algorubick-key.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
