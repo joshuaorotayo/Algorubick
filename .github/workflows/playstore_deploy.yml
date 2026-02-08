@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       track:
-        description: "Non-production track"
+        description: "Release Track"
         required: true
         default: production
         type: choice
@@ -17,6 +17,7 @@ on:
           - internal
           - alpha
           - beta
+          - production
 
 jobs:
   deploy:
