@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,9 +68,24 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            ((AppCompatActivity) requireActivity())
-                    .getSupportActionBar()
-                    .hide();
+            Window window = getActivity().getWindow();
+            // Set status bar to your primary color (not transparent)
+            window.setStatusBarColor(requireActivity().getColor(R.color.colorPrimary));
+
+            // Hide the command bar
+            View commandBar = root.findViewById(R.id.home_command_bar);
+            if (commandBar != null) {
+                commandBar.setVisibility(View.GONE);
+            }
+
+            // Set status bar icons to white
+            WindowCompat.getInsetsController(window, window.getDecorView())
+                    .setAppearanceLightStatusBars(false);
+
+            // Set navigation bar
+            WindowCompat.getInsetsController(window, window.getDecorView())
+                    .setAppearanceLightNavigationBars(false);
+
             mode.getMenuInflater().inflate(R.menu.contextual_menu, menu);
 
             return true;
@@ -108,6 +125,15 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
             ((AppCompatActivity) requireActivity())
                     .getSupportActionBar()
                     .show();
+
+            // Show the command bar again
+            View commandBar = root.findViewById(R.id.home_command_bar);
+            if (commandBar != null) {
+                commandBar.setVisibility(View.VISIBLE);
+            }
+
+            Window window = getActivity().getWindow();
+            WindowCompat.getInsetsController(window, window.getDecorView()).setAppearanceLightNavigationBars(true);
             actionMode = null;
             algorithmRecyclerAdapter.clearSelection();
         }

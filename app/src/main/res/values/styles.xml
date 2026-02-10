@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="actionModeStyle">@style/AppActionModeStyle</item>
 
@@ -8,21 +7,31 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <!-- Action mode background -->
+        <item name="actionModeBackground">@color/colorPrimary</item>
+
+        <!-- This makes action mode overlay instead of push content -->
+        <item name="windowActionModeOverlay">true</item>
+
+        <!-- Default status bar transparent for edge-to-edge -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <!-- Action mode close button style - makes it white -->
+        <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButton</item>
     </style>
 
-    <style name="AppActionModeStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <item name="android:titleTextStyle">@style/ActionModeTitleText</item>
+    <style name="AppActionModeStyle" parent="Widget.MaterialComponents.ActionMode">
+        <item name="titleTextStyle">@style/ActionModeTitleText</item>
         <item name="background">@color/colorPrimary</item>
-
-<!--        &lt;!&ndash; This fixes the white bar issue &ndash;&gt;-->
-<!--        <item name="windowActionModeOverlay">true</item>-->
     </style>
 
     <style name="ActionModeTitleText">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ActionModeCloseButton" parent="Widget.AppCompat.ActionButton">
+        <item name="android:tint">@android:color/white</item>
     </style>
 
     <style name="ActionModeMenuItem" parent="Widget.AppCompat.ActionButton">

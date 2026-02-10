@@ -473,4 +473,6 @@
     <string name="delete_cube_size_icon">Delete Cube Size Icon</string>
     <string name="cube_size_spinner_label">Cube Size spinner label</string>
     <string name="sort_statistics_spinner">Sort statistics spinner</string>
+    <string name="dialog_ok">Ok</string>
+    <string name="step_image">Step image</string>
 </resources>
