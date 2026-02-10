@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
     android:scaleType="fitCenter"
-    android:contentDescription="Step image"
+    android:contentDescription="@string/step_image"
     />

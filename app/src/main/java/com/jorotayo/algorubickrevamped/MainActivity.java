@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
 
         super.onCreate(savedInstanceState);
-
+        WindowCompat.enableEdgeToEdge(getWindow());
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         setContentView(R.layout.activity_main);
 

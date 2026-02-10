@@ -122,7 +122,7 @@ public class AlgorithmRecyclerAdapter
         boolean selected = selectedItems.contains(position);
 
         if (selected) {
-            h.algorithmCard.setBackgroundResource(R.color.colorPrimaryDark);
+            h.algorithmCard.setBackgroundResource(R.color.colorPrimary);
             setTextColor(h, Color.WHITE);
             h.algorithm_item_checks.setVisibility(View.GONE);
             h.algorithm_selected_checks.setVisibility(View.VISIBLE);
