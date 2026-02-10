@@ -81,7 +81,6 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
         Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
         if (activity != null && activity.getSupportActionBar() != null) {
             activity.getSupportActionBar().setTitle("Learn Algorithm");
-            activity.getSupportActionBar().setSubtitle("Algorithm Name");
         }
 
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
@@ -136,7 +135,13 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     private void setupAlgorithm(Algorithm nextAlgorithm) {
         if (nextAlgorithm == null) return;
         currentAlgorithm = nextAlgorithm;
-        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
+
+        Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
+        if (activity != null && activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setTitle("Learn Algorithm");
+            activity.getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
+        }
+
         learn_alg_name.setText(this.currentAlgorithm.getAlg_name());
         learn_alg_alg.setText(this.currentAlgorithm.getAlg());
         setupAlgImages();

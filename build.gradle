@@ -1,6 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.objectboxVersion = '4.0.3'
+    ext {
+        kotlin_version = '2.0.21'
+    }
 
     repositories {
         google()
@@ -14,6 +17,8 @@ buildscript {
         // in the individual module build.gradle files
 
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.jetbrains.kotlin:compose-compiler-gradle-plugin:2.0.21'
     }
 }
 

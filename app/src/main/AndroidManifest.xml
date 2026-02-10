@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Required to run keep-alive objectbox service when targeting API 28 or higher -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -12,7 +13,8 @@
         android:supportsRtl="true"
         android:exported="true"
         android:theme="@style/AppTheme"
-        android:name=".Application">
+        android:name=".Application"
+        tools:targetApi="28">
         <activity
             android:name="com.jorotayo.algorubickrevamped.ui.timer.StatisticsActivity"
             android:label="@string/title_activity_statistics"

@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.AlgorubickRevamped" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.AlgorubickRevamped" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorPrimary</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>

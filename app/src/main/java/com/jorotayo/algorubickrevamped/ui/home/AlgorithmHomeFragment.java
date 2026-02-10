@@ -15,11 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.jorotayo.algorubickrevamped.MainActivity;
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
@@ -63,7 +66,11 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            ((AppCompatActivity) requireActivity())
+                    .getSupportActionBar()
+                    .hide();
             mode.getMenuInflater().inflate(R.menu.contextual_menu, menu);
+
             return true;
         }
 
@@ -77,7 +84,6 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
             Intent intent = new Intent(getContext(), Activity_StudyAlgorithm.class);
             selectedList.clear();
             selectedList.addAll(algorithmRecyclerAdapter.getSelectedItems());
@@ -99,6 +105,9 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+            ((AppCompatActivity) requireActivity())
+                    .getSupportActionBar()
+                    .show();
             actionMode = null;
             algorithmRecyclerAdapter.clearSelection();
         }
@@ -172,19 +181,41 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
     }
 
     private void onAlgorithmClick(int position) {
+
+        if (actionMode != null) {
+            algorithmRecyclerAdapter.toggleSelection(position);
+
+            actionMode.setTitle(
+                    algorithmRecyclerAdapter.getSelectedItemCount() + " selected"
+            );
+
+            if (algorithmRecyclerAdapter.getSelectedItemCount() == 0) {
+                actionMode.finish();
+            }
+
+            return;
+        }
+
+        // Normal click (no ActionMode)
         Intent intent = new Intent(getContext(), Activity_Algorithm.class);
         intent.putExtra("algorithm_id", algorithmArrayList.get(position).id);
         startActivity(intent);
     }
 
+
     private void onLongClickAlgorithm() {
         if (actionMode == null) {
+
             actionMode = ((MainActivity) requireActivity())
                     .startSupportActionMode(actionModeCallback);
         }
         actionMode.setTitle(
                 algorithmRecyclerAdapter.getSelectedItemCount() + " selected"
         );
+
+        if(actionMode != null && algorithmRecyclerAdapter.getSelectedItemCount() == 0){
+            actionMode.finish();
+        }
     }
 
     private void onLearntAlgorithmClick(int position) {
