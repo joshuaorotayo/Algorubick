@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jorotayo.algorubickrevamped.ObjectBox;
-import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.data.Steps;
@@ -36,7 +35,7 @@ import java.util.Objects;
 import io.objectbox.Box;
 import io.objectbox.query.QueryBuilder;
 
-public class ViewSolutionFragment extends Fragment implements OnClickListener, OnStepListener, OnBackPressed {
+public class ViewSolutionFragment extends Fragment implements OnClickListener, OnStepListener {
     static final /* synthetic */ boolean $assertionsDisabled = false;
     private static final String ARG_PARAM1 = "param1";
     Builder deleteDialog;
@@ -120,7 +119,7 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int itemId = menuItem.getItemId();
         if (itemId == 16908332) {
-            customBackPressed();
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
             return true;
         } else if (itemId == R.id.delete_solution_menu_button) {
             this.deleteDialog.show();
@@ -161,9 +160,4 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         Collections.sort(arrayList);
         this.view_solution_steps_recycler.setAdapter(new StepsRecyclerAdapter(this.stepsArrayList, this));
     }
-
-    public void customBackPressed() {
-        requireActivity().finish();
-    }
-
 }

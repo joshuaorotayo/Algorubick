@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -70,6 +71,7 @@ public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.O
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
         this.categoryBox = ObjectBox.getBoxStore().boxFor(Category.class);
 
@@ -79,7 +81,11 @@ public class Fragment_NewAlgorithm extends Fragment implements CategoryAdapter.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         this.view = inflater.inflate(R.layout.fragment_algorithm_new, container, false);
-        Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("Create New Algorithm");
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setTitle("Create New Algorithm");
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         this.algorithmBox = ObjectBox.getBoxStore().boxFor(Algorithm.class);
 
         categoryAdapter = new CategoryAdapter(requireContext(), R.id.category_spinner_label, categories, this);

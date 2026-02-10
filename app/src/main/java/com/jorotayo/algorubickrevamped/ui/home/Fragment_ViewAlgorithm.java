@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jorotayo.algorubickrevamped.ObjectBox;
-import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Algorithm;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
@@ -31,7 +30,7 @@ import java.util.Objects;
 
 import io.objectbox.Box;
 
-public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener, OnBackPressed {
+public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener {
     private static final String ALG_ID = "param1";
     private final ArrayList<Integer> selectedList = new ArrayList();
     private Box<Algorithm> algorithmBox;
@@ -73,11 +72,18 @@ public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener,
         Button practice_alg_btn = this.view.findViewById(R.id.view_alg_practice_algorithm_btn);
         view_alg_image = this.view.findViewById(R.id.view_alg_image);
 
-        Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
+       /* Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
         ActionBar actionBar = Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar());
         String str = "";
         String stringBuilder = str + this.currentAlg.alg_name;
-        actionBar.setSubtitle(stringBuilder);
+        actionBar.setSubtitle(stringBuilder);*/
+
+        ActionBar actionBar = ((Activity_Algorithm) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("View Algorithm");
+            actionBar.setSubtitle(this.currentAlg.alg_name);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         view_alg_name.setText(this.currentAlg.alg_name);
         view_alg_text.setText(this.currentAlg.alg);
@@ -170,10 +176,6 @@ public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener,
     private void deleteAlgorithm() {
         this.algorithmBox.remove(this.currentAlg);
         requireActivity().getOnBackPressedDispatcher().onBackPressed();
-    }
-
-    public void customBackPressed() {
-        requireActivity().finish();
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

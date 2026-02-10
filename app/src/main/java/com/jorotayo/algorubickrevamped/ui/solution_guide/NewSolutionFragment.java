@@ -41,7 +41,7 @@ import java.util.Objects;
 import io.objectbox.Box;
 import io.objectbox.query.QueryBuilder;
 
-public class NewSolutionFragment extends Fragment implements OnClickListener, OnBackPressed {
+public class NewSolutionFragment extends Fragment implements OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private MaterialAlertDialogBuilder closeSolutionDialog;
     private Solution currentSolution;
@@ -78,6 +78,8 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_solution_new, container, false);
         ((SolutionActivity) requireActivity()).getSupportActionBar().setTitle("Create New Solution");
+        ((SolutionActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Button addStepBtn = view.findViewById(R.id.add_step_btn);
         ImageView add_new_solution_icon_btn = view.findViewById(R.id.add_new_solution_icon_btn);
         add_solution_icon_preview = view.findViewById(R.id.new_solution_icon_preview);
@@ -346,13 +348,8 @@ public class NewSolutionFragment extends Fragment implements OnClickListener, On
         if (menuItem.getItemId() != 16908332) {
             return false;
         }
-        customBackPressed();
+        requireActivity().getOnBackPressedDispatcher().onBackPressed();
         return true;
-    }
-
-    @Override
-    public void customBackPressed() {
-        closeSolutionDialog.show();
     }
 
     public void saveBackPressed() {

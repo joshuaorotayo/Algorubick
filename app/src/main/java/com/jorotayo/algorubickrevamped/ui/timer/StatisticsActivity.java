@@ -14,8 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solve;
@@ -41,7 +46,21 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_statistics);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIconTint(ContextCompat.getColor(this, R.color.white));
+
+        // Apply status bar insets to toolbar
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.toolbar), (view, insets) -> {
+            int topInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+            view.setPadding(0, topInset, 0, 0);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         this.statisticsRecycler = findViewById(R.id.solve_grid);
         setupSortSpinner();
         Box<Solve> boxFor = ObjectBox.getBoxStore().boxFor(Solve.class);
@@ -149,7 +168,7 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    public void reverseSort(){
+    public void reverseSort() {
         ArrayList<Solve> reversedList = solveArrayList;
         if (reverseSort.getColorFilter() == null) {
             reverseSort.setColorFilter(getResources().getColor(R.color.colorAccent));

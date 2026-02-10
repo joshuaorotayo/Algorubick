@@ -129,7 +129,11 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ((Activity_StudyAlgorithm) getActivity()).getSupportActionBar().setTitle("Practice Algorithm");
+        Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
+        if (activity != null && activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setTitle("Practice Algorithm");
+        }
+
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.practice_alg_name);
         learn_alg_inputspace.setOnClickListener(this);
