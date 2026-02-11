@@ -88,6 +88,6 @@
         android:elevation="40dp"
         android:gravity="end|center_vertical"
         android:src="@drawable/icons8_star_48"
-       android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

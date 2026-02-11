@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Required to run keep-alive objectbox service when targeting API 28 or higher -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -12,16 +13,14 @@
         android:roundIcon="@mipmap/algorubick_launcher_icon"
         android:supportsRtl="true"
         android:exported="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.CustomSplashScreenTheme"
         android:name=".Application"
         tools:targetApi="28">
-        <activity
-            android:name="com.jorotayo.algorubickrevamped.ui.timer.StatisticsActivity"
-            android:label="@string/title_activity_statistics"
-            android:theme="@style/AppTheme" />
+
+        <!-- Splash screen -->
         <activity
             android:name="com.jorotayo.algorubickrevamped.SplashScreen"
-            android:theme="@style/bgSplashScreenStyle"
+            android:theme="@style/Theme.CustomSplashScreenTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,35 +28,57 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- MainActivity -->
         <activity
             android:name="com.jorotayo.algorubickrevamped.MainActivity"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.Material"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
+        <!-- Algorithm Activity (MaterialComponents) -->
         <activity
             android:name="com.jorotayo.algorubickrevamped.ui.home.Activity_Algorithm"
+            android:theme="@style/AppTheme.Material"
             android:parentActivityName="com.jorotayo.algorubickrevamped.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <!-- Solution Activity (AppCompat) -->
         <activity
             android:name="com.jorotayo.algorubickrevamped.ui.solution_guide.SolutionActivity"
+            android:theme="@style/AppTheme.Material.Toolbars"
             android:parentActivityName="com.jorotayo.algorubickrevamped.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <!-- Study Algorithm Activity (MaterialComponents) -->
         <activity
             android:name="com.jorotayo.algorubickrevamped.ui.home.Activity_StudyAlgorithm"
+            android:theme="@style/AppTheme.Material"
             android:parentActivityName="com.jorotayo.algorubickrevamped.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <!-- Statistics Activity (AppCo) -->
+        <activity
+            android:name="com.jorotayo.algorubickrevamped.ui.timer.StatisticsActivity"
+            android:theme="@style/AppTheme.Material.Toolbars"
+            android:parentActivityName="com.jorotayo.algorubickrevamped.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
     </application>
 </manifest>

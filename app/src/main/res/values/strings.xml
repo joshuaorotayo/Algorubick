@@ -475,4 +475,5 @@
     <string name="sort_statistics_spinner">Sort statistics spinner</string>
     <string name="dialog_ok">Ok</string>
     <string name="step_image">Step image</string>
+    <string name="reverse_sort_order">Reverse Sort Order</string>
 </resources>

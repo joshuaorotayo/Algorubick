@@ -31,10 +31,10 @@ public class NotationFragment extends Fragment implements MenuProvider {
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
         MenuItem actionBarSearch = menu.findItem(R.id.actionbar_search);
         MenuItem actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
-        if (actionBarSearch != null){
+        if (actionBarSearch != null) {
             menu.findItem(R.id.actionbar_search).setVisible(false);
         }
-        if( actionBarStatistics != null){
+        if (actionBarStatistics != null) {
             menu.findItem(R.id.actionbar_statistics).setVisible(false);
         }
     }

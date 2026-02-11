@@ -45,7 +45,6 @@ public class UtilMethods {
     }
 
 
-
     public static void LoadStepIcon(Context ctx, ImageView imageView, String stepIcon) {
         if (ctx == null || imageView == null) return;
 

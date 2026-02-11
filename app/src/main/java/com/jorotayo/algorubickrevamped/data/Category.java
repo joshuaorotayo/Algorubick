@@ -14,7 +14,7 @@ public class Category {
         this.category_name = category_name;
     }
 
-    public Category(){
+    public Category() {
 
     }
 

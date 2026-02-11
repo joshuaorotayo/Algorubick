@@ -280,9 +280,9 @@ public class KeyboardDialog implements OnClickListener, View.OnLongClickListener
         this.inputSpace.setText(backSpaceAlg);
         newAlg = backSpaceAlg;
         wholeAlg = newAlg;
-        if(newAlg.length() > 0){
+        if (newAlg.length() > 0) {
             this.current_alg_text.setText(newAlg);
-        }else  {
+        } else {
             this.current_alg_text.setText("Text for Algorithm");
         }
     }

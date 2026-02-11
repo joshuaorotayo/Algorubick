@@ -72,18 +72,10 @@ public class Fragment_ViewAlgorithm extends Fragment implements OnClickListener 
         Button practice_alg_btn = this.view.findViewById(R.id.view_alg_practice_algorithm_btn);
         view_alg_image = this.view.findViewById(R.id.view_alg_image);
 
-       /* Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar()).setTitle("View Algorithm");
-        ActionBar actionBar = Objects.requireNonNull(Objects.requireNonNull((Activity_Algorithm) getActivity()).getSupportActionBar());
-        String str = "";
-        String stringBuilder = str + this.currentAlg.alg_name;
-        actionBar.setSubtitle(stringBuilder);*/
-
-        ActionBar actionBar = ((Activity_Algorithm) getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle("View Algorithm");
-            actionBar.setSubtitle(this.currentAlg.alg_name);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        Activity_Algorithm activity = ((Activity_Algorithm) requireActivity());
+        activity.setToolbarTitle("View Algorithm");
+        activity.setToolbarSubTitle(this.currentAlg.alg_name);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
 
         view_alg_name.setText(this.currentAlg.alg_name);
         view_alg_text.setText(this.currentAlg.alg);

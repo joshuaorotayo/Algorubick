@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,11 +81,6 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
-        if (activity != null && activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setTitle("Learn Algorithm");
-        }
-
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
         learn_alg_name = view.findViewById(R.id.learn_alg_name);
         learn_alg_alg = view.findViewById(R.id.learn_alg_alg);
@@ -117,6 +115,16 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
                     .add(R.id.learn_alg_keyboard_space, new KeyboardFragment(learn_alg_inputspace))
                     .commit();
         }
+
+        View keyboardSpace = view.findViewById(R.id.learn_alg_keyboard_space);
+
+        // Apply status bar insets to toolbar
+        ViewCompat.setOnApplyWindowInsetsListener(keyboardSpace, (view, insets) -> {
+            int bottomInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
+            view.setPadding(0, 0, 0, bottomInset);
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     public void onClick(View v) {
@@ -136,10 +144,9 @@ public class Fragment_LearnAlgorithm extends Fragment implements OnClickListener
         if (nextAlgorithm == null) return;
         currentAlgorithm = nextAlgorithm;
 
-        Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
-        if (activity != null && activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setTitle("Learn Algorithm");
-            activity.getSupportActionBar().setSubtitle(this.currentAlgorithm.getAlg_name());
+        if (requireActivity() instanceof Activity_StudyAlgorithm) {
+            ((Activity_StudyAlgorithm) requireActivity())
+                    .setToolbarTitle("Learn Algorithm");
         }
 
         learn_alg_name.setText(this.currentAlgorithm.getAlg_name());

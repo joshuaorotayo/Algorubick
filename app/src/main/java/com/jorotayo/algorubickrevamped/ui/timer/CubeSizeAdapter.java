@@ -65,10 +65,10 @@ public class CubeSizeAdapter extends ArrayAdapter {
         dropdown_delete.setTag(position);
         cubeSize_spinner_label.setOnClickListener(v -> onClick(v));
         dropdown_delete.setOnClickListener(v -> onClick(v));
-        if(position == cubeSize.size()-1){
+        if (position == cubeSize.size() - 1) {
             dropdown_delete.setVisibility(View.GONE);
         }
-        if(cubeSize.size() <= 2){
+        if (cubeSize.size() <= 2) {
             dropdown_delete.setVisibility(View.GONE);
             dropdown_delete.setEnabled(false);
         }

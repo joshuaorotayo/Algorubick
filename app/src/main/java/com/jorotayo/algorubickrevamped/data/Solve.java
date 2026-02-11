@@ -20,7 +20,7 @@ public class Solve {
     public String solve_scramble;
     public String solve_time;
 
-    public Solve (String solve_cube_size, String solve_scramble, String solve_time, int solve_milliseconds, String solve_date) {
+    public Solve(String solve_cube_size, String solve_scramble, String solve_time, int solve_milliseconds, String solve_date) {
         this.solve_cube_size = solve_cube_size;
         this.solve_date = solve_date;
         this.solve_time = solve_time;
@@ -31,18 +31,15 @@ public class Solve {
     public Solve() {
     }
 
-    public long getId()
-    {
+    public long getId() {
         return id;
     }
 
-    public void setId(long id)
-    {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getSolve_cube_size()
-    {
+    public String getSolve_cube_size() {
         return solve_cube_size;
     }
 
@@ -50,28 +47,25 @@ public class Solve {
         this.solve_cube_size = solve_cube_size;
     }
 
-    public String getSolve_date()
-    {
+    public String getSolve_date() {
         return solve_date;
     }
 
-    public Date getSolve_dateDate(){
+    public Date getSolve_dateDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy", Locale.ENGLISH);
 
         try {
-             return formatter.parse(solve_date);
+            return formatter.parse(solve_date);
         } catch (ParseException e) {
             return new Date(0);
         }
     }
 
-    public void setSolve_date(String solve_date)
-    {
+    public void setSolve_date(String solve_date) {
         this.solve_date = solve_date;
     }
 
-    public int getSolve_milliseconds()
-    {
+    public int getSolve_milliseconds() {
         return solve_milliseconds;
     }
 
@@ -79,28 +73,24 @@ public class Solve {
         this.solve_milliseconds = solve_milliseconds;
     }
 
-    public String getSolve_scramble()
-    {
+    public String getSolve_scramble() {
         return solve_scramble;
     }
 
-    public void setSolve_scramble(String solve_scramble)
-    {
+    public void setSolve_scramble(String solve_scramble) {
         this.solve_scramble = solve_scramble;
     }
 
-    public String getSolve_time()
-    {
+    public String getSolve_time() {
         return solve_time;
     }
 
-    public void setSolve_time(String solve_time)
-    {
+    public void setSolve_time(String solve_time) {
         this.solve_time = solve_time;
     }
 
 
-    public static class CompareSolvedDate implements Comparator<Solve>{
+    public static class CompareSolvedDate implements Comparator<Solve> {
         @Override
         public int compare(Solve solve1, Solve solve2) {
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy", Locale.ENGLISH);

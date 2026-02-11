@@ -18,6 +18,8 @@ import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 
 public class SolutionActivity extends AppCompatActivity implements MenuProvider {
+    MaterialToolbar toolbar;
+
     /* Access modifiers changed, original: protected */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +28,12 @@ public class SolutionActivity extends AppCompatActivity implements MenuProvider 
 
         setContentView(R.layout.activity_solution);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Statistics");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Apply status bar insets to toolbar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.toolbar), (view, insets) -> {
@@ -66,10 +72,10 @@ public class SolutionActivity extends AppCompatActivity implements MenuProvider 
         // TODO: 18/11/2022 implement search for solutions
         MenuItem actionBarSearch = menu.findItem(R.id.actionbar_search);
         MenuItem actionBarStatistics = menu.findItem(R.id.actionbar_statistics);
-        if (actionBarSearch != null){
+        if (actionBarSearch != null) {
             menu.findItem(R.id.actionbar_search).setVisible(false);
         }
-        if( actionBarStatistics != null){
+        if (actionBarStatistics != null) {
             menu.findItem(R.id.actionbar_statistics).setVisible(false);
         }
     }
@@ -78,4 +84,13 @@ public class SolutionActivity extends AppCompatActivity implements MenuProvider 
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
         return false;
     }
+
+    public void setToolbarTitle(String title) {
+        if (toolbar != null) toolbar.setTitle(title);
+    }
+
+    public void setToolbarSubTitle(String subtitle) {
+        if (toolbar != null) toolbar.setSubtitle(subtitle);
+    }
+
 }
