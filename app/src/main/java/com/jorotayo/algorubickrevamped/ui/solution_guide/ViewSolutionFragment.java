@@ -63,8 +63,13 @@ public class ViewSolutionFragment extends Fragment implements OnClickListener, O
         this.solutionBox = ObjectBox.getBoxStore().boxFor(Solution.class);
         this.stepsBox = ObjectBox.getBoxStore().boxFor(Steps.class);
         this.currentSolution = this.solutionBox.get(requireActivity().getIntent().getExtras().getLong("Solution"));
-        Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setTitle("View Solution");
-        Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setSubtitle(this.currentSolution.getSolutionName());
+
+        SolutionActivity activity = (SolutionActivity) requireActivity();
+        activity.setToolbarTitle("View Solution");
+        activity.setToolbarSubTitle(this.currentSolution.getSolutionName());
+//        Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setTitle("View Solution");
+//        Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setSubtitle(this.currentSolution.getSolutionName());
+
         setupStepsAdapter();
         setupDeleteDialog();
         ImageView view_solution_image = view.findViewById(R.id.view_solution_image);

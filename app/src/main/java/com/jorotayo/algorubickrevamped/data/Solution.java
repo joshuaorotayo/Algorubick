@@ -22,7 +22,7 @@ public class Solution {
         this.solutionIconLocation = solutionIconLocation;
     }
 
-    public Solution(){
+    public Solution() {
 
     }
 
@@ -38,7 +38,7 @@ public class Solution {
             StringBuilder stringBuilder3 = new StringBuilder();
             stringBuilder3.append("Creator Name_");
             stringBuilder3.append(lastCreatorID);
-            contacts.add(new Solution(stringBuilder2, stringBuilder3.toString(), "Description of the solution that will be created and listed",""));
+            contacts.add(new Solution(stringBuilder2, stringBuilder3.toString(), "Description of the solution that will be created and listed", ""));
         }
         return contacts;
     }

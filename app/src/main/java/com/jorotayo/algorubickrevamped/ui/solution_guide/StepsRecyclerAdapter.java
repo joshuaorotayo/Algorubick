@@ -24,7 +24,7 @@ public class StepsRecyclerAdapter extends Adapter<StepsRecyclerAdapter.ViewHolde
     private final OnStepListener mOnStepListener;
     private ArrayList<Steps> mSteps = new ArrayList();
     private Solution solution;
-private Context context;
+    private Context context;
 
     public StepsRecyclerAdapter(ArrayList<Steps> mSteps, OnStepListener mOnStepListener) {
         this.mSteps = mSteps;
@@ -42,8 +42,8 @@ private Context context;
         holder.stepName.setText(step.getStepName());
         holder.stepDescription.setText(step.getStepDescription());
         holder.stepAlgorithm.setText(step.getStepAlgorithm());
-        UtilMethods.LoadStepIcon(context,holder.stepImageStart, step.stepImageStart);
-        UtilMethods.LoadStepIcon(context,holder.stepImageEnd, step.stepImageEnd);
+        UtilMethods.LoadStepIcon(context, holder.stepImageStart, step.stepImageStart);
+        UtilMethods.LoadStepIcon(context, holder.stepImageEnd, step.stepImageEnd);
     }
 
     public void onViewRecycled(@NonNull ViewHolder holder) {

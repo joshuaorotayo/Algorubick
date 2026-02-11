@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -129,9 +132,9 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Activity_StudyAlgorithm activity = (Activity_StudyAlgorithm) getActivity();
-        if (activity != null && activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setTitle("Practice Algorithm");
+        if (requireActivity() instanceof Activity_StudyAlgorithm) {
+            ((Activity_StudyAlgorithm) requireActivity())
+                    .setToolbarTitle("Practice Algorithm");
         }
 
         learn_alg_inputspace = view.findViewById(R.id.learn_alg_inputspace);
@@ -145,7 +148,7 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
 
         RecyclerView recyclerView = view.findViewById(R.id.alg_steps_recycler);
 
-// Flexbox layout manager
+        // Flexbox layout manager
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setFlexWrap(FlexWrap.WRAP);
@@ -171,6 +174,16 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
                     .add(R.id.learn_alg_keyboard_space, new KeyboardFragment(learn_alg_inputspace))
                     .commit();
         }
+
+        View keyboardSpace = view.findViewById(R.id.learn_alg_keyboard_space);
+
+        // Apply status bar insets to toolbar
+        ViewCompat.setOnApplyWindowInsetsListener(keyboardSpace, (view, insets) -> {
+            int bottomInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
+            view.setPadding(0, 0, 0, bottomInset);
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     public void onClick(View v) {
@@ -184,8 +197,9 @@ public class Fragment_PracticeAlgorithm extends Fragment implements OnClickListe
         super.onPause();
         stopTimer();
     }
+
     private void checkCorrect() {
-        if (learn_alg_inputspace.getText().toString().trim().equals(currentAlgorithm.getAlg())){
+        if (learn_alg_inputspace.getText().toString().trim().equals(currentAlgorithm.getAlg())) {
             correctDialog.show();
             correct++;
         } else {

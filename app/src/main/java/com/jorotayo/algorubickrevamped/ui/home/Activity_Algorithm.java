@@ -3,10 +3,12 @@ package com.jorotayo.algorubickrevamped.ui.home;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.ComponentActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -14,6 +16,7 @@ import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 
 public class Activity_Algorithm extends AppCompatActivity {
+    MaterialToolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +24,14 @@ public class Activity_Algorithm extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_algorithm);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        // Set status bar color to primary
+        getWindow().setStatusBarColor(getColor(R.color.colorPrimary));
+
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         // Apply status bar insets to toolbar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.toolbar), (view, insets) -> {
@@ -30,6 +39,7 @@ public class Activity_Algorithm extends AppCompatActivity {
             view.setPadding(0, topInset, 0, 0);
             return WindowInsetsCompat.CONSUMED;
         });
+
 
         if (getIntent().getExtras() != null) {
             setUpViewAlgPage();
@@ -55,11 +65,21 @@ public class Activity_Algorithm extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        OnBackPressed fragment = (OnBackPressed) getSupportFragmentManager().findFragmentById(R.id.algorithm_activity_container);
+        OnBackPressed fragment = (OnBackPressed) getFragmentManager().findFragmentById(R.id.algorithm_activity_container);
         if (fragment != null) {
             fragment.customBackPressed();
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void setToolbarTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    public void setToolbarSubTitle(String subtitle) {
+        if (toolbar != null) toolbar.setSubtitle(subtitle);
     }
 }

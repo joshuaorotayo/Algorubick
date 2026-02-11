@@ -52,6 +52,10 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Statistics");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         toolbar.setNavigationIconTint(ContextCompat.getColor(this, R.color.white));
 
         // Apply status bar insets to toolbar
@@ -75,7 +79,6 @@ public class StatisticsActivity extends AppCompatActivity implements View.OnClic
             this.statisticsRecyclerAdapter = statisticsRecyclerAdapter;
             this.statisticsRecycler.setAdapter(statisticsRecyclerAdapter);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupSortSpinner() {

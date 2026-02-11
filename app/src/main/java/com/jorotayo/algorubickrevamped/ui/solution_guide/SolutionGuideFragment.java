@@ -70,6 +70,7 @@ public class SolutionGuideFragment extends Fragment implements OnClickListener, 
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
         return false;
     }
+
     public void onClick(View v) {
         if (v.getId() == R.id.create_new_solution_btn) {
             startActivity(new Intent(getContext(), SolutionActivity.class));

@@ -146,27 +146,31 @@ public class Algorithm {
         this.favourite_alg ^= favourite_alg;
     }
 
-    public void setCreatedTime() { this.createdTime = System.currentTimeMillis(); }
+    public void setCreatedTime() {
+        this.createdTime = System.currentTimeMillis();
+    }
 
-    public Long getCreatedTime() { return this.createdTime;}
+    public Long getCreatedTime() {
+        return this.createdTime;
+    }
 
-    public static class CompareAlgorithmName implements Comparator<Algorithm>{
+    public static class CompareAlgorithmName implements Comparator<Algorithm> {
         @Override
-        public int compare (Algorithm algorithm1, Algorithm algorithm2){
+        public int compare(Algorithm algorithm1, Algorithm algorithm2) {
             return algorithm1.getAlg_name().compareTo(algorithm2.alg_name);
         }
     }
 
-    public static class CompareCreatedDate implements Comparator<Algorithm>{
+    public static class CompareCreatedDate implements Comparator<Algorithm> {
         @Override
-        public int compare (Algorithm algorithm1, Algorithm algorithm2){
+        public int compare(Algorithm algorithm1, Algorithm algorithm2) {
             return algorithm1.getCreatedTime().compareTo(algorithm2.createdTime);
         }
     }
 
-    public static class CompareCategory implements Comparator<Algorithm>{
+    public static class CompareCategory implements Comparator<Algorithm> {
         @Override
-        public int compare (Algorithm algorithm1, Algorithm algorithm2){
+        public int compare(Algorithm algorithm1, Algorithm algorithm2) {
             return algorithm1.getCategory().compareTo(algorithm2.getCategory());
         }
     }

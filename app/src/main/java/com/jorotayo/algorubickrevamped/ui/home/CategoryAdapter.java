@@ -68,11 +68,11 @@ public class CategoryAdapter extends ArrayAdapter {
         dropdown_delete.setTag(categories.get(position).id);
         category_spinner_label.setOnClickListener(v -> onClick(v));
         dropdown_delete.setOnClickListener(v -> onClick(v));
-        if(position==0){
+        if (position == 0) {
             dropdown_delete.setVisibility(View.GONE);
             dropdown_delete.setEnabled(false);
         }
-        if(categories.size() <= 2){
+        if (categories.size() <= 2) {
             dropdown_delete.setVisibility(View.GONE);
             dropdown_delete.setEnabled(false);
         }

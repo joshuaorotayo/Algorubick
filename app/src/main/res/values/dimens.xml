@@ -97,14 +97,21 @@
     <dimen name="def_drawer_elevation" tools:ignore="PrivateResource">10dp</dimen>
     <dimen name="default_dimension" tools:ignore="PrivateResource">100dp</dimen>
     <dimen name="design_appbar_elevation" tools:ignore="PrivateResource">4dp</dimen>
-    <dimen name="design_bottom_navigation_active_item_max_width" tools:ignore="PrivateResource">168dp</dimen>
-    <dimen name="design_bottom_navigation_active_item_min_width" tools:ignore="PrivateResource">96dp</dimen>
-    <dimen name="design_bottom_navigation_active_text_size" tools:ignore="PrivateResource">14sp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:ignore="PrivateResource">
+        168dp
+    </dimen>
+    <dimen name="design_bottom_navigation_active_item_min_width" tools:ignore="PrivateResource">
+        96dp
+    </dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:ignore="PrivateResource">14sp
+    </dimen>
     <dimen name="design_bottom_navigation_elevation" tools:ignore="PrivateResource">8dp</dimen>
     <dimen name="design_bottom_navigation_height" tools:ignore="PrivateResource">56dp</dimen>
     <dimen name="design_bottom_navigation_icon_size" tools:ignore="PrivateResource">24dp</dimen>
-    <dimen name="design_bottom_navigation_item_max_width" tools:ignore="PrivateResource">96dp</dimen>
-    <dimen name="design_bottom_navigation_item_min_width" tools:ignore="PrivateResource">56dp</dimen>
+    <dimen name="design_bottom_navigation_item_max_width" tools:ignore="PrivateResource">96dp
+    </dimen>
+    <dimen name="design_bottom_navigation_item_min_width" tools:ignore="PrivateResource">56dp
+    </dimen>
     <dimen name="design_bottom_navigation_margin" tools:ignore="PrivateResource">8dp</dimen>
     <dimen name="design_bottom_navigation_shadow_height" tools:ignore="PrivateResource">1dp</dimen>
     <dimen name="design_bottom_navigation_text_size" tools:ignore="PrivateResource">12sp</dimen>
@@ -116,26 +123,33 @@
     <dimen name="design_fab_image_size" tools:ignore="PrivateResource">24dp</dimen>
     <dimen name="design_fab_size_mini" tools:ignore="PrivateResource">40dp</dimen>
     <dimen name="design_fab_size_normal" tools:ignore="PrivateResource">56dp</dimen>
-    <dimen name="design_fab_translation_z_hovered_focused" tools:ignore="PrivateResource">6dp</dimen>
+    <dimen name="design_fab_translation_z_hovered_focused" tools:ignore="PrivateResource">6dp
+    </dimen>
     <dimen name="design_fab_translation_z_pressed" tools:ignore="PrivateResource">6dp</dimen>
     <dimen name="design_navigation_elevation" tools:ignore="PrivateResource">16dp</dimen>
     <dimen name="design_navigation_icon_padding" tools:ignore="PrivateResource">32dp</dimen>
     <dimen name="design_navigation_icon_size" tools:ignore="PrivateResource">24dp</dimen>
-    <dimen name="design_navigation_item_horizontal_padding" tools:ignore="PrivateResource">16dp</dimen>
+    <dimen name="design_navigation_item_horizontal_padding" tools:ignore="PrivateResource">16dp
+    </dimen>
     <dimen name="design_navigation_item_icon_padding" tools:ignore="PrivateResource">32dp</dimen>
     <dimen name="design_navigation_max_width" tools:ignore="PrivateResource">280dp</dimen>
     <dimen name="design_navigation_padding_bottom" tools:ignore="PrivateResource">8dp</dimen>
-    <dimen name="design_navigation_separator_vertical_padding" tools:ignore="PrivateResource">8dp</dimen>
-    <dimen name="design_snackbar_action_inline_max_width" tools:ignore="PrivateResource">128dp</dimen>
+    <dimen name="design_navigation_separator_vertical_padding" tools:ignore="PrivateResource">8dp
+    </dimen>
+    <dimen name="design_snackbar_action_inline_max_width" tools:ignore="PrivateResource">128dp
+    </dimen>
     <dimen name="design_snackbar_action_text_color_alpha" tools:ignore="PrivateResource">1</dimen>
-    <dimen name="design_snackbar_background_corner_radius" tools:ignore="PrivateResource">0dp</dimen>
+    <dimen name="design_snackbar_background_corner_radius" tools:ignore="PrivateResource">0dp
+    </dimen>
     <dimen name="design_snackbar_elevation" tools:ignore="PrivateResource">6dp</dimen>
-    <dimen name="design_snackbar_extra_spacing_horizontal" tools:ignore="PrivateResource">0dp</dimen>
+    <dimen name="design_snackbar_extra_spacing_horizontal" tools:ignore="PrivateResource">0dp
+    </dimen>
     <dimen name="design_snackbar_max_width" tools:ignore="PrivateResource">-1px</dimen>
     <dimen name="design_snackbar_min_width" tools:ignore="PrivateResource">-1px</dimen>
     <dimen name="design_snackbar_padding_horizontal" tools:ignore="PrivateResource">12dp</dimen>
     <dimen name="design_snackbar_padding_vertical" tools:ignore="PrivateResource">14dp</dimen>
-    <dimen name="design_snackbar_padding_vertical_2lines" tools:ignore="PrivateResource">24dp</dimen>
+    <dimen name="design_snackbar_padding_vertical_2lines" tools:ignore="PrivateResource">24dp
+    </dimen>
     <dimen name="design_snackbar_text_size" tools:ignore="PrivateResource">14sp</dimen>
     <dimen name="design_tab_max_width" tools:ignore="PrivateResource">264dp</dimen>
     <dimen name="design_tab_scrollable_min_width" tools:ignore="PrivateResource">72dp</dimen>
@@ -162,12 +176,17 @@
     <dimen name="material_emphasis_high_type">0.87</dimen>
     <dimen name="material_emphasis_medium">0.6</dimen>
     <dimen name="material_text_view_test_line_height" tools:ignore="PrivateResource">200dp</dimen>
-    <dimen name="material_text_view_test_line_height_override" tools:ignore="PrivateResource">100dp</dimen>
-    <dimen name="mtrl_alert_dialog_background_inset_bottom" tools:ignore="PrivateResource">80dp</dimen>
+    <dimen name="material_text_view_test_line_height_override" tools:ignore="PrivateResource">
+        100dp
+    </dimen>
+    <dimen name="mtrl_alert_dialog_background_inset_bottom" tools:ignore="PrivateResource">80dp
+    </dimen>
     <dimen name="mtrl_alert_dialog_background_inset_end" tools:ignore="PrivateResource">24dp</dimen>
-    <dimen name="mtrl_alert_dialog_background_inset_start" tools:ignore="PrivateResource">24dp</dimen>
+    <dimen name="mtrl_alert_dialog_background_inset_start" tools:ignore="PrivateResource">24dp
+    </dimen>
     <dimen name="mtrl_alert_dialog_background_inset_top" tools:ignore="PrivateResource">80dp</dimen>
-    <dimen name="mtrl_alert_dialog_picker_background_inset" tools:ignore="PrivateResource">24dp</dimen>
+    <dimen name="mtrl_alert_dialog_picker_background_inset" tools:ignore="PrivateResource">24dp
+    </dimen>
     <dimen name="mtrl_badge_horizontal_edge_offset" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_badge_long_text_horizontal_padding" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_badge_radius" tools:ignore="PrivateResource">4dp</dimen>
@@ -177,8 +196,11 @@
     <dimen name="mtrl_bottomappbar_fabOffsetEndMode" tools:ignore="PrivateResource">60dp</dimen>
     <dimen name="mtrl_bottomappbar_fab_bottom_margin" tools:ignore="PrivateResource">16dp</dimen>
     <dimen name="mtrl_bottomappbar_fab_cradle_margin" tools:ignore="PrivateResource">5dp</dimen>
-    <dimen name="mtrl_bottomappbar_fab_cradle_rounded_corner_radius" tools:ignore="PrivateResource">8dp</dimen>
-    <dimen name="mtrl_bottomappbar_fab_cradle_vertical_offset" tools:ignore="PrivateResource">0dp</dimen>
+    <dimen name="mtrl_bottomappbar_fab_cradle_rounded_corner_radius" tools:ignore="PrivateResource">
+        8dp
+    </dimen>
+    <dimen name="mtrl_bottomappbar_fab_cradle_vertical_offset" tools:ignore="PrivateResource">0dp
+    </dimen>
     <dimen name="mtrl_bottomappbar_height" tools:ignore="PrivateResource">56dp</dimen>
     <dimen name="mtrl_btn_corner_radius" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_btn_dialog_btn_min_width" tools:ignore="PrivateResource">64dp</dimen>
@@ -215,29 +237,46 @@
     <dimen name="mtrl_calendar_days_of_week_height" tools:ignore="PrivateResource">24dp</dimen>
     <dimen name="mtrl_calendar_dialog_background_inset" tools:ignore="PrivateResource">16dp</dimen>
     <dimen name="mtrl_calendar_header_content_padding" tools:ignore="PrivateResource">12dp</dimen>
-    <dimen name="mtrl_calendar_header_content_padding_fullscreen" tools:ignore="PrivateResource">4dp</dimen>
+    <dimen name="mtrl_calendar_header_content_padding_fullscreen" tools:ignore="PrivateResource">
+        4dp
+    </dimen>
     <dimen name="mtrl_calendar_header_divider_thickness" tools:ignore="PrivateResource">1dp</dimen>
     <dimen name="mtrl_calendar_header_height" tools:ignore="PrivateResource">120dp</dimen>
-    <dimen name="mtrl_calendar_header_height_fullscreen" tools:ignore="PrivateResource">128dp</dimen>
-    <dimen name="mtrl_calendar_header_selection_line_height" tools:ignore="PrivateResource">32dp</dimen>
+    <dimen name="mtrl_calendar_header_height_fullscreen" tools:ignore="PrivateResource">128dp
+    </dimen>
+    <dimen name="mtrl_calendar_header_selection_line_height" tools:ignore="PrivateResource">32dp
+    </dimen>
     <dimen name="mtrl_calendar_header_text_padding" tools:ignore="PrivateResource">12dp</dimen>
-    <dimen name="mtrl_calendar_header_toggle_margin_bottom" tools:ignore="PrivateResource">8dp</dimen>
+    <dimen name="mtrl_calendar_header_toggle_margin_bottom" tools:ignore="PrivateResource">8dp
+    </dimen>
     <dimen name="mtrl_calendar_header_toggle_margin_top" tools:ignore="PrivateResource">24dp</dimen>
     <dimen name="mtrl_calendar_landscape_header_width" tools:ignore="PrivateResource">0dp</dimen>
-    <dimen name="mtrl_calendar_maximum_default_fullscreen_minor_axis" tools:ignore="PrivateResource">480dp</dimen>
+    <dimen name="mtrl_calendar_maximum_default_fullscreen_minor_axis" tools:ignore="PrivateResource">
+        480dp
+    </dimen>
     <dimen name="mtrl_calendar_month_horizontal_padding" tools:ignore="PrivateResource">2dp</dimen>
     <dimen name="mtrl_calendar_month_vertical_padding" tools:ignore="PrivateResource">0dp</dimen>
     <dimen name="mtrl_calendar_navigation_bottom_padding" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_calendar_navigation_height" tools:ignore="PrivateResource">48dp</dimen>
     <dimen name="mtrl_calendar_navigation_top_padding" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_calendar_pre_l_text_clip_padding" tools:ignore="PrivateResource">0dp</dimen>
-    <dimen name="mtrl_calendar_selection_baseline_to_top_fullscreen" tools:ignore="PrivateResource">104dp</dimen>
-    <dimen name="mtrl_calendar_selection_text_baseline_to_bottom" tools:ignore="PrivateResource">20dp</dimen>
-    <dimen name="mtrl_calendar_selection_text_baseline_to_bottom_fullscreen" tools:ignore="PrivateResource">24dp</dimen>
-    <dimen name="mtrl_calendar_selection_text_baseline_to_top" tools:ignore="PrivateResource">100dp</dimen>
+    <dimen name="mtrl_calendar_selection_baseline_to_top_fullscreen" tools:ignore="PrivateResource">
+        104dp
+    </dimen>
+    <dimen name="mtrl_calendar_selection_text_baseline_to_bottom" tools:ignore="PrivateResource">
+        20dp
+    </dimen>
+    <dimen name="mtrl_calendar_selection_text_baseline_to_bottom_fullscreen" tools:ignore="PrivateResource">
+        24dp
+    </dimen>
+    <dimen name="mtrl_calendar_selection_text_baseline_to_top" tools:ignore="PrivateResource">
+        100dp
+    </dimen>
     <dimen name="mtrl_calendar_text_input_padding_top" tools:ignore="PrivateResource">16dp</dimen>
     <dimen name="mtrl_calendar_title_baseline_to_top" tools:ignore="PrivateResource">28dp</dimen>
-    <dimen name="mtrl_calendar_title_baseline_to_top_fullscreen" tools:ignore="PrivateResource">68dp</dimen>
+    <dimen name="mtrl_calendar_title_baseline_to_top_fullscreen" tools:ignore="PrivateResource">
+        68dp
+    </dimen>
     <dimen name="mtrl_calendar_year_corner" tools:ignore="PrivateResource">18dp</dimen>
     <dimen name="mtrl_calendar_year_height" tools:ignore="PrivateResource">52dp</dimen>
     <dimen name="mtrl_calendar_year_horizontal_padding" tools:ignore="PrivateResource">8dp</dimen>
@@ -252,13 +291,19 @@
     <dimen name="mtrl_chip_pressed_translation_z" tools:ignore="PrivateResource">3dp</dimen>
     <dimen name="mtrl_chip_text_size" tools:ignore="PrivateResource">14sp</dimen>
     <dimen name="mtrl_edittext_rectangle_top_offset">12dp</dimen>
-    <dimen name="mtrl_exposed_dropdown_menu_popup_elevation" tools:ignore="PrivateResource">8dp</dimen>
-    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_offset" tools:ignore="PrivateResource">1dp</dimen>
-    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:ignore="PrivateResource">8dp</dimen>
+    <dimen name="mtrl_exposed_dropdown_menu_popup_elevation" tools:ignore="PrivateResource">8dp
+    </dimen>
+    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_offset" tools:ignore="PrivateResource">
+        1dp
+    </dimen>
+    <dimen name="mtrl_exposed_dropdown_menu_popup_vertical_padding" tools:ignore="PrivateResource">
+        8dp
+    </dimen>
     <dimen name="mtrl_extended_fab_bottom_padding" tools:ignore="PrivateResource">12dp</dimen>
     <dimen name="mtrl_extended_fab_corner_radius" tools:ignore="PrivateResource">24dp</dimen>
     <dimen name="mtrl_extended_fab_disabled_elevation" tools:ignore="PrivateResource">0dp</dimen>
-    <dimen name="mtrl_extended_fab_disabled_translation_z" tools:ignore="PrivateResource">0dp</dimen>
+    <dimen name="mtrl_extended_fab_disabled_translation_z" tools:ignore="PrivateResource">0dp
+    </dimen>
     <dimen name="mtrl_extended_fab_elevation" tools:ignore="PrivateResource">6dp</dimen>
     <dimen name="mtrl_extended_fab_end_padding" tools:ignore="PrivateResource">20dp</dimen>
     <dimen name="mtrl_extended_fab_end_padding_icon" tools:ignore="PrivateResource">24dp</dimen>
@@ -270,7 +315,9 @@
     <dimen name="mtrl_extended_fab_start_padding_icon" tools:ignore="PrivateResource">16dp</dimen>
     <dimen name="mtrl_extended_fab_top_padding" tools:ignore="PrivateResource">12dp</dimen>
     <dimen name="mtrl_extended_fab_translation_z_base" tools:ignore="PrivateResource">0dp</dimen>
-    <dimen name="mtrl_extended_fab_translation_z_hovered_focused" tools:ignore="PrivateResource">2dp</dimen>
+    <dimen name="mtrl_extended_fab_translation_z_hovered_focused" tools:ignore="PrivateResource">
+        2dp
+    </dimen>
     <dimen name="mtrl_extended_fab_translation_z_pressed" tools:ignore="PrivateResource">6dp</dimen>
     <dimen name="mtrl_fab_elevation" tools:ignore="PrivateResource">6dp</dimen>
     <dimen name="mtrl_fab_min_touch_target" tools:ignore="PrivateResource">48dp</dimen>
@@ -287,11 +334,14 @@
     <dimen name="mtrl_low_ripple_pressed_alpha" tools:ignore="PrivateResource">0.24</dimen>
     <dimen name="mtrl_min_touch_target_size" tools:ignore="PrivateResource">48dp</dimen>
     <dimen name="mtrl_navigation_elevation" tools:ignore="PrivateResource">0dp</dimen>
-    <dimen name="mtrl_navigation_item_horizontal_padding" tools:ignore="PrivateResource">22dp</dimen>
+    <dimen name="mtrl_navigation_item_horizontal_padding" tools:ignore="PrivateResource">22dp
+    </dimen>
     <dimen name="mtrl_navigation_item_icon_padding" tools:ignore="PrivateResource">14dp</dimen>
     <dimen name="mtrl_navigation_item_icon_size" tools:ignore="PrivateResource">24dp</dimen>
-    <dimen name="mtrl_navigation_item_shape_horizontal_margin" tools:ignore="PrivateResource">8dp</dimen>
-    <dimen name="mtrl_navigation_item_shape_vertical_margin" tools:ignore="PrivateResource">4dp</dimen>
+    <dimen name="mtrl_navigation_item_shape_horizontal_margin" tools:ignore="PrivateResource">8dp
+    </dimen>
+    <dimen name="mtrl_navigation_item_shape_vertical_margin" tools:ignore="PrivateResource">4dp
+    </dimen>
     <dimen name="mtrl_shape_corner_size_large_component" tools:ignore="PrivateResource">0dp</dimen>
     <dimen name="mtrl_shape_corner_size_medium_component" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_shape_corner_size_small_component" tools:ignore="PrivateResource">4dp</dimen>
@@ -307,7 +357,8 @@
     <dimen name="mtrl_slider_widget_height" tools:ignore="PrivateResource">48dp</dimen>
     <dimen name="mtrl_snackbar_action_text_color_alpha" tools:ignore="PrivateResource">0.5</dimen>
     <dimen name="mtrl_snackbar_background_corner_radius" tools:ignore="PrivateResource">4dp</dimen>
-    <dimen name="mtrl_snackbar_background_overlay_color_alpha" tools:ignore="PrivateResource">0.8</dimen>
+    <dimen name="mtrl_snackbar_background_overlay_color_alpha" tools:ignore="PrivateResource">0.8
+    </dimen>
     <dimen name="mtrl_snackbar_margin" tools:ignore="PrivateResource">8dp</dimen>
     <dimen name="mtrl_switch_thumb_elevation" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_textinput_box_corner_radius_medium" tools:ignore="PrivateResource">4dp</dimen>
@@ -317,7 +368,8 @@
     <dimen name="mtrl_textinput_box_stroke_width_focused" tools:ignore="PrivateResource">2dp</dimen>
     <dimen name="mtrl_textinput_counter_margin_start" tools:ignore="PrivateResource">16dp</dimen>
     <dimen name="mtrl_textinput_end_icon_margin_start" tools:ignore="PrivateResource">4dp</dimen>
-    <dimen name="mtrl_textinput_outline_box_expanded_padding" tools:ignore="PrivateResource">16dp</dimen>
+    <dimen name="mtrl_textinput_outline_box_expanded_padding" tools:ignore="PrivateResource">16dp
+    </dimen>
     <dimen name="mtrl_textinput_start_icon_margin_end" tools:ignore="PrivateResource">4dp</dimen>
     <dimen name="mtrl_toolbar_default_height" tools:ignore="PrivateResource">56dp</dimen>
     <dimen name="mtrl_tooltip_arrowSize" tools:ignore="PrivateResource">14dp</dimen>
@@ -325,7 +377,8 @@
     <dimen name="mtrl_tooltip_minHeight" tools:ignore="PrivateResource">32dp</dimen>
     <dimen name="mtrl_tooltip_minWidth" tools:ignore="PrivateResource">32dp</dimen>
     <dimen name="mtrl_tooltip_padding" tools:ignore="PrivateResource">12dp</dimen>
-    <dimen name="mtrl_transition_shared_axis_slide_distance" tools:ignore="PrivateResource">30dp</dimen>
+    <dimen name="mtrl_transition_shared_axis_slide_distance" tools:ignore="PrivateResource">30dp
+    </dimen>
     <dimen name="notification_action_icon_size">32dp</dimen>
     <dimen name="notification_action_text_size">13sp</dimen>
     <dimen name="notification_big_circle_margin">12dp</dimen>

@@ -27,11 +27,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jorotayo.algorubickrevamped.KeyboardFragment;
 import com.jorotayo.algorubickrevamped.ObjectBox;
-import com.jorotayo.algorubickrevamped.OnBackPressed;
 import com.jorotayo.algorubickrevamped.R;
 import com.jorotayo.algorubickrevamped.data.Solution;
 import com.jorotayo.algorubickrevamped.data.Steps;
 import com.jorotayo.algorubickrevamped.data.Steps_;
+import com.jorotayo.algorubickrevamped.ui.home.Activity_Algorithm;
 import com.jorotayo.algorubickrevamped.utils.UtilMethods;
 
 import java.util.ArrayList;
@@ -77,8 +77,11 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_solution_new, container, false);
-        ((SolutionActivity) requireActivity()).getSupportActionBar().setTitle("Create New Solution");
-        ((SolutionActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SolutionActivity activity = (SolutionActivity) requireActivity();
+        activity.setToolbarTitle("Create New Solution");
+//        ((SolutionActivity) requireActivity()).getSupportActionBar().setTitle("Create New Solution");
+//        ((SolutionActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button addStepBtn = view.findViewById(R.id.add_step_btn);
         ImageView add_new_solution_icon_btn = view.findViewById(R.id.add_new_solution_icon_btn);
@@ -127,7 +130,16 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
     }
 
     private void editSolution() {
-        Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setTitle("Edit Solution");
+        SolutionActivity activity = (SolutionActivity) requireActivity();
+        activity.setToolbarTitle("Edit Solution");
+        activity.toolbar.setNavigationIcon(R.drawable.material_ic_keyboard_arrow_left_black_24dp);
+        activity.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onBackPressed();
+            }
+        });
+//        Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).setTitle("Edit Solution");
         Solution solution = solutionBox.get(this.intent.getLongExtra("edit", 0));
         currentSolution = solution;
         new_solution_name.setText(solution.getSolutionName());
@@ -173,14 +185,17 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
         String solutionCreator = new_solution_creator.getText().toString();
         String solutionDescription = new_solution_description.getText().toString();
         String solutionImage = "";
-        if(add_solution_icon_preview.getTag() != null ){
+        if (add_solution_icon_preview.getTag() != null) {
             solutionImage = add_solution_icon_preview.getTag().toString();
         }
         if (validateSolution()) {
             Solution newSolution = new Solution(solutionName, solutionCreator, solutionDescription, solutionImage);
-            if (Objects.requireNonNull(Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).getTitle()).toString().contains("Edit")) {
+
+            SolutionActivity activity = (SolutionActivity) requireActivity();
+            if(activity.getTitle().toString().contains("Edit")){
                 newSolution.id = currentSolution.id;
             }
+
             solutionBox.put(newSolution);
             saveSteps(solutionName);
         }
@@ -219,8 +234,11 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
 
     private void saveSteps(String solutionName) {
         String str = "Debug";
-        if (Objects.requireNonNull(Objects.requireNonNull(((SolutionActivity) requireActivity()).getSupportActionBar()).getTitle()).toString().contains("Edit")) {
+
+        SolutionActivity activity = (SolutionActivity) requireActivity();
+        if(activity.getTitle().toString().contains("Edit")){
             stepsBox.remove(this.stepsBox.query().equal(Steps_.solutionName, currentSolution.getSolutionName(), QueryBuilder.StringOrder.CASE_INSENSITIVE).build().find());
+
         }
         main = view.findViewById(R.id.step_linear_container);
         for (int index = 0; index < main.getChildCount(); index++) {
@@ -236,10 +254,10 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
             steps.setStepName(stepNameEditText.getText().toString());
             steps.setStepDescription(stepDescriptionEditText.getText().toString());
             steps.setStepAlgorithm(stepAlgorithmEditText.getText().toString());
-            if(step_start_image_preview.getTag() != null){
+            if (step_start_image_preview.getTag() != null) {
                 steps.setStepImageStart(step_start_image_preview.getTag().toString());
             }
-            if(step_end_image_preview.getTag() != null){
+            if (step_end_image_preview.getTag() != null) {
                 steps.setStepImageEnd(step_end_image_preview.getTag().toString());
             }
             if (!(steps.stepDescription.isEmpty() || steps.stepName.isEmpty())) {
@@ -290,7 +308,6 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
     }
 
 
-
     @Override
     public final void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -301,7 +318,7 @@ public class NewSolutionFragment extends Fragment implements OnClickListener {
             if (editingSolutionIcon) {
                 Uri solution_alg_uri = data.getData();
                 add_solution_icon_preview.setImageURI(solution_alg_uri);
-                if(solution_alg_uri == null) {
+                if (solution_alg_uri == null) {
                     add_solution_icon_preview.setTag("");
                 } else {
                     add_solution_icon_preview.setTag(solution_alg_uri.toString());

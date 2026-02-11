@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.jorotayo.algorubickrevamped.MainActivity;
 import com.jorotayo.algorubickrevamped.ObjectBox;
 import com.jorotayo.algorubickrevamped.OnBackPressed;
@@ -40,7 +39,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import io.objectbox.Box;
 
@@ -239,17 +237,17 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
                 algorithmRecyclerAdapter.getSelectedItemCount() + " selected"
         );
 
-        if(actionMode != null && algorithmRecyclerAdapter.getSelectedItemCount() == 0){
+        if (actionMode != null && algorithmRecyclerAdapter.getSelectedItemCount() == 0) {
             actionMode.finish();
         }
     }
 
     private void onLearntAlgorithmClick(int position) {
         Toast.makeText(
-            getContext(),
-            algorithmArrayList.get(position).alg_name + " Learnt",
-            Toast.LENGTH_SHORT
-    ).show();
+                getContext(),
+                algorithmArrayList.get(position).alg_name + " Learnt",
+                Toast.LENGTH_SHORT
+        ).show();
         Algorithm alg = algorithmArrayList.get(position);
         alg.learnt = !alg.learnt;
         algorithmBox.put(alg);
@@ -339,7 +337,8 @@ public class AlgorithmHomeFragment extends Fragment implements OnBackPressed {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 

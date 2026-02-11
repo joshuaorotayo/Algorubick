@@ -1,17 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.AlgorubickRevamped" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/colorPrimary</item>
-        <!-- Primary brand color. -->
+
+    <!-- Splash Screen Theme -->
+    <style name="Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.Material</item>
+    </style>
+
+    <!-- MaterialComponents Theme for FragmentActivity screens -->
+    <style name="AppTheme.Material" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!-- Customize your theme here. -->
+
+        <!-- Edge-to-edge support -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/design_default_color_background</item>
+
+        <!-- ActionMode -->
+        <item name="actionModeStyle">@style/AppActionModeStyle</item>
+        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButton</item>
     </style>
-  <style name="Theme.CustomSplashScreenTheme" parent="Theme.SplashScreen">
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/algorubick_branding_patch</item>
-      <item name="windowSplashScreenBackground">@color/colorPrimary</item>
-        <item name="android:windowSplashScreenAnimationDuration">1000</item>
-        <item name="postSplashScreenTheme">@style/Theme.AlgorubickRevamped</item>
+
+    <!-- Material AppCompat theme for activities that use MaterialToolbar -->
+    <style name="AppTheme.Material.Toolbars" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <!-- Edge-to-edge support -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/design_default_color_background</item>
+
+        <!-- ActionMode -->
+        <item name="actionModeStyle">@style/AppActionModeStyle</item>
+        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButton</item>
     </style>
+
+    <!-- AppCompat Theme for activities that use AppCompat widgets -->
+    <style name="AppTheme.AppCompat" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Edge-to-edge support -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/design_default_color_background</item>
+
+        <!-- ActionMode -->
+        <item name="actionModeStyle">@style/AppActionModeStyle</item>
+        <item name="actionModeBackground">@color/colorPrimary</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButton</item>
+
+        <!-- Popup overlay for AppCompat menus -->
+        <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
+    </style>
+
+    <!-- ActionMode Styles -->
+    <style name="AppActionModeStyle" parent="Widget.MaterialComponents.ActionMode">
+        <item name="titleTextStyle">@style/ActionModeTitleText</item>
+        <item name="background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ActionModeTitleText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ActionModeCloseButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+    <!-- Popup overlay for AppCompat menus -->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <!-- Preference summary text -->
+    <style name="PreferenceSummaryTextStyle">
+        <item name="android:textAppearance">@style/PreferenceSummaryTextStyle</item>
+    </style>
+
+    <!-- Key Styles -->
+    <style name="key">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/blue_key_filled_white_outline_64</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="key_space" parent="key">
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="key_special" parent="key">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <!-- Grid margin helpers -->
+    <style name="grid_sq_left">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="grid_sq_right">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Dialog Theme -->
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
 </resources>
