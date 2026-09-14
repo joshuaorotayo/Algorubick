@@ -122,6 +122,12 @@ Generate locally:
 bash scripts/generate-whatsnew.sh 1.5.0
 ```
 
+## Versioning rules
+
+- App defaults: **versionName `1.5.0`**, **versionCode `150`** (overridable via env / workflow inputs).
+- `versionCode` must increase for every upload to Play (internal or production).
+- Leaving workflow `version_code` blank uses `github.run_number`.
+- Do not reuse a `versionCode` that was already accepted by Play, even on another track.
 
 ---
 
