@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
+import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickThemeFromSettings
 
 sealed class SolutionScreenMode {
     data object Create : SolutionScreenMode()
@@ -29,7 +29,7 @@ class SolutionActivity : ComponentActivity() {
             }
 
         setContent {
-            AlgorubickTheme {
+            AlgorubickThemeFromSettings {
                 var mode by remember { mutableStateOf(initialMode) }
 
                 when (val current = mode) {

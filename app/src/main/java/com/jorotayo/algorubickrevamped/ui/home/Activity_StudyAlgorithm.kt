@@ -8,7 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jorotayo.algorubickrevamped.ui.algorithm.StudyAlgorithmScreen
 import com.jorotayo.algorubickrevamped.ui.algorithm.StudyAlgorithmViewModel
 import com.jorotayo.algorubickrevamped.ui.algorithm.StudyMode
-import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
+import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickThemeFromSettings
 
 class Activity_StudyAlgorithm : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class Activity_StudyAlgorithm : ComponentActivity() {
         val ids = if (practiceIds.isNotEmpty()) practiceIds else learnIds
 
         setContent {
-            AlgorubickTheme {
+            AlgorubickThemeFromSettings {
                 val vm: StudyAlgorithmViewModel =
                     viewModel(factory = StudyAlgorithmViewModel.factory(mode, ids))
                 StudyAlgorithmScreen(

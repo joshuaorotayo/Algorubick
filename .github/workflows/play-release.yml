@@ -17,7 +17,7 @@
 #   Play Console limit is ~500 characters.
 #
 # Manual: Actions → Play Release → Run workflow
-# Tags:   git tag v1.5.0 && git push origin v1.5.0   → review (production draft)
+# Tags:   git tag v1.6.0 && git push origin v1.6.0   → review (production draft)
 
 name: Play Release
 
@@ -37,10 +37,10 @@ on:
           - internal
           - review
       version_name:
-        description: "versionName (default 1.5.0)"
+        description: "versionName (default 1.6.0)"
         required: false
         type: string
-        default: "1.5.0"
+        default: "1.6.0"
       version_code:
         description: "versionCode (integer). Leave blank to use last Internal testing code + 1."
         required: false
@@ -88,7 +88,7 @@ jobs:
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             RELEASE_TYPE="${INPUT_RELEASE_TYPE}"
-            VERSION_NAME="${INPUT_VERSION_NAME:-1.5.0}"
+            VERSION_NAME="${INPUT_VERSION_NAME:-1.6.0}"
             VERSION_CODE_INPUT="${INPUT_VERSION_CODE:-}"
             NOTES_OVERRIDE="${INPUT_RELEASE_NOTES:-}"
             DRY_RUN="${INPUT_DRY_RUN:-false}"
@@ -167,7 +167,7 @@ jobs:
           else
             python3 -m pip install --quiet google-api-python-client google-auth
             VERSION_CODE="$(python3 scripts/next-play-version-code.py)"
-            echo "Auto versionCode=${VERSION_CODE} (last internal + 1, or 150 if none)"
+            echo "Auto versionCode=${VERSION_CODE} (last internal + 1, or 160 if none)"
           fi
 
           if ! [[ "${VERSION_CODE}" =~ ^[0-9]+$ ]]; then

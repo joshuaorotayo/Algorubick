@@ -30,8 +30,11 @@ android {
         minSdkVersion 23
         targetSdkVersion 36
 
-        versionCode = (System.getenv("VERSION_CODE") ?: "150").toInteger()
-        versionName System.getenv("VERSION_NAME") ?: "1.5.0"
+        versionCode = (System.getenv("VERSION_CODE") ?: "160").toInteger()
+        versionName System.getenv("VERSION_NAME") ?: "1.6.0"
+
+        // ISO date (yyyy-MM-dd). Update when shipping a Play release; shown in Settings footer.
+        buildConfigField "String", "RELEASE_DATE", "\"2026-09-14\""
 
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -120,6 +123,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'org.apache.commons:commons-lang3:3.17.0'
     implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'androidx.datastore:datastore-preferences:1.1.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

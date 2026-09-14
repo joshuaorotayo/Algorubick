@@ -4,7 +4,7 @@
 
 Android app for Rubik’s Cube (and related puzzles) — save and study algorithms, run timed solves, browse 3×3 notation, and build multi-step solution guides. Everything stays on-device.
 
-**Package:** `com.jorotayo.algorubickrevamped` · **Version:** 1.5.0 (versionCode 150)
+**Package:** `com.jorotayo.algorubickrevamped` · **Version:** 1.6.0 (versionCode 160)
 
 ## Features
 
@@ -14,7 +14,8 @@ Android app for Rubik’s Cube (and related puzzles) — save and study algorith
 - **Cube sizes** — 3×3 through 9×9, Megaminx, Pyraminx, plus custom sizes you add
 - **Notation guide** — 3×3 reference: intro, faces, moves, doubles, two-layer, slices, rotations, and algorithms
 - **Solution guides** — author multi-step methods (name, creator, description, icons, per-step algs and images)
-- **Local storage** — ObjectBox persistence; Material 3 UI with system light/dark theme
+- **Local storage** — ObjectBox persistence; Material 3 UI with system / light / dark theme via Settings
+- **Settings** — display theme previews, practice sounds & vibration packs, auto-learnt accuracy threshold
 
 Default algorithm categories include Cross, F2L, OLL, PLL, EOLL, Triggers, and Default.
 

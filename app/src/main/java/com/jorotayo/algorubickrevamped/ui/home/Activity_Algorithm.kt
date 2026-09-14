@@ -16,7 +16,7 @@ import com.jorotayo.algorubickrevamped.ui.algorithm.AlgorithmEditScreen
 import com.jorotayo.algorubickrevamped.ui.algorithm.AlgorithmEditViewModel
 import com.jorotayo.algorubickrevamped.ui.algorithm.AlgorithmViewScreen
 import com.jorotayo.algorubickrevamped.ui.algorithm.AlgorithmViewViewModel
-import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
+import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickThemeFromSettings
 
 sealed class AlgorithmScreenMode {
     data object Create : AlgorithmScreenMode()
@@ -37,7 +37,7 @@ class Activity_Algorithm : ComponentActivity() {
         }
 
         setContent {
-            AlgorubickTheme {
+            AlgorubickThemeFromSettings {
                 var mode by remember { mutableStateOf(initialMode) }
                 var viewEpoch by remember { mutableIntStateOf(0) }
                 var editEpoch by remember { mutableIntStateOf(0) }

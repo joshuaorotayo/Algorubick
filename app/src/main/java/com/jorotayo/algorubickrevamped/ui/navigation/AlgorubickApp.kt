@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -47,6 +49,11 @@ import com.jorotayo.algorubickrevamped.ui.home.Activity_StudyAlgorithm
 import com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeScreen
 import com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeViewModel
 import com.jorotayo.algorubickrevamped.ui.notation.NotationScreen
+import com.jorotayo.algorubickrevamped.ui.settings.DisplaySettingsScreen
+import com.jorotayo.algorubickrevamped.ui.settings.PracticeSettingsScreen
+import com.jorotayo.algorubickrevamped.ui.settings.SettingsHubScreen
+import com.jorotayo.algorubickrevamped.ui.settings.SettingsRoutes
+import com.jorotayo.algorubickrevamped.ui.settings.SettingsViewModel
 import com.jorotayo.algorubickrevamped.ui.solution_guide.SolutionGuideScreen
 import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
 import com.jorotayo.algorubickrevamped.ui.theme.DefaultPreviews
@@ -71,6 +78,7 @@ private val AppBarColors
 @Composable
 fun AlgorubickApp(
     homeViewModel: AlgorithmHomeViewModel = viewModel(),
+    settingsViewModel: SettingsViewModel = viewModel(),
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -79,10 +87,17 @@ fun AlgorubickApp(
     val homeState by homeViewModel.uiState.collectAsStateWithLifecycle()
     var searchExpanded by remember { mutableStateOf(false) }
 
+    val onSettings = SettingsRoutes.isSettingsRoute(currentRoute)
     val currentDestination = TopLevelDestination.entries.firstOrNull { it.route == currentRoute }
         ?: TopLevelDestination.Home
 
     val onHome = currentRoute == TopLevelDestination.Home.route
+
+    val settingsTitleRes = when (currentRoute) {
+        SettingsRoutes.Display -> R.string.settings_title_display
+        SettingsRoutes.Practice -> R.string.settings_title_practice
+        else -> R.string.settings_title_hub
+    }
 
     LaunchedEffect(currentRoute) {
         if (!onHome) {
@@ -95,6 +110,21 @@ fun AlgorubickApp(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             when {
+                onSettings -> {
+                    TopAppBar(
+                        title = { Text(stringResource(settingsTitleRes)) },
+                        navigationIcon = {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.common_action_back),
+                                )
+                            }
+                        },
+                        colors = AppBarColors,
+                    )
+                }
+
                 onHome && homeState.selectionMode -> {
                     TopAppBar(
                         title = { Text(stringResource(R.string.navigation_selection_count, homeState.selectedIds.size)) },
@@ -185,6 +215,20 @@ fun AlgorubickApp(
                 else -> {
                     TopAppBar(
                         title = { Text(stringResource(currentDestination.titleRes)) },
+                        navigationIcon = {
+                            IconButton(
+                                onClick = {
+                                    navController.navigate(SettingsRoutes.Hub) {
+                                        launchSingleTop = true
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    Icons.Outlined.Settings,
+                                    contentDescription = stringResource(R.string.navigation_cd_settings),
+                                )
+                            }
+                        },
                         colors = AppBarColors,
                         actions = {
                             if (onHome) {
@@ -212,43 +256,45 @@ fun AlgorubickApp(
             }
         },
         bottomBar = {
-            NavigationBar(
-                containerColor = Primary,
-                contentColor = White,
-                tonalElevation = 0.dp,
-            ) {
-                TopLevelDestination.entries.forEach { destination ->
-                    val selected = currentRoute == destination.route
-                    NavigationBarItem(
-                        selected = selected,
-                        onClick = {
-                            navController.navigate(destination.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            if (!onSettings) {
+                NavigationBar(
+                    containerColor = Primary,
+                    contentColor = White,
+                    tonalElevation = 0.dp,
+                ) {
+                    TopLevelDestination.entries.forEach { destination ->
+                        val selected = currentRoute == destination.route
+                        NavigationBarItem(
+                            selected = selected,
+                            onClick = {
+                                navController.navigate(destination.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = if (selected) {
-                                    destination.selectedIcon
-                                } else {
-                                    destination.unselectedIcon
-                                },
-                                contentDescription = stringResource(destination.titleRes),
-                            )
-                        },
-                        label = { Text(stringResource(destination.titleRes)) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = White,
-                            selectedTextColor = White,
-                            unselectedIconColor = White.copy(alpha = 0.65f),
-                            unselectedTextColor = White.copy(alpha = 0.65f),
-                            indicatorColor = PrimaryLight,
-                        ),
-                    )
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = if (selected) {
+                                        destination.selectedIcon
+                                    } else {
+                                        destination.unselectedIcon
+                                    },
+                                    contentDescription = stringResource(destination.titleRes),
+                                )
+                            },
+                            label = { Text(stringResource(destination.titleRes)) },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = White,
+                                selectedTextColor = White,
+                                unselectedIconColor = White.copy(alpha = 0.65f),
+                                unselectedTextColor = White.copy(alpha = 0.65f),
+                                indicatorColor = PrimaryLight,
+                            ),
+                        )
+                    }
                 }
             }
         },
@@ -277,6 +323,18 @@ fun AlgorubickApp(
             composable(TopLevelDestination.Timer.route) { TimerScreen() }
             composable(TopLevelDestination.Notation.route) { NotationScreen() }
             composable(TopLevelDestination.Solutions.route) { SolutionGuideScreen() }
+            composable(SettingsRoutes.Hub) {
+                SettingsHubScreen(
+                    onDisplay = { navController.navigate(SettingsRoutes.Display) },
+                    onPractice = { navController.navigate(SettingsRoutes.Practice) },
+                )
+            }
+            composable(SettingsRoutes.Display) {
+                DisplaySettingsScreen(viewModel = settingsViewModel)
+            }
+            composable(SettingsRoutes.Practice) {
+                PracticeSettingsScreen(viewModel = settingsViewModel)
+            }
         }
     }
 }
@@ -290,10 +348,19 @@ private fun AlgorubickAppPreview() {
             topBar = {
                 TopAppBar(
                     title = { Text(stringResource(R.string.navigation_title_home)) },
+                    navigationIcon = {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                Icons.Outlined.Settings,
+                                contentDescription = stringResource(R.string.navigation_cd_settings),
+                            )
+                        }
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Primary,
                         titleContentColor = White,
                         actionIconContentColor = White,
+                        navigationIconContentColor = White,
                     ),
                     actions = {
                         IconButton(onClick = {}) {

@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.jorotayo.algorubickrevamped.data.CategoryRepository
 import com.jorotayo.algorubickrevamped.ui.navigation.AlgorubickApp
-import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
+import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickThemeFromSettings
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         seedCategoriesIfNeeded()
 
         setContent {
-            AlgorubickTheme {
+            AlgorubickThemeFromSettings {
                 AlgorubickApp()
             }
         }

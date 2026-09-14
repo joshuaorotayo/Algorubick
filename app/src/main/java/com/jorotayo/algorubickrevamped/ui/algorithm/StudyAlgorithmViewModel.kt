@@ -1,16 +1,23 @@
 package com.jorotayo.algorubickrevamped.ui.algorithm
 
+import android.app.Application
 import android.os.SystemClock
-import com.jorotayo.algorubickrevamped.R
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jorotayo.algorubickrevamped.R
 import com.jorotayo.algorubickrevamped.data.Algorithm
 import com.jorotayo.algorubickrevamped.data.AlgorithmRepository
+import com.jorotayo.algorubickrevamped.data.AppSettings
+import com.jorotayo.algorubickrevamped.data.SettingsRepository
+import com.jorotayo.algorubickrevamped.ui.settings.PracticeFeedbackPlayer
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -35,24 +42,33 @@ data class StudyAlgorithmUiState(
 )
 
 class StudyAlgorithmViewModel(
+    application: Application,
     private val mode: StudyMode,
     private val algorithmIds: List<Long>,
     private val algorithmRepository: AlgorithmRepository = AlgorithmRepository(),
-) : ViewModel() {
+    private val settingsRepository: SettingsRepository = SettingsRepository.get(application),
+) : AndroidViewModel(application) {
 
+    private val feedbackPlayer = PracticeFeedbackPlayer(application)
     private val algorithms: List<Algorithm>
     private val session: MutableList<Algorithm> = mutableListOf()
     private var sessionPosition = 0
-    private var sessionCorrect = 0
-    private var sessionPracticed = 0
+    private val sessionAttempts = mutableMapOf<Long, Int>()
+    private val sessionCorrects = mutableMapOf<Long, Int>()
+    private var overallCorrect = 0
+    private var overallPracticed = 0
     private var timerJob: Job? = null
     private var timerStart = 0L
+    private var cachedSettings: AppSettings = AppSettings()
 
     private val _uiState = MutableStateFlow(StudyAlgorithmUiState(mode = mode))
     val uiState: StateFlow<StudyAlgorithmUiState> = _uiState.asStateFlow()
 
     init {
         algorithms = algorithmIds.mapNotNull { algorithmRepository.get(it) }
+        viewModelScope.launch {
+            settingsRepository.settings.collect { cachedSettings = it }
+        }
         if (algorithms.isEmpty()) {
             _uiState.update { it.copy(empty = true) }
         } else if (mode == StudyMode.Learn) {
@@ -71,9 +87,18 @@ class StudyAlgorithmViewModel(
     fun checkAnswer() {
         val current = _uiState.value.current ?: return
         val correct = _uiState.value.input.trim() == current.alg
+        if (correct) {
+            feedbackPlayer.playCorrect(cachedSettings)
+        } else {
+            feedbackPlayer.playWrong(cachedSettings)
+        }
         _uiState.update {
             it.copy(
-                feedbackTitleRes = if (correct) R.string.algorithmStudy_feedback_correct_title else R.string.algorithmStudy_feedback_incorrect_title,
+                feedbackTitleRes = if (correct) {
+                    R.string.algorithmStudy_feedback_correct_title
+                } else {
+                    R.string.algorithmStudy_feedback_incorrect_title
+                },
                 feedbackMessageRes = if (correct) {
                     R.string.algorithmStudy_feedback_correct_message
                 } else {
@@ -87,10 +112,14 @@ class StudyAlgorithmViewModel(
             bindAlgorithm(algorithms.random(Random))
             _uiState.update { it.copy(input = "") }
         } else {
-            if (correct) sessionCorrect++
-            sessionPracticed++
-            current.practiced_number_int = sessionPracticed
-            current.practiced_correctly_int = sessionCorrect
+            overallPracticed++
+            if (correct) overallCorrect++
+            sessionAttempts[current.id] = (sessionAttempts[current.id] ?: 0) + 1
+            if (correct) {
+                sessionCorrects[current.id] = (sessionCorrects[current.id] ?: 0) + 1
+            }
+            current.practiced_number_int += 1
+            if (correct) current.practiced_correctly_int += 1
             algorithmRepository.put(current)
             advancePractice()
         }
@@ -109,15 +138,34 @@ class StudyAlgorithmViewModel(
     private fun advancePractice() {
         if (sessionPosition >= session.size) {
             stopTimer()
+            viewModelScope.launch { applySessionLearntFlags() }
             _uiState.update { it.copy(sessionFinished = true) }
             return
         }
         val next = session[sessionPosition++]
-        sessionCorrect = next.practiced_correctly_int
-        sessionPracticed = next.practiced_number_int
         bindAlgorithm(next)
-        _uiState.update { it.copy(input = "") }
+        _uiState.update {
+            it.copy(
+                input = "",
+                correctCount = overallCorrect,
+                practicedCount = overallPracticed,
+            )
+        }
         restartTimer()
+    }
+
+    private suspend fun applySessionLearntFlags() {
+        val threshold = settingsRepository.settings.first().learntThresholdPercent
+        sessionAttempts.forEach { (id, attempts) ->
+            if (attempts < 3) return@forEach
+            val correct = sessionCorrects[id] ?: 0
+            if (correct * 100 / attempts < threshold) return@forEach
+            val alg = algorithmRepository.get(id) ?: return@forEach
+            if (!alg.learnt) {
+                alg.learnt = true
+                algorithmRepository.put(alg)
+            }
+        }
     }
 
     private fun bindAlgorithm(algorithm: Algorithm) {
@@ -125,8 +173,8 @@ class StudyAlgorithmViewModel(
             it.copy(
                 current = algorithm,
                 stepIcons = AlgMoveImages.stepDrawables(algorithm.alg),
-                correctCount = if (mode == StudyMode.Practice) sessionCorrect else algorithm.practiced_correctly_int,
-                practicedCount = if (mode == StudyMode.Practice) sessionPracticed else algorithm.practiced_number_int,
+                correctCount = if (mode == StudyMode.Practice) overallCorrect else algorithm.practiced_correctly_int,
+                practicedCount = if (mode == StudyMode.Practice) overallPracticed else algorithm.practiced_number_int,
             )
         }
     }
@@ -169,11 +217,22 @@ class StudyAlgorithmViewModel(
     }
 
     companion object {
-        fun factory(mode: StudyMode, algorithmIds: List<Long>): androidx.lifecycle.ViewModelProvider.Factory =
-            object : androidx.lifecycle.ViewModelProvider.Factory {
+        fun factory(mode: StudyMode, algorithmIds: List<Long>): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
-                override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-                    return StudyAlgorithmViewModel(mode, algorithmIds) as T
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    throw IllegalStateException("Use create(Class, CreationExtras) with Application")
+                }
+
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: androidx.lifecycle.viewmodel.CreationExtras,
+                ): T {
+                    val app = checkNotNull(
+                        extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY],
+                    ) as Application
+                    return StudyAlgorithmViewModel(app, mode, algorithmIds) as T
                 }
             }
     }
