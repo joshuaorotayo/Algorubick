@@ -127,7 +127,8 @@ bash scripts/generate-whatsnew.sh 1.5.0
 
 - App defaults: **versionName `1.5.0`**, **versionCode `150`** (overridable via env / workflow inputs).
 - `versionCode` must increase for every upload to Play (internal or production).
-- Leaving workflow `version_code` blank uses `github.run_number`.
+- Leaving workflow `version_code` blank uses **`150 + github.run_number`** (e.g. run 2 → `152`), so early CI runs do not reuse old Play codes like `1`/`2`.
+- You can still set an explicit `version_code` (must be ≥ 150 and unused on Play).
 - Do not reuse a `versionCode` that was already accepted by Play, even on another track.
 
 ---

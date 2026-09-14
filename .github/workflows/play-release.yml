@@ -42,7 +42,7 @@ on:
         type: string
         default: "1.5.0"
       version_code:
-        description: "versionCode (integer). Leave blank to use the GitHub run number."
+        description: "versionCode (integer). Leave blank for 150 + GitHub run number (avoids reusing old Play codes)."
         required: false
         type: string
         default: ""
@@ -109,14 +109,22 @@ jobs:
             exit 1
           fi
 
+          # Play rejects reused versionCodes. Early Actions run numbers (1, 2, …)
+          # collide with older uploads, so blank input uses floor + run_number.
+          VERSION_CODE_FLOOR=150
           if [[ -z "${VERSION_CODE_INPUT}" ]]; then
-            VERSION_CODE="${{ github.run_number }}"
+            VERSION_CODE=$((VERSION_CODE_FLOOR + ${{ github.run_number }}))
           else
             VERSION_CODE="${VERSION_CODE_INPUT}"
           fi
 
           if ! [[ "${VERSION_CODE}" =~ ^[0-9]+$ ]]; then
             echo "version_code must be an integer, got: ${VERSION_CODE}"
+            exit 1
+          fi
+
+          if (( VERSION_CODE < VERSION_CODE_FLOOR )); then
+            echo "version_code ${VERSION_CODE} is below app floor ${VERSION_CODE_FLOOR}; bump it."
             exit 1
           fi
 
