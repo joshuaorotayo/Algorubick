@@ -66,13 +66,16 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             if (hasReleaseSigning) {
                 signingConfig signingConfigs.release
             }
         }
         debug {
             // Use the default Android debug keystore (never the Play upload key).
+            minifyEnabled false
+            shrinkResources false
         }
     }
     compileOptions {
