@@ -6,7 +6,6 @@
         <item name="windowSplashScreenBackground">@color/colorPrimary</item>
         <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="postSplashScreenTheme">@style/AppTheme.Material</item>
     </style>
 
@@ -17,9 +16,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <!-- Edge-to-edge support -->
+        <!-- Edge-to-edge: transparent system bars (enableEdgeToEdge handles appearance). -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/design_default_color_background</item>
 
         <!-- ActionMode -->
@@ -38,9 +37,8 @@
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorOnSecondary">@android:color/white</item>
 
-        <!-- Edge-to-edge support -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/design_default_color_background</item>
 
         <!-- ActionMode -->
@@ -57,9 +55,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <!-- Edge-to-edge support -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/design_default_color_background</item>
 
         <!-- ActionMode -->

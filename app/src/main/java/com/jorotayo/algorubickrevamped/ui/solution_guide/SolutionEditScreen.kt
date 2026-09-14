@@ -1,6 +1,5 @@
 package com.jorotayo.algorubickrevamped.ui.solution_guide
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -56,7 +55,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.jorotayo.algorubickrevamped.R
 import com.jorotayo.algorubickrevamped.ui.keyboard.AlgorithmKeyboardDialog
 import com.jorotayo.algorubickrevamped.ui.theme.Accent
@@ -86,35 +84,27 @@ fun SolutionEditScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val activity = context as Activity
     var pendingPick by remember { mutableStateOf<ImagePickTarget?>(null) }
     val scrollState = rememberScrollState()
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
+        ActivityResultContracts.GetContent(),
+    ) { uri ->
         val target = pendingPick
         pendingPick = null
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val uri = result.data?.data?.toString().orEmpty()
-        if (uri.isEmpty()) return@rememberLauncherForActivityResult
+        if (uri == null) return@rememberLauncherForActivityResult
+        val uriString = uri.toString()
         when (target) {
-            is ImagePickTarget.SolutionIcon -> viewModel.updateIcon(uri)
-            is ImagePickTarget.StepStart -> viewModel.updateStepStartImage(target.localId, uri)
-            is ImagePickTarget.StepEnd -> viewModel.updateStepEndImage(target.localId, uri)
+            is ImagePickTarget.SolutionIcon -> viewModel.updateIcon(uriString)
+            is ImagePickTarget.StepStart -> viewModel.updateStepStartImage(target.localId, uriString)
+            is ImagePickTarget.StepEnd -> viewModel.updateStepEndImage(target.localId, uriString)
             null -> Unit
         }
     }
 
     fun launchImagePicker(target: ImagePickTarget) {
         pendingPick = target
-        ImagePicker.with(activity)
-            .crop()
-            .compress(1024)
-            .galleryMimeTypes(arrayOf("image/png", "image/jpg", "image/jpeg"))
-            .createIntent { intent ->
-                imagePickerLauncher.launch(intent)
-            }
+        imagePickerLauncher.launch("image/*")
     }
 
     BackHandler {
