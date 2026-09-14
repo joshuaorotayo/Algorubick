@@ -10,9 +10,11 @@
 #   KEY_ALIAS                  key alias
 #   KEY_PASSWORD               key password
 #   PLAY_SERVICE_ACCOUNT_JSON  full JSON for a Play Console service account
-#                              with "Release to production / testing tracks" permission
 #
-# Optional input overrides: version_name, version_code, release_notes
+# What's New:
+#   Uses play-listing/en-US/whatsnew (curated), or a friendly auto summary from
+#   recent commits. Optional release_notes input overrides the curated file.
+#   Play Console limit is ~500 characters.
 #
 # Manual: Actions → Play Release → Run workflow
 # Tags:   git tag v1.5.0 && git push origin v1.5.0   → review (production draft)
@@ -35,19 +37,20 @@ on:
           - internal
           - review
       version_name:
-        description: "versionName shown to users (e.g. 1.5.0)"
-        required: true
+        description: "versionName (default 1.5.0)"
+        required: false
         type: string
+        default: "1.5.0"
       version_code:
         description: "versionCode (integer). Leave blank to use the GitHub run number."
         required: false
         type: string
         default: ""
       release_notes:
-        description: "Short release notes for this build (en-US)"
+        description: "Optional What's New override (leave blank to use play-listing/en-US/whatsnew)"
         required: false
         type: string
-        default: "Bug fixes and improvements."
+        default: ""
       dry_run:
         description: "Build + attach AAB only (skip Play upload)"
         required: false
@@ -68,6 +71,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Resolve release type, version, and Play track
         id: meta
@@ -83,21 +88,21 @@ jobs:
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             RELEASE_TYPE="${INPUT_RELEASE_TYPE}"
-            VERSION_NAME="${INPUT_VERSION_NAME}"
+            VERSION_NAME="${INPUT_VERSION_NAME:-1.5.0}"
             VERSION_CODE_INPUT="${INPUT_VERSION_CODE:-}"
-            NOTES="${INPUT_RELEASE_NOTES:-Bug fixes and improvements.}"
+            NOTES_OVERRIDE="${INPUT_RELEASE_NOTES:-}"
             DRY_RUN="${INPUT_DRY_RUN:-false}"
           elif [[ "${{ github.ref_name }}" == internal-v* ]]; then
             RELEASE_TYPE="internal"
             VERSION_NAME="${GITHUB_REF_NAME#internal-v}"
             VERSION_CODE_INPUT=""
-            NOTES="Internal build ${VERSION_NAME}"
+            NOTES_OVERRIDE=""
             DRY_RUN="false"
           elif [[ "${{ github.ref_name }}" == v* ]]; then
             RELEASE_TYPE="review"
             VERSION_NAME="${GITHUB_REF_NAME#v}"
             VERSION_CODE_INPUT=""
-            NOTES="Release ${VERSION_NAME}"
+            NOTES_OVERRIDE=""
             DRY_RUN="false"
           else
             echo "Unsupported trigger"
@@ -146,9 +151,9 @@ jobs:
             echo "gh_prerelease=${GH_PRERELEASE}"
             echo "gh_tag=${GH_TAG}"
             echo "dry_run=${DRY_RUN}"
-            echo "release_notes<<NOTES_EOF"
-            printf '%s\n' "${NOTES}"
-            echo "NOTES_EOF"
+            echo "notes_override<<OVERRIDE_EOF"
+            printf '%s\n' "${NOTES_OVERRIDE}"
+            echo "OVERRIDE_EOF"
           } >> "$GITHUB_OUTPUT"
 
           echo "Release type : ${RELEASE_TYPE}"
@@ -156,6 +161,21 @@ jobs:
           echo "versionCode  : ${VERSION_CODE}"
           echo "Play track   : ${PLAY_TRACK} (${PLAY_STATUS})"
           echo "Dry run      : ${DRY_RUN}"
+
+      - name: Generate Play What's New
+        id: whatsnew
+        env:
+          NOTES_OVERRIDE: ${{ steps.meta.outputs.notes_override }}
+          VERSION_NAME: ${{ steps.meta.outputs.version_name }}
+        run: |
+          set -euo pipefail
+          chmod +x scripts/generate-whatsnew.sh
+          scripts/generate-whatsnew.sh "${VERSION_NAME}" "${NOTES_OVERRIDE}" play-listing/en-US/whatsnew
+          {
+            echo "text<<NOTES_EOF"
+            cat play-listing/en-US/whatsnew
+            echo "NOTES_EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -224,15 +244,6 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Write Play release notes file
-        if: steps.meta.outputs.dry_run != 'true'
-        env:
-          NOTES: ${{ steps.meta.outputs.release_notes }}
-        run: |
-          set -euo pipefail
-          mkdir -p play-listing/en-US
-          printf '%s\n' "${NOTES}" > play-listing/en-US/whatsnew
-
       - name: Upload to Google Play
         if: steps.meta.outputs.dry_run != 'true'
         uses: r0adkll/upload-google-play@v1.1.3
@@ -259,8 +270,8 @@ jobs:
 
             ${{ steps.meta.outputs.release_type == 'internal' && 'Uploaded to **Internal testing**. Testers on the internal track can install from the Play Store.' || 'Uploaded as a **Production draft**. Open Play Console → Production → finish the release and submit for review.' }}
 
-            ### Notes
-            ${{ steps.meta.outputs.release_notes }}
+            ### What's New (Play Store)
+            ${{ steps.whatsnew.outputs.text }}
           files: ${{ steps.aab.outputs.path }}
           prerelease: ${{ steps.meta.outputs.gh_prerelease == 'true' }}
           generate_release_notes: true
@@ -280,6 +291,12 @@ jobs:
             echo "| Play track | \`${{ steps.meta.outputs.play_track }}\` |"
             echo "| Play status | \`${{ steps.meta.outputs.play_status }}\` |"
             echo "| Dry run | \`${{ steps.meta.outputs.dry_run }}\` |"
+            echo ""
+            echo "### What's New"
+            echo ""
+            echo '```'
+            cat play-listing/en-US/whatsnew
+            echo '```'
             echo ""
             if [[ "${{ steps.meta.outputs.release_type }}" == "internal" ]]; then
               echo "Next: open **Play Console → Testing → Internal testing** and share the testers link."

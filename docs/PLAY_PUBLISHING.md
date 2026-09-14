@@ -104,11 +104,24 @@ In **Run workflow**, enable `dry_run` to build and upload the AAB artifact / Git
 
 ---
 
-## Versioning rules
+## What's New (Play Store)
 
-- `versionCode` must increase for every upload to Play (internal or production).
-- Leaving `version_code` blank uses `github.run_number`, which is usually enough.
-- Do not reuse a `versionCode` that was already accepted by Play, even on another track.
+Each release uploads an en-US **What's New** blurb (max ~500 characters).
+
+Priority order:
+
+1. Optional `release_notes` input on the workflow (manual override)
+2. Curated file [`play-listing/en-US/whatsnew`](../play-listing/en-US/whatsnew)
+3. Auto-friendly summary generated from recent git commits
+
+Update the curated file whenever you ship user-facing changes, then run **Play Release**. The workflow refreshes the title to match the release `versionName`.
+
+Generate locally:
+
+```bash
+bash scripts/generate-whatsnew.sh 1.5.0
+```
+
 
 ---
 

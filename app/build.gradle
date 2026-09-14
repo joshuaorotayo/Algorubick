@@ -30,8 +30,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 36
 
-        versionCode = (System.getenv("VERSION_CODE") ?: "1").toInteger()
-        versionName System.getenv("VERSION_NAME") ?: "1.4.1"
+        versionCode = (System.getenv("VERSION_CODE") ?: "150").toInteger()
+        versionName System.getenv("VERSION_NAME") ?: "1.5.0"
 
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
