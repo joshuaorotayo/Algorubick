@@ -167,7 +167,7 @@ jobs:
           else
             python3 -m pip install --quiet google-api-python-client google-auth
             VERSION_CODE="$(python3 scripts/next-play-version-code.py)"
-            echo "Auto versionCode=${VERSION_CODE} (last internal + 1, or 160 if none)"
+            echo "Auto versionCode=${VERSION_CODE} (max Play code + 1, or 160 if none)"
           fi
 
           if ! [[ "${VERSION_CODE}" =~ ^[0-9]+$ ]]; then
@@ -273,23 +273,27 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.jorotayo.algorubickrevamped
           releaseFiles: ${{ steps.aab.outputs.path }}
-          track: ${{ steps.meta.outputs.play_track }}
+          tracks: ${{ steps.meta.outputs.play_track }}
           status: ${{ steps.meta.outputs.play_status }}
           whatsNewDirectory: play-listing
           releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
 
-      # Review builds also go to Internal testing so testers can install while production is in draft/review.
-      - name: Upload to Google Play (internal track)
+      # Same AAB cannot be uploaded twice (Play rejects reused versionCodes).
+      # For review, assign the already-uploaded code to Internal without re-upload.
+      - name: Assign build to Internal testing
         if: steps.meta.outputs.dry_run != 'true' && steps.meta.outputs.release_type == 'review'
-        uses: r0adkll/upload-google-play@v1.1.5
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.jorotayo.algorubickrevamped
-          releaseFiles: ${{ steps.aab.outputs.path }}
-          track: internal
-          status: completed
-          whatsNewDirectory: play-listing
-          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          VERSION_CODE: ${{ steps.version.outputs.version_code }}
+          VERSION_NAME: ${{ steps.meta.outputs.version_name }}
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet google-api-python-client google-auth
+          python3 scripts/assign-play-track.py \
+            internal \
+            "${VERSION_CODE}" \
+            completed \
+            "${VERSION_NAME} (${VERSION_CODE})"
 
       - name: Create GitHub Release
         if: steps.meta.outputs.dry_run != 'true'

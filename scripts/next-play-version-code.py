@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Print the next Play versionCode: (max on internal track) + 1.
+"""Print the next Play versionCode: (max across known tracks) + 1.
 
-If the internal track has no releases, prints DEFAULT_START (150).
+If no versionCodes exist, prints DEFAULT_START (160).
 Requires PLAY_SERVICE_ACCOUNT_JSON in the environment.
 """
 
@@ -12,33 +12,25 @@ import os
 import sys
 
 PACKAGE_NAME = "com.jorotayo.algorubickrevamped"
-TRACK = "internal"
+TRACKS = ("internal", "production", "alpha", "beta")
 DEFAULT_START = 160
 SCOPE = "https://www.googleapis.com/auth/androidpublisher"
 
 
-def max_version_code_on_track(service, package_name: str, track: str) -> int | None:
+def max_version_code_on_track(service, package_name: str, track: str, edit_id: str) -> int | None:
     from googleapiclient.errors import HttpError
 
-    edit = service.edits().insert(body={}, packageName=package_name).execute()
-    edit_id = edit["id"]
     try:
-        try:
-            track_info = (
-                service.edits()
-                .tracks()
-                .get(packageName=package_name, editId=edit_id, track=track)
-                .execute()
-            )
-        except HttpError as exc:
-            if exc.resp is not None and exc.resp.status == 404:
-                return None
-            raise
-    finally:
-        try:
-            service.edits().delete(packageName=package_name, editId=edit_id).execute()
-        except Exception:  # noqa: BLE001
-            pass
+        track_info = (
+            service.edits()
+            .tracks()
+            .get(packageName=package_name, editId=edit_id, track=track)
+            .execute()
+        )
+    except HttpError as exc:
+        if exc.resp is not None and exc.resp.status == 404:
+            return None
+        raise
 
     codes: list[int] = []
     for release in track_info.get("releases") or []:
@@ -77,13 +69,28 @@ def main() -> int:
         info, scopes=[SCOPE]
     )
     service = build("androidpublisher", "v3", credentials=credentials, cache_discovery=False)
-    last = max_version_code_on_track(service, PACKAGE_NAME, TRACK)
-    if last is None:
+    edit = service.edits().insert(body={}, packageName=PACKAGE_NAME).execute()
+    edit_id = edit["id"]
+    try:
+        found: list[int] = []
+        for track in TRACKS:
+            code = max_version_code_on_track(service, PACKAGE_NAME, track, edit_id)
+            if code is not None:
+                found.append(code)
+                print(f"Track '{track}' max versionCode={code}", file=sys.stderr)
+    finally:
+        try:
+            service.edits().delete(packageName=PACKAGE_NAME, editId=edit_id).execute()
+        except Exception:  # noqa: BLE001
+            pass
+
+    if not found:
         nxt = DEFAULT_START
-        print(f"No versionCodes on '{TRACK}' track; using default {nxt}", file=sys.stderr)
+        print(f"No versionCodes on Play tracks; using default {nxt}", file=sys.stderr)
     else:
+        last = max(found)
         nxt = last + 1
-        print(f"Last internal versionCode={last}; next={nxt}", file=sys.stderr)
+        print(f"Highest Play versionCode={last}; next={nxt}", file=sys.stderr)
     print(nxt)
     return 0
 
