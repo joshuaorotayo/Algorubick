@@ -6,9 +6,14 @@ plugins {
 
 def signingPropsFile = rootProject.file("signing.properties")
 def signingProps = new Properties()
+def hasReleaseSigning = false
 
 if (signingPropsFile.exists()) {
-    signingProps.load(new FileInputStream(signingPropsFile))
+    signingPropsFile.withInputStream { signingProps.load(it) }
+    hasReleaseSigning = signingProps['STORE_FILE'] &&
+            signingProps['STORE_PASSWORD'] &&
+            signingProps['KEY_ALIAS'] &&
+            signingProps['KEY_PASSWORD']
 }
 
 configurations.all {
@@ -26,7 +31,7 @@ android {
         targetSdkVersion 36
 
         versionCode = (System.getenv("VERSION_CODE") ?: "1").toInteger()
-        versionName "1.4.0"
+        versionName System.getenv("VERSION_NAME") ?: "1.4.1"
 
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -39,28 +44,32 @@ android {
     }
 
     signingConfigs {
-        release {
-            storeFile file(signingProps['STORE_FILE'])
-            storePassword signingProps['STORE_PASSWORD']
-            keyAlias signingProps['KEY_ALIAS']
-            keyPassword signingProps['KEY_PASSWORD']
-        }
-        debug {
-            storeFile file(signingProps['STORE_FILE'])
-            storePassword signingProps['STORE_PASSWORD']
-            keyAlias signingProps['KEY_ALIAS']
-            keyPassword signingProps['KEY_PASSWORD']
+        if (hasReleaseSigning) {
+            release {
+                def storePath = signingProps['STORE_FILE'] as String
+                // Absolute path, or path relative to the app module / project root.
+                def resolved = file(storePath)
+                if (!resolved.exists()) {
+                    resolved = rootProject.file(storePath)
+                }
+                storeFile resolved
+                storePassword signingProps['STORE_PASSWORD']
+                keyAlias signingProps['KEY_ALIAS']
+                keyPassword signingProps['KEY_PASSWORD']
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources false
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
         }
         debug {
-            signingConfig signingConfigs.debug
+            // Use the default Android debug keystore (never the Play upload key).
         }
     }
     compileOptions {
@@ -73,10 +82,15 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "2.0.21" // match your Kotlin version
+        kotlinCompilerExtensionVersion = "2.0.21"
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
 }
 
@@ -85,17 +99,20 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    // Navigation
     implementation 'androidx.navigation:navigation-fragment:2.8.5'
     implementation 'androidx.navigation:navigation-ui:2.8.5'
 
-    // Lifecycle
     implementation 'androidx.lifecycle:lifecycle-livedata:2.8.7'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.7'
     implementation 'androidx.fragment:fragment:1.8.5'
+    implementation 'androidx.fragment:fragment-ktx:1.8.5'
     implementation 'androidx.activity:activity:1.9.3'
+    implementation 'androidx.activity:activity-compose:1.9.3'
 
-    // Other
+    implementation 'androidx.navigation:navigation-compose:2.8.5'
+
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'androidx.core:core-splashscreen:1.2.0-alpha02'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
@@ -104,14 +121,13 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.17.0'
     implementation 'androidx.core:core-ktx:1.17.0'
 
-    // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
-    // ObjectBox
-    debugImplementation("io.objectbox:objectbox-android-objectbrowser:4.0.3")
-    releaseImplementation("io.objectbox:objectbox-android:4.0.3")
+    debugImplementation("io.objectbox:objectbox-android-objectbrowser:4.3.0")
+    releaseImplementation("io.objectbox:objectbox-android:4.3.0")
+    implementation("io.objectbox:objectbox-kotlin:4.3.0")
     implementation 'org.apache.commons:commons-lang3:3.9'
 
     implementation "com.github.bumptech.glide:glide:4.16.0"
@@ -120,10 +136,13 @@ dependencies {
 
     implementation(platform("androidx.compose:compose-bom:2026.01.01"))
     implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material:material-icons-extended")
     debugImplementation("androidx.compose.ui:ui-tooling")
 
+    implementation("io.coil-kt:coil-compose:2.7.0")
 }
 
 apply plugin: 'io.objectbox'

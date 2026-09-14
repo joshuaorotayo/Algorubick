@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- region common -->
+    <string name="common_action_cancel">Cancel</string>
+    <string name="common_action_yes">Yes</string>
+    <string name="common_action_no">No</string>
+    <string name="common_action_ok">OK</string>
+    <string name="common_action_close">Close</string>
+    <string name="common_action_save">Save</string>
+    <string name="common_action_back">Back</string>
+    <string name="common_action_add">Add</string>
+    <string name="common_action_edit">Edit</string>
+    <string name="common_action_delete">Delete</string>
+    <string name="common_not_applicable">NA</string>
+    <string name="common_em_dash">—</string>
+    <string name="common_search_hint">Search…</string>
+    <string name="common_cd_clear_selection">Clear selection</string>
+    <string name="common_cd_close_search">Close search</string>
+    <string name="common_cd_clear_query">Clear query</string>
+    <!-- endregion -->
+
+    <!-- region navigation -->
+    <string name="navigation_title_home">Home</string>
+    <string name="navigation_title_timer">Timer</string>
+    <string name="navigation_title_notation">Notation</string>
+    <string name="navigation_title_solutions">Solutions</string>
+    <string name="navigation_cd_search">Search</string>
+    <string name="navigation_cd_learn">Learn</string>
+    <string name="navigation_cd_practice">Practice</string>
+    <string name="navigation_cd_statistics">Statistics</string>
+    <string name="navigation_selection_count">%d selected</string>
+    <string name="navigation_preview_home_content">Home content</string>
+    <!-- endregion -->
+
+    <!-- region splash -->
+    <string name="splash_logo_description">Algorubick Logo</string>
+    <string name="splash_app_name">Algorubick</string>
+    <string name="splash_slogan">One stop hub for all things cubing</string>
+    <!-- endregion -->
+
+    <!-- region home -->
+    <string name="home_fab_create_algorithm">Create New Algorithm</string>
+    <string name="home_total_algs_label">Total Algs:</string>
+    <string name="home_sort_created_date">Created Date</string>
+    <string name="home_sort_algorithm_name">Algorithm Name</string>
+    <string name="home_sort_category">Category</string>
+    <string name="home_card_correct_practiced_format">Correct/Practiced: %1$d / %2$d</string>
+    <string name="home_cd_alg_icon">Image of Case</string>
+    <string name="home_cd_favourite">Favourited</string>
+    <string name="home_cd_learnt">Learnt</string>
+    <!-- endregion -->
+
+    <!-- region timer -->
+    <string name="timer_label_select_cube_size">Currently Solving for: </string>
+    <string name="timer_scramble_header">Current Scramble:</string>
+    <string name="timer_label_hint">Click the time below and start solving now!</string>
+    <string name="timer_label_tap_to_stop">Tap anywhere to stop</string>
+    <string name="timer_cd_save_solve">Save Solve</string>
+    <string name="timer_cd_delete_solve">Delete Solve</string>
+    <string name="timer_cd_dnf_solve">Mark Solve as DNF</string>
+    <string name="timer_cd_plus2">Add 2 Seconds</string>
+    <string name="timer_cd_cube_size_delete">Delete cube size</string>
+    <string name="timer_stat_best">Best Time: </string>
+    <string name="timer_stat_worst">Worst Solve: </string>
+    <string name="timer_stat_mean">Mean: </string>
+    <string name="timer_stat_count">Total Solves</string>
+    <string name="timer_stat_avg5">Avg of 5:</string>
+    <string name="timer_stat_avg12">Avg of 12: </string>
+    <string name="timer_stat_avg50">Avg of 50:</string>
+    <string name="timer_stat_avg100">Avg of 100: </string>
+    <string name="timer_dialog_delete_solve_title">Delete Solve</string>
+    <string name="timer_dialog_delete_solve_message">Are you sure you want to delete your current solve time?</string>
+    <string name="timer_dialog_dnf_title">DNF Solve</string>
+    <string name="timer_dialog_dnf_message">Mark as DNF?</string>
+    <string name="timer_dialog_plus2_title">Solve Penalty</string>
+    <string name="timer_dialog_plus2_message">Add +2 seconds penalty to this solve?</string>
+    <string name="timer_dialog_delete_cube_size_title">Delete Cube Size?</string>
+    <string name="timer_dialog_delete_cube_size_message">Are you sure that you wish to delete this Cube Size (%1$s)?</string>
+    <string name="timer_dialog_add_cube_size_title">Add Cube Size</string>
+    <string name="timer_dialog_add_cube_size_label">Enter the shape/size</string>
+    <string name="timer_dialog_add_cube_size_confirm">Add</string>
+    <string name="timer_add_cube_size_option">Add Cube Size +</string>
+    <string name="timer_toast_new_scramble">New scramble created</string>
+    <string name="timer_toast_plus2_applied">+2 penalty applied</string>
+    <string name="timer_toast_saved_time">Saved %1$s for %2$s</string>
+    <string name="timer_toast_cube_size_exists">Cube size %1$s already exists</string>
+    <string name="timer_stats_solve_count">%d Solves</string>
+    <!-- endregion -->
+
+    <!-- region statistics -->
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_sort_header">Sort By: </string>
+    <string name="statistics_sort_solved_date">Solved Date</string>
+    <string name="statistics_sort_cube_size">Cube Size</string>
+    <string name="statistics_sort_solve_time">Solve Time</string>
+    <string name="statistics_cd_reverse_sort">Reverse Sort Order</string>
+    <string name="statistics_empty_title">No Solves Saved!</string>
+    <string name="statistics_empty_hint">Start solving now to see your Solves</string>
+    <string name="statistics_dialog_delete_title">Delete Solve</string>
+    <string name="statistics_dialog_delete_message">Are you sure you want to delete the current Solve</string>
+    <string name="statistics_cd_delete_solve">Delete Solve</string>
+    <!-- endregion -->
+
+    <!-- region notation -->
+    <string name="notation_tab_intro">Intro</string>
+    <string name="notation_tab_faces">Faces</string>
+    <string name="notation_tab_moves">Moves</string>
+    <string name="notation_tab_doubles">Doubles</string>
+    <string name="notation_tab_two_layer">Two Layer Moves</string>
+    <string name="notation_tab_slices">Slices</string>
+    <string name="notation_tab_rotations">Rotations</string>
+    <string name="notation_tab_algorithms">Algorithms</string>
+
+    <string name="notation_intro_header_title">Introduction</string>
+    <string name="notation_intro_header_body">Guide to information about the notation used in this app.\n\nNotation cited in this section can be used as reference for solves, provide more information and give a better understanding of the puzzle.\n\nAt the moment all information given will only relate to the 3x3x3 Rubiks cube</string>
+    <string name="notation_intro_gestures_hint">Swipe Right to Left for more tabs and notation information</string>
+
+    <string name="notation_faces_header_title">Explanation of Faces:</string>
+    <string name="notation_faces_header_body">On a standard 3x3x3 Cube there are 6 faces.\n\nThese 6 faces are named and used depending non the colour which is facing you.</string>
+    <string name="notation_faces_left">The Left face\nThe face to the left of you</string>
+    <string name="notation_faces_right">The Right face\nThe face to the right of you</string>
+    <string name="notation_faces_front">The Front face\nThe face at the front of the cube</string>
+    <string name="notation_faces_back">The Back face\nThe face at the back of the cube</string>
+    <string name="notation_faces_up">The Up Face\nThe face at the top of the cube</string>
+    <string name="notation_faces_down">The Down face\nThe face at the bottom of the cube</string>
+
+    <string name="notation_moves_header_title">Explanation of Moves</string>
+    <string name="notation_moves_header_body">These moves will be listed as clockwise moves and anticlockwise moves\n\n Clockwise moves are noted with a capital letter for the face e.g. R.\n\n Anticlockwise moves are noted with a capital letter for the face and an apostrophe e.g. R\'</string>
+    <string name="notation_moves_clockwise_r">Right clockwise: R\nClockwise turn of the right layer</string>
+    <string name="notation_moves_anticlockwise_r">Right Anti-clockwise: R\'\nAnti Clockwise turn of the right layer</string>
+    <string name="notation_moves_clockwise_l">Left clockwise: L\nClockwise turn of the left layer</string>
+    <string name="notation_moves_anticlockwise_l">Left Anti-clockwise: L\'\nAnti Clockwise turn of the left layer</string>
+    <string name="notation_moves_clockwise_u">Up clockwise: U\nClockwise turn of the up layer</string>
+    <string name="notation_moves_anticlockwise_u">Up Anti-clockwise: U\'\nAnti Clockwise turn of the up layer</string>
+    <string name="notation_moves_clockwise_d">Down clockwise: D\nClockwise turn of the down layer</string>
+    <string name="notation_moves_anticlockwise_d">Down Anti-clockwise: D\'\nAnti Clockwise turn of the down layer</string>
+    <string name="notation_moves_clockwise_f">Front clockwise: F\nClockwise turn of the front layer</string>
+    <string name="notation_moves_anticlockwise_f">Front Anti-clockwise: F\'\nAnti Clockwise turn of the front layer</string>
+    <string name="notation_moves_clockwise_b">Back clockwise: B\nClockwise turn of the back layer</string>
+    <string name="notation_moves_anticlockwise_b">Back Anti-clockwise: B\'\nAnti Clockwise turn of the back layer</string>
+
+    <string name="notation_doubles_header_title">Double Moves</string>
+    <string name="notation_doubles_header_body">Double layer moves will be noted as a capital Letter and number 2 e.g. R2</string>
+    <string name="notation_doubles_r">Double R Move: R2\n\nDouble turn in one direction on the right face</string>
+    <string name="notation_doubles_l">Double L Move: L2\n\nDouble turn in one direction on the left face</string>
+    <string name="notation_doubles_u">Double U Move: U2\n\nDouble turn in one direction on the up face</string>
+    <string name="notation_doubles_d">Double D Move: D2\n\nDouble turn in one direction on the down face</string>
+    <string name="notation_doubles_f">Double F Move: F2\n\nDouble turn in one direction on the front face</string>
+    <string name="notation_doubles_b">Double B Move: B2\n\nDouble turn in one direction on the back face</string>
+
+    <string name="notation_two_layer_header_title">Explanation of 2-Layer Moves:</string>
+    <string name="notation_two_layer_header_body">In more complex algorithms there is a need for 2 layers to be turned simultaneously these moves are denoted with a lower case letter.\n\nThey can be accessed on the Algorithm keyboard these can be accessed by clicking on the shift button</string>
+    <string name="notation_two_layer_r">2-Layer r Move: r\n\nTurn the right and front vertical layer 90 degrees</string>
+    <string name="notation_two_layer_l">2-Layer l Move: l\n\nTurn the left and front vertical layer 90 degrees</string>
+    <string name="notation_two_layer_u">2-Layer u Move: u\n\nTurn the up and front horizontal layer 90 degrees</string>
+    <string name="notation_two_layer_d">2-Layer d Move: d\n\nTurn the down and front horizontal layer 90 degrees</string>
+    <string name="notation_two_layer_f">2-Layer f Move: f\n\nTurn the front and right vertical middle layer 90 degrees</string>
+    <string name="notation_two_layer_b">2-Layer b Move: b\n\nTurn the back and right vertical middle layer 90 degrees</string>
+
+    <string name="notation_slices_header_title">Explanation of Slice moves:</string>
+    <string name="notation_slices_header_body">Slice moves are moves made with layers in between diagonally opposite faces.\n\nThese moves are not seen as often in algorithms but are still seen.</string>
+    <string name="notation_slices_m">Middle Layer Slice: M\n\nLayers between the Right and Left layers</string>
+    <string name="notation_slices_e">E-Layer Slice: E\n\nLayers between the Up and Down layers</string>
+    <string name="notation_slices_s">S Layer Slice: S\n\nLayers between the Front and Back layers</string>
+    <string name="notation_slices_extra_header">Extra Information:</string>
+    <string name="notation_slices_extra_body">Anti clockwise slices are noted with the slice move followed by an apostrophe e.g. M\'\n\n Double slice moves are noted with the slice move followed by the number 2 e.g. M2</string>
+
+    <string name="notation_rotations_header_title">Explanation of Rotations:</string>
+    <string name="notation_rotations_header_body">Explanation for the rotations that can be used within a solve on the standard 3x3x3 Rubik\'s cube</string>
+    <string name="notation_rotations_x">X axis Rotation: X\n\nRotating the cube clockwise on the X-axis e.g. the Front face will become the Up face</string>
+    <string name="notation_rotations_y">Y axis Rotation: Y\n\nRotating the cube clockwise on the Y-axis e.g. the Front face will become the Left face</string>
+    <string name="notation_rotations_z">Z axis Rotation: Z\n\nRotating the cube clockwise on the Z-axis e.g. the Up face will become the Right face</string>
+    <string name="notation_rotations_extra_header">Extra Information:</string>
+    <string name="notation_rotations_extra_body">Anti clockwise rotations are noted with the rotation move followed by an apostrophe e.g. X\'\n\n Double rotations are noted with the rotation move followed by the number 2 e.g. X2</string>
+
+    <string name="notation_algorithms_header_title">How Algorithms Work</string>
+    <string name="notation_algorithms_header_body">Algorithms are made up of Moves, Slices and Rotations performed one after another.\n\nAlgorithms are noted down with commas between the moves and sometimes brackets used to separate up chunks of algorithms</string>
+    <!-- endregion -->
+
+    <!-- region solution -->
+    <string name="solution_fab_create">New Solution</string>
+    <string name="solution_sort_label">Sorting By: </string>
+    <string name="solution_sort_name">Solution Name</string>
+    <string name="solution_sort_creator">Solution Creator</string>
+    <string name="solution_cd_card_image">Solution Icon Image</string>
+
+    <string name="solutionEdit_title_create">Create New Solution</string>
+    <string name="solutionEdit_title_edit">Edit Solution</string>
+    <string name="solutionEdit_cd_add_icon">Add Solution Icon</string>
+    <string name="solutionEdit_cd_pick_image">Add Image of Algorithm</string>
+    <string name="solutionEdit_field_name_label">Solution Name</string>
+    <string name="solutionEdit_field_creator_label">Creator Name</string>
+    <string name="solutionEdit_field_description_label">Description of new solution</string>
+    <string name="solutionEdit_field_name_error">Solution name cannot be blank</string>
+    <string name="solutionEdit_field_creator_error">Solution creator cannot be blank</string>
+    <string name="solutionEdit_field_description_error">Solution description cannot be blank</string>
+    <string name="solutionEdit_action_add_step">+ Add Step</string>
+    <string name="solutionEdit_action_save">Save Solution</string>
+    <string name="solutionEdit_step_name_label">Step Name e.g. First Layer</string>
+    <string name="solutionEdit_step_instruction_label">Instructions for the step</string>
+    <string name="solutionEdit_step_algorithm_label">Step Algorithm</string>
+    <string name="solutionEdit_step_image_start_btn">+ Img Start</string>
+    <string name="solutionEdit_step_image_end_btn">+ Img End</string>
+    <string name="solutionEdit_step_image_description">Image for algorithm start state</string>
+    <string name="solutionEdit_dialog_validation_title">Solution Error</string>
+    <string name="solutionEdit_dialog_validation_message">Fill in all Solution details before saving</string>
+    <string name="solutionEdit_dialog_discard_title">Close without saving?</string>
+    <string name="solutionEdit_dialog_discard_message">If you carry on the current Solution will be closed without saving. Click ok if you are fine to do so.</string>
+
+    <string name="solutionView_title">View Solution</string>
+    <string name="solutionView_cd_edit">Edit Solution</string>
+    <string name="solutionView_cd_delete">Delete Solution</string>
+    <string name="solutionView_cd_image">Solution Image</string>
+    <string name="solutionView_steps_header">Steps</string>
+    <string name="solutionView_step_title_format">Step %1$d: %2$s</string>
+    <string name="solutionView_cd_step_start">Start</string>
+    <string name="solutionView_cd_step_end">End</string>
+    <string name="solutionView_dialog_delete_title">Delete Solution</string>
+    <string name="solutionView_dialog_delete_message">Are you sure you want to delete the current Solution: %1$s</string>
+    <!-- endregion -->
+
+    <!-- region algorithm -->
+    <string name="algorithmEdit_title_create">Create New Algorithm</string>
+    <string name="algorithmEdit_title_edit">Edit Algorithm</string>
+    <string name="algorithmEdit_cd_image">Algorithm image</string>
+    <string name="algorithmEdit_cd_pick_image">Pick image</string>
+    <string name="algorithmEdit_field_name_label">Name</string>
+    <string name="algorithmEdit_field_algorithm_label">Algorithm</string>
+    <string name="algorithmEdit_field_description_label">Description</string>
+    <string name="algorithmEdit_field_category_label">Category</string>
+    <string name="algorithmEdit_switch_favourite">Favourite</string>
+    <string name="algorithmEdit_switch_custom">Custom</string>
+    <string name="algorithmEdit_field_name_error">Algorithm Name cannot be blank</string>
+    <string name="algorithmEdit_field_algorithm_error">Algorithm cannot be blank</string>
+    <string name="algorithmEdit_field_description_error">Algorithm Description cannot be blank</string>
+    <string name="algorithmEdit_dialog_discard_title">Close without saving?</string>
+    <string name="algorithmEdit_dialog_discard_message">If you carry on the current Algorithm will be closed without saving. Click ok if you are fine to do this.</string>
+
+    <string name="algorithmView_title">View Algorithm</string>
+    <string name="algorithmView_not_found">Algorithm not found</string>
+    <string name="algorithmView_correct_practiced_format">Correct/Practiced: %1$d / %2$d</string>
+    <string name="algorithmView_label_favourite">Favourite </string>
+    <string name="algorithmView_label_custom">Custom </string>
+    <string name="algorithmView_action_learn">Learn Algorithm</string>
+    <string name="algorithmView_action_practice">Practice Algorithm</string>
+    <string name="algorithmView_dialog_delete_title">Delete Algorithm</string>
+    <string name="algorithmView_dialog_delete_message">Are you sure you want to delete the current Algorithm: %1$s</string>
+
+    <string name="algorithmStudy_title_learn">Learn Algorithm</string>
+    <string name="algorithmStudy_title_practice">Practice Algorithm</string>
+    <string name="algorithmStudy_empty">No algorithms to study</string>
+    <string name="algorithmStudy_input_label">Your input</string>
+    <string name="algorithmStudy_action_check">Check</string>
+    <string name="algorithmStudy_feedback_correct_title">Correct</string>
+    <string name="algorithmStudy_feedback_incorrect_title">Incorrect</string>
+    <string name="algorithmStudy_feedback_correct_message">Correct Algorithm Inputted. Keep it up</string>
+    <string name="algorithmStudy_feedback_incorrect_message">Incorrect Algorithm Inputted. Try Again</string>
+    <!-- endregion -->
+
+    <!-- region keyboard -->
+    <string name="keyboard_current_alg_hint">Current Algorithm: </string>
+    <string name="keyboard_current_alg_placeholder">Text for algorithm</string>
+    <string name="keyboard_close_button">X</string>
+    <string name="keyboard_btn_prime">\'</string>
+    <string name="keyboard_btn_w">W</string>
+    <string name="keyboard_btn_2">2</string>
+    <string name="keyboard_btn_shift">^</string>
+    <string name="keyboard_btn_backspace">&lt;&lt;</string>
+    <!-- endregion -->
+</resources>

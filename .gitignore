@@ -13,4 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Signing / release secrets — never commit these
 signing.properties
+*.jks
+*.keystore
+*.pepk
+**/release/**/*.aab
+**/release/**/*.apk
+play-service-account.json
+**/google-services-private.json
+.kotlin/

@@ -1,0 +1,8 @@
+# Copy to signing.properties (gitignored) and fill in local values.
+# Prefer keeping the .jks outside the repo, e.g. C:/Users/You/keys/Algorubick_key.jks
+# Path may be absolute, or relative to the app/ module, or relative to the project root.
+
+STORE_FILE=path/to/Algorubick_key.jks
+STORE_PASSWORD=your-store-password
+KEY_ALIAS=your-key-alias
+KEY_PASSWORD=your-key-password
