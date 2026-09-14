@@ -93,6 +93,7 @@ git push origin v1.5.0
 Result:
 
 - Signed AAB uploaded to Play track **`production`** with status **`draft`**
+- Same AAB also uploaded to **`internal`** with status **`completed`** (testers can install while you finish review)
 - Open **Play Console → Production**, open the draft, complete any checklist items, then **Send for review**
 - AAB attached to a GitHub Release
 
@@ -136,6 +137,6 @@ bash scripts/generate-whatsnew.sh 1.5.0
 | Type | Where to look |
 |------|----------------|
 | Internal | Play Console → **Testing → Internal testing** |
-| Review | Play Console → **Production** → draft release → **Send for review** |
+| Review | Play Console → **Production** → draft → **Send for review**, and **Testing → Internal testing** (same build) |
 
 You can also download the AAB from the workflow **Artifacts** tab or the GitHub Release and upload manually if needed.

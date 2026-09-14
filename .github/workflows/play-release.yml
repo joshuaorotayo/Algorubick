@@ -2,7 +2,7 @@
 #
 # Tracks:
 #   internal  → Internal testing (auto-available to internal testers)
-#   review    → Production draft (finish & submit for review in Play Console)
+#   review    → Production draft + same build on Internal testing
 #
 # Required GitHub Secrets:
 #   KEYSTORE_BASE64            base64-encoded upload .jks
@@ -244,7 +244,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Upload to Google Play
+      - name: Upload to Google Play (primary track)
         if: steps.meta.outputs.dry_run != 'true'
         uses: r0adkll/upload-google-play@v1.1.3
         with:
@@ -253,6 +253,19 @@ jobs:
           releaseFiles: ${{ steps.aab.outputs.path }}
           track: ${{ steps.meta.outputs.play_track }}
           status: ${{ steps.meta.outputs.play_status }}
+          whatsNewDirectory: play-listing
+          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.meta.outputs.version_code }})
+
+      # Review builds also go to Internal testing so testers can install while production is in draft/review.
+      - name: Upload to Google Play (internal track)
+        if: steps.meta.outputs.dry_run != 'true' && steps.meta.outputs.release_type == 'review'
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.jorotayo.algorubickrevamped
+          releaseFiles: ${{ steps.aab.outputs.path }}
+          track: internal
+          status: completed
           whatsNewDirectory: play-listing
           releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.meta.outputs.version_code }})
 
@@ -268,7 +281,7 @@ jobs:
             **versionCode:** `${{ steps.meta.outputs.version_code }}`
             **Play track:** `${{ steps.meta.outputs.play_track }}` (`${{ steps.meta.outputs.play_status }}`)
 
-            ${{ steps.meta.outputs.release_type == 'internal' && 'Uploaded to **Internal testing**. Testers on the internal track can install from the Play Store.' || 'Uploaded as a **Production draft**. Open Play Console → Production → finish the release and submit for review.' }}
+            ${{ steps.meta.outputs.release_type == 'internal' && 'Uploaded to **Internal testing**. Testers on the internal track can install from the Play Store.' || 'Uploaded as a **Production draft** and the same build to **Internal testing**. Open Play Console → Production → finish the release and submit for review; internal testers can install now.' }}
 
             ### What's New (Play Store)
             ${{ steps.whatsnew.outputs.text }}
@@ -290,6 +303,9 @@ jobs:
             echo "| versionCode | \`${{ steps.meta.outputs.version_code }}\` |"
             echo "| Play track | \`${{ steps.meta.outputs.play_track }}\` |"
             echo "| Play status | \`${{ steps.meta.outputs.play_status }}\` |"
+            if [[ "${{ steps.meta.outputs.release_type }}" == "review" ]]; then
+              echo "| Also uploaded | \`internal\` (\`completed\`) |"
+            fi
             echo "| Dry run | \`${{ steps.meta.outputs.dry_run }}\` |"
             echo ""
             echo "### What's New"
@@ -301,6 +317,6 @@ jobs:
             if [[ "${{ steps.meta.outputs.release_type }}" == "internal" ]]; then
               echo "Next: open **Play Console → Testing → Internal testing** and share the testers link."
             else
-              echo "Next: open **Play Console → Production**, open the draft release, complete checklist items, then **Send for review**."
+              echo "Next: open **Play Console → Production**, open the draft release, complete checklist items, then **Send for review**. The same build is already on **Internal testing**."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
