@@ -23,6 +23,7 @@ friendly_from_git() {
   commits="$(
     git log --pretty=format:'%s' "$range" 2>/dev/null \
       | grep -viE '^(merge|wip|tmp|chore:|bump )' \
+      | grep -viE 'github|play.?store|play release|play upload|pipeline|workflow|ci/|actions?|keystore|signing|aab|versionCode|what.?s new|docs?/play|publishing' \
       | head -n 12 \
       || true
   )"

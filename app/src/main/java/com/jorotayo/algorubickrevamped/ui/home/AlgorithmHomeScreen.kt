@@ -54,6 +54,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.widthIn
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -288,26 +289,35 @@ private fun AlgorithmCard(
                     .weight(1f)
                     .padding(start = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = algorithm.alg_name,
                     style = MaterialTheme.typography.titleMedium,
                     color = contentColor,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Text(
                     text = algorithm.category,
                     style = MaterialTheme.typography.bodySmall,
                     color = mutedColor,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Text(
                     text = algorithm.alg,
                     style = MaterialTheme.typography.bodyLarge,
                     color = contentColor,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Text(
                     text = stringResource(R.string.home_card_correct_practiced_format, algorithm.practiced_correctly_int, algorithm.practiced_number_int),
                     style = MaterialTheme.typography.bodySmall,
                     color = mutedColor,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
 

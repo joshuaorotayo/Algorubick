@@ -13,7 +13,7 @@ import sys
 
 PACKAGE_NAME = "com.jorotayo.algorubickrevamped"
 TRACKS = ("internal", "production", "alpha", "beta")
-DEFAULT_START = 160
+DEFAULT_START = 161
 SCOPE = "https://www.googleapis.com/auth/androidpublisher"
 
 

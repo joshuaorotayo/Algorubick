@@ -30,8 +30,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 36
 
-        versionCode = (System.getenv("VERSION_CODE") ?: "160").toInteger()
-        versionName System.getenv("VERSION_NAME") ?: "1.6.0"
+        versionCode = (System.getenv("VERSION_CODE") ?: "161").toInteger()
+        versionName System.getenv("VERSION_NAME") ?: "1.6.1"
 
         // ISO date (yyyy-MM-dd). Update when shipping a Play release; shown in Settings footer.
         buildConfigField "String", "RELEASE_DATE", "\"2026-09-14\""

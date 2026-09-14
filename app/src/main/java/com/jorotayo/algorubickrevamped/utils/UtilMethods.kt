@@ -13,8 +13,10 @@ object UtilMethods {
     @DrawableRes
     fun resolveDrawableRes(context: Context, icon: String?): Int {
         if (icon.isNullOrEmpty()) return R.drawable.cfop
-        if (icon.startsWith("file:///")) return 0
-        val name = icon.replace("R.drawable.", "")
+        if (icon.startsWith("file:///") || icon.startsWith("content://")) return 0
+        // Never treat stored integers as drawable IDs — they break across builds with non-final R ids.
+        if (icon.toIntOrNull() != null) return R.drawable.cfop
+        val name = icon.removePrefix("R.drawable.")
         val resId = context.resources.getIdentifier(name, "drawable", context.packageName)
         return if (resId != 0) resId else R.drawable.cfop
     }
@@ -24,7 +26,6 @@ object UtilMethods {
         if (icon.startsWith("file:///") || icon.startsWith("content://")) {
             return Uri.parse(icon)
         }
-        icon.toIntOrNull()?.takeIf { it != 0 }?.let { return it }
         return resolveDrawableRes(context, icon)
     }
 

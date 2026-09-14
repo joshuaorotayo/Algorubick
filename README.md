@@ -4,7 +4,7 @@
 
 Android app for Rubik’s Cube (and related puzzles) — save and study algorithms, run timed solves, browse 3×3 notation, and build multi-step solution guides. Everything stays on-device.
 
-**Package:** `com.jorotayo.algorubickrevamped` · **Version:** 1.6.0 (versionCode 160)
+**Package:** `com.jorotayo.algorubickrevamped` · **Version:** 1.6.1 (versionCode 161)
 
 ## Features
 
