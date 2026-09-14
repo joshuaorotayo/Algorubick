@@ -55,7 +55,7 @@ Use this for builds you want testers to install quickly from **Internal testing*
 1. **Actions → Play Release → Run workflow**
 2. `release_type` = `internal`
 3. Set `version_name` (e.g. `1.5.0-internal.3`)
-4. Leave `version_code` blank to use the run number (must always increase)
+4. Leave `version_code` blank to use `150 + run number` (must always increase on Play)
 5. Run
 
 **Tag shortcut**
