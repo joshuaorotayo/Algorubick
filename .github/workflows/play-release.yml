@@ -42,7 +42,7 @@ on:
         type: string
         default: "1.5.0"
       version_code:
-        description: "versionCode (integer). Leave blank for 150 + GitHub run number (avoids reusing old Play codes)."
+        description: "versionCode (integer). Leave blank to use last Internal testing code + 1."
         required: false
         type: string
         default: ""
@@ -109,24 +109,8 @@ jobs:
             exit 1
           fi
 
-          # Play rejects reused versionCodes. Early Actions run numbers (1, 2, …)
-          # collide with older uploads, so blank input uses floor + run_number.
-          VERSION_CODE_FLOOR=150
-          if [[ -z "${VERSION_CODE_INPUT}" ]]; then
-            VERSION_CODE=$((VERSION_CODE_FLOOR + ${{ github.run_number }}))
-          else
-            VERSION_CODE="${VERSION_CODE_INPUT}"
-          fi
-
-          if ! [[ "${VERSION_CODE}" =~ ^[0-9]+$ ]]; then
-            echo "version_code must be an integer, got: ${VERSION_CODE}"
-            exit 1
-          fi
-
-          if (( VERSION_CODE < VERSION_CODE_FLOOR )); then
-            echo "version_code ${VERSION_CODE} is below app floor ${VERSION_CODE_FLOOR}; bump it."
-            exit 1
-          fi
+          # version_code may be resolved from Play Internal in the next step.
+          VERSION_CODE="${VERSION_CODE_INPUT}"
 
           case "${RELEASE_TYPE}" in
             internal)
@@ -147,17 +131,14 @@ jobs:
               ;;
           esac
 
-          GH_TAG="play-${RELEASE_TYPE}-v${VERSION_NAME}-${VERSION_CODE}"
-
           {
             echo "release_type=${RELEASE_TYPE}"
             echo "version_name=${VERSION_NAME}"
-            echo "version_code=${VERSION_CODE}"
+            echo "version_code_input=${VERSION_CODE}"
             echo "play_track=${PLAY_TRACK}"
             echo "play_status=${PLAY_STATUS}"
             echo "artifact_label=${ARTIFACT_LABEL}"
             echo "gh_prerelease=${GH_PRERELEASE}"
-            echo "gh_tag=${GH_TAG}"
             echo "dry_run=${DRY_RUN}"
             echo "notes_override<<OVERRIDE_EOF"
             printf '%s\n' "${NOTES_OVERRIDE}"
@@ -166,9 +147,42 @@ jobs:
 
           echo "Release type : ${RELEASE_TYPE}"
           echo "versionName  : ${VERSION_NAME}"
-          echo "versionCode  : ${VERSION_CODE}"
+          echo "versionCode  : ${VERSION_CODE:-"(auto: last internal + 1)"}"
           echo "Play track   : ${PLAY_TRACK} (${PLAY_STATUS})"
           echo "Dry run      : ${DRY_RUN}"
+
+      - name: Resolve versionCode
+        id: version
+        env:
+          VERSION_CODE_INPUT: ${{ steps.meta.outputs.version_code_input }}
+          VERSION_NAME: ${{ steps.meta.outputs.version_name }}
+          RELEASE_TYPE: ${{ steps.meta.outputs.release_type }}
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          set -euo pipefail
+
+          if [[ -n "${VERSION_CODE_INPUT}" ]]; then
+            VERSION_CODE="${VERSION_CODE_INPUT}"
+            echo "Using explicit versionCode=${VERSION_CODE}"
+          else
+            python3 -m pip install --quiet google-api-python-client google-auth
+            VERSION_CODE="$(python3 scripts/next-play-version-code.py)"
+            echo "Auto versionCode=${VERSION_CODE} (last internal + 1, or 150 if none)"
+          fi
+
+          if ! [[ "${VERSION_CODE}" =~ ^[0-9]+$ ]]; then
+            echo "version_code must be an integer, got: ${VERSION_CODE}"
+            exit 1
+          fi
+
+          GH_TAG="play-${RELEASE_TYPE}-v${VERSION_NAME}-${VERSION_CODE}"
+          {
+            echo "version_code=${VERSION_CODE}"
+            echo "gh_tag=${GH_TAG}"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Final versionName=${VERSION_NAME} versionCode=${VERSION_CODE}"
+          echo "GitHub tag=${GH_TAG}"
 
       - name: Generate Play What's New
         id: whatsnew
@@ -226,7 +240,7 @@ jobs:
 
       - name: Build signed release bundle
         env:
-          VERSION_CODE: ${{ steps.meta.outputs.version_code }}
+          VERSION_CODE: ${{ steps.version.outputs.version_code }}
           VERSION_NAME: ${{ steps.meta.outputs.version_name }}
         run: |
           set -euo pipefail
@@ -239,7 +253,7 @@ jobs:
         run: |
           set -euo pipefail
           SRC=$(ls app/build/outputs/bundle/release/*.aab | head -n1)
-          DEST="app/build/outputs/bundle/release/algorubick-${{ steps.meta.outputs.artifact_label }}-${{ steps.meta.outputs.version_name }}-${{ steps.meta.outputs.version_code }}.aab"
+          DEST="app/build/outputs/bundle/release/algorubick-${{ steps.meta.outputs.artifact_label }}-${{ steps.meta.outputs.version_name }}-${{ steps.version.outputs.version_code }}.aab"
           mv "$SRC" "$DEST"
           echo "path=${DEST}" >> "$GITHUB_OUTPUT"
           echo "Built: ${DEST}"
@@ -247,7 +261,7 @@ jobs:
       - name: Upload AAB artifact
         uses: actions/upload-artifact@v4
         with:
-          name: algorubick-${{ steps.meta.outputs.artifact_label }}-${{ steps.meta.outputs.version_name }}-${{ steps.meta.outputs.version_code }}
+          name: algorubick-${{ steps.meta.outputs.artifact_label }}-${{ steps.meta.outputs.version_name }}-${{ steps.version.outputs.version_code }}
           path: ${{ steps.aab.outputs.path }}
           if-no-files-found: error
           retention-days: 30
@@ -262,7 +276,7 @@ jobs:
           track: ${{ steps.meta.outputs.play_track }}
           status: ${{ steps.meta.outputs.play_status }}
           whatsNewDirectory: play-listing
-          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.meta.outputs.version_code }})
+          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
 
       # Review builds also go to Internal testing so testers can install while production is in draft/review.
       - name: Upload to Google Play (internal track)
@@ -275,18 +289,18 @@ jobs:
           track: internal
           status: completed
           whatsNewDirectory: play-listing
-          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.meta.outputs.version_code }})
+          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
 
       - name: Create GitHub Release
         if: steps.meta.outputs.dry_run != 'true'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event_name == 'push' && github.ref_name || steps.meta.outputs.gh_tag }}
-          name: ${{ steps.meta.outputs.release_type == 'internal' && format('Internal {0} ({1})', steps.meta.outputs.version_name, steps.meta.outputs.version_code) || format('Review {0} ({1})', steps.meta.outputs.version_name, steps.meta.outputs.version_code) }}
+          tag_name: ${{ github.event_name == 'push' && github.ref_name || steps.version.outputs.gh_tag }}
+          name: ${{ steps.meta.outputs.release_type == 'internal' && format('Internal {0} ({1})', steps.meta.outputs.version_name, steps.version.outputs.version_code) || format('Review {0} ({1})', steps.meta.outputs.version_name, steps.version.outputs.version_code) }}
           body: |
             **Type:** `${{ steps.meta.outputs.release_type }}`
             **versionName:** `${{ steps.meta.outputs.version_name }}`
-            **versionCode:** `${{ steps.meta.outputs.version_code }}`
+            **versionCode:** `${{ steps.version.outputs.version_code }}`
             **Play track:** `${{ steps.meta.outputs.play_track }}` (`${{ steps.meta.outputs.play_status }}`)
 
             ${{ steps.meta.outputs.release_type == 'internal' && 'Uploaded to **Internal testing**. Testers on the internal track can install from the Play Store.' || 'Uploaded as a **Production draft** and the same build to **Internal testing**. Open Play Console → Production → finish the release and submit for review; internal testers can install now.' }}
@@ -308,7 +322,7 @@ jobs:
             echo "| --- | --- |"
             echo "| Type | \`${{ steps.meta.outputs.release_type }}\` |"
             echo "| versionName | \`${{ steps.meta.outputs.version_name }}\` |"
-            echo "| versionCode | \`${{ steps.meta.outputs.version_code }}\` |"
+            echo "| versionCode | \`${{ steps.version.outputs.version_code }}\` |"
             echo "| Play track | \`${{ steps.meta.outputs.play_track }}\` |"
             echo "| Play status | \`${{ steps.meta.outputs.play_status }}\` |"
             if [[ "${{ steps.meta.outputs.release_type }}" == "review" ]]; then

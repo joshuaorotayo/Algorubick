@@ -55,7 +55,7 @@ Use this for builds you want testers to install quickly from **Internal testing*
 1. **Actions → Play Release → Run workflow**
 2. `release_type` = `internal`
 3. Set `version_name` (e.g. `1.5.0-internal.3`)
-4. Leave `version_code` blank to use `150 + run number` (must always increase on Play)
+4. Leave `version_code` blank to auto-use **last Internal testing versionCode + 1**
 5. Run
 
 **Tag shortcut**
@@ -80,7 +80,7 @@ Use this when you are ready to send a build through **Google Play review**.
 1. **Actions → Play Release → Run workflow**
 2. `release_type` = `review`
 3. Set `version_name` (e.g. `1.5.0`)
-4. Optionally set an explicit `version_code` (must be higher than any previous upload)
+4. Leave `version_code` blank (auto: last Internal + 1), or set an explicit unused code
 5. Run
 
 **Tag shortcut**
@@ -125,10 +125,12 @@ bash scripts/generate-whatsnew.sh 1.5.0
 
 ## Versioning rules
 
-- App defaults: **versionName `1.5.0`**, **versionCode `150`** (overridable via env / workflow inputs).
+- App defaults: **versionName `1.5.0`**, **versionCode `150`** (local/`build.gradle`; overridable via env).
 - `versionCode` must increase for every upload to Play (internal or production).
-- Leaving workflow `version_code` blank uses **`150 + github.run_number`** (e.g. run 2 → `152`), so early CI runs do not reuse old Play codes like `1`/`2`.
-- You can still set an explicit `version_code` (must be ≥ 150 and unused on Play).
+- Leaving workflow `version_code` blank queries Play **Internal testing** for the highest `versionCode` and uses **that + 1**.
+  - Review uploads also land on Internal, so the next blank release stays in sequence.
+  - If Internal has no builds yet, starts at **150**.
+- You can still set an explicit `version_code` (must be unused on Play).
 - Do not reuse a `versionCode` that was already accepted by Play, even on another track.
 
 ---
