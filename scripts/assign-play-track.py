@@ -63,7 +63,11 @@ def main() -> int:
             track=track,
             body=body,
         ).execute()
-        service.edits().commit(packageName=PACKAGE_NAME, editId=edit_id).execute()
+        service.edits().commit(
+            packageName=PACKAGE_NAME,
+            editId=edit_id,
+            changesNotSentForReview=True,
+        ).execute()
     except Exception:
         try:
             service.edits().delete(packageName=PACKAGE_NAME, editId=edit_id).execute()
