@@ -27,6 +27,7 @@ class SettingsRepository(context: Context) {
             vibrationPresetCorrect = prefs[Keys.VIBRATION_PRESET_CORRECT].toEnum(VibrationPreset.Soft),
             vibrationPresetWrong = prefs[Keys.VIBRATION_PRESET_WRONG].toEnum(VibrationPreset.Medium),
             learntThresholdPercent = (prefs[Keys.LEARNT_THRESHOLD] ?: 80).coerceIn(50, 100),
+            whatsNewDismissedVersion = prefs[Keys.WHATS_NEW_DISMISSED_VERSION] ?: "",
         )
     }
 
@@ -66,6 +67,10 @@ class SettingsRepository(context: Context) {
         dataStore.edit { it[Keys.LEARNT_THRESHOLD] = percent.coerceIn(50, 100) }
     }
 
+    suspend fun setWhatsNewDismissedVersion(version: String) {
+        dataStore.edit { it[Keys.WHATS_NEW_DISMISSED_VERSION] = version }
+    }
+
     private object Keys {
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val SOUND_ENABLED_CORRECT = booleanPreferencesKey("sound_enabled_correct")
@@ -76,6 +81,7 @@ class SettingsRepository(context: Context) {
         val VIBRATION_PRESET_CORRECT = stringPreferencesKey("vibration_preset_correct")
         val VIBRATION_PRESET_WRONG = stringPreferencesKey("vibration_preset_wrong")
         val LEARNT_THRESHOLD = intPreferencesKey("learnt_threshold_percent")
+        val WHATS_NEW_DISMISSED_VERSION = stringPreferencesKey("whats_new_dismissed_version")
     }
 
     private inline fun <reified T : Enum<T>> String?.toEnum(default: T): T =

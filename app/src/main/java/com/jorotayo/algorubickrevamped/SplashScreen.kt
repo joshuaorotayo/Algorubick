@@ -3,8 +3,6 @@ package com.jorotayo.algorubickrevamped
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +15,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
-import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,9 +35,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
+import com.jorotayo.algorubickrevamped.data.SettingsRepository
 import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
 import com.jorotayo.algorubickrevamped.ui.theme.DefaultPreviews
 import com.jorotayo.algorubickrevamped.ui.theme.Primary
+import com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewActivity
+import com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewContent
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
@@ -55,10 +59,20 @@ class SplashScreen : ComponentActivity() {
             }
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+        lifecycleScope.launch {
+            delay(SPLASH_DURATION_MS)
+            val dismissed = SettingsRepository.get(this@SplashScreen)
+                .settings
+                .first()
+                .whatsNewDismissedVersion
+            val next = if (dismissed == WhatsNewContent.CONTENT_VERSION) {
+                MainActivity::class.java
+            } else {
+                WhatsNewActivity::class.java
+            }
+            startActivity(Intent(this@SplashScreen, next))
             finish()
-        }, SPLASH_DURATION_MS)
+        }
     }
 
     companion object {

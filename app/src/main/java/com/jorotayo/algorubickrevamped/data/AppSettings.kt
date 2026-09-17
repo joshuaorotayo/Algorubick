@@ -29,4 +29,6 @@ data class AppSettings(
     val vibrationPresetCorrect: VibrationPreset = VibrationPreset.Soft,
     val vibrationPresetWrong: VibrationPreset = VibrationPreset.Medium,
     val learntThresholdPercent: Int = 80,
+    /** Last What's New content version the user dismissed ("Don't show again"). */
+    val whatsNewDismissedVersion: String = "",
 )

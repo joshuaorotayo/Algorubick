@@ -54,15 +54,15 @@ Use this for builds you want testers to install quickly from **Internal testing*
 
 1. **Actions → Play Release → Run workflow**
 2. `release_type` = `internal`
-3. Set `version_name` (e.g. `1.6.1-internal.3`)
+3. Set `version_name` (e.g. `1.7.0-internal.3`)
 4. Leave `version_code` blank to auto-use **last Internal testing versionCode + 1**
 5. Run
 
 **Tag shortcut**
 
 ```bash
-git tag internal-v1.6.1-3
-git push origin internal-v1.6.1-3
+git tag internal-v1.7.0-3
+git push origin internal-v1.7.0-3
 ```
 
 Result:
@@ -79,15 +79,15 @@ Use this when you are ready to send a build through **Google Play review**.
 
 1. **Actions → Play Release → Run workflow**
 2. `release_type` = `review`
-3. Set `version_name` (e.g. `1.6.1`)
+3. Set `version_name` (e.g. `1.7.0`)
 4. Leave `version_code` blank (auto: last Internal + 1), or set an explicit unused code
 5. Run
 
 **Tag shortcut**
 
 ```bash
-git tag v1.6.1
-git push origin v1.6.1
+git tag v1.7.0
+git push origin v1.7.0
 ```
 
 Result:
@@ -122,17 +122,17 @@ Update the curated file whenever you ship user-facing changes, then run **Play R
 Generate locally:
 
 ```bash
-bash scripts/generate-whatsnew.sh 1.6.1
+bash scripts/generate-whatsnew.sh 1.7.0
 ```
 
 ## Versioning rules
 
-- App defaults: **versionName `1.6.1`**, **versionCode `161`** (local/`build.gradle`; overridable via env).
+- App defaults: **versionName `1.7.0`**, **versionCode `170`** (local/`build.gradle`; overridable via env).
 - Update `BuildConfig.RELEASE_DATE` (`yyyy-MM-dd` in `app/build.gradle`) whenever you ship so Settings shows the correct release day.
 - `versionCode` must increase for every upload to Play (internal or production).
 - Leaving workflow `version_code` blank queries Play for the highest `versionCode` across Internal/Production (and alpha/beta if present) and uses **that + 1**.
   - Review uploads the AAB once to Production (draft), then **assigns** the same version to Internal without re-uploading.
-  - If no builds exist yet, starts at **161**.
+  - If no builds exist yet, starts at **170**.
 - You can still set an explicit `version_code` (must be unused on Play).
 - Do not reuse a `versionCode` that was already accepted by Play, even on another track.
 

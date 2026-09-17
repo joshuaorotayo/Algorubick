@@ -268,6 +268,22 @@
     <string name="keyboard_btn_backspace">&lt;&lt;</string>
     <!-- endregion -->
 
+    <!-- region whatsNew -->
+    <string name="whatsNew_header">Update</string>
+    <string name="whatsNew_title">What\'s new</string>
+    <string name="whatsNew_action_next">Next</string>
+    <string name="whatsNew_action_get_started">Get started</string>
+    <string name="whatsNew_action_dont_show">Don\'t show this again</string>
+    <string name="whatsNew_page1_title">A smarter Settings hub</string>
+    <string name="whatsNew_page1_body">Tap the gear on the top bar to open Settings. Personalise display and practice from one modern place.</string>
+    <string name="whatsNew_page2_title">Display your way</string>
+    <string name="whatsNew_page2_body">Choose Light, Dark, or follow your system theme — with live Home previews so you can see the difference instantly.</string>
+    <string name="whatsNew_page3_title">Practice that feels right</string>
+    <string name="whatsNew_page3_body">Pick sound packs and vibration patterns for correct and incorrect answers, and set how accurate a session must be before an algorithm is marked learnt.</string>
+    <string name="whatsNew_page4_title">Home polish</string>
+    <string name="whatsNew_page4_body">Algorithm icons match their cases again, and card text is centred so your library is easier to scan at a glance.</string>
+    <!-- endregion -->
+
     <!-- region settings -->
     <string name="settings_title_hub">Settings</string>
     <string name="settings_title_display">Display</string>

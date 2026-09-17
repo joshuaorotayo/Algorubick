@@ -30,6 +30,12 @@
             </intent-filter>
         </activity>
 
+        <!-- What's New (after splash, until dismissed for current content version) -->
+        <activity
+            android:name="com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewActivity"
+            android:theme="@style/AppTheme.Material"
+            android:exported="false" />
+
         <!-- MainActivity -->
         <activity
             android:name="com.jorotayo.algorubickrevamped.MainActivity"
