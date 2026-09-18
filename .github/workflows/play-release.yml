@@ -277,6 +277,7 @@ jobs:
           status: ${{ steps.meta.outputs.play_status }}
           whatsNewDirectory: play-listing
           releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
           # Play often requires this when the app has outstanding console checklist items.
           changesNotSentForReview: true
 
