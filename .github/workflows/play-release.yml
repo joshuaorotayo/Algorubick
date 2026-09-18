@@ -268,6 +268,8 @@ jobs:
 
       - name: Upload to Google Play (primary track)
         if: steps.meta.outputs.dry_run != 'true'
+        id: play_upload
+        continue-on-error: true
         uses: r0adkll/upload-google-play@v1.1.5
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
@@ -278,13 +280,34 @@ jobs:
           whatsNewDirectory: play-listing
           releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
           mappingFile: app/build/outputs/mapping/release/mapping.txt
-          # Play often requires this when the app has outstanding console checklist items.
+
+      # Play Console flips between requiring and forbidding changesNotSentForReview.
+      # Retry with the flag only when the first upload failed on that commit rule.
+      - name: Upload to Google Play (manual-review fallback)
+        id: play_upload_fallback
+        if: steps.meta.outputs.dry_run != 'true' && steps.play_upload.outcome == 'failure'
+        uses: r0adkll/upload-google-play@v1.1.5
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.jorotayo.algorubickrevamped
+          releaseFiles: ${{ steps.aab.outputs.path }}
+          tracks: ${{ steps.meta.outputs.play_track }}
+          status: ${{ steps.meta.outputs.play_status }}
+          whatsNewDirectory: play-listing
+          releaseName: ${{ steps.meta.outputs.version_name }} (${{ steps.version.outputs.version_code }})
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
           changesNotSentForReview: true
+
+      - name: Require Play upload success
+        if: steps.meta.outputs.dry_run != 'true' && steps.play_upload.outcome != 'success' && steps.play_upload_fallback.outcome != 'success'
+        run: |
+          echo "Google Play upload failed (tried with and without changesNotSentForReview)."
+          exit 1
 
       # Same AAB cannot be uploaded twice (Play rejects reused versionCodes).
       # For review, assign the already-uploaded code to Internal without re-upload.
       - name: Assign build to Internal testing
-        if: steps.meta.outputs.dry_run != 'true' && steps.meta.outputs.release_type == 'review'
+        if: steps.meta.outputs.dry_run != 'true' && steps.meta.outputs.release_type == 'review' && (steps.play_upload.outcome == 'success' || steps.play_upload_fallback.outcome == 'success')
         env:
           PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           VERSION_CODE: ${{ steps.version.outputs.version_code }}
@@ -299,7 +322,7 @@ jobs:
             "${VERSION_NAME} (${VERSION_CODE})"
 
       - name: Create GitHub Release
-        if: steps.meta.outputs.dry_run != 'true'
+        if: steps.meta.outputs.dry_run != 'true' && (steps.play_upload.outcome == 'success' || steps.play_upload_fallback.outcome == 'success')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event_name == 'push' && github.ref_name || steps.version.outputs.gh_tag }}

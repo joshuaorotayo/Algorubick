@@ -122,8 +122,17 @@ Update the curated file whenever you ship user-facing changes, then run **Play R
 Generate locally:
 
 ```bash
-bash scripts/generate-whatsnew.sh 1.7.0
+bash scripts/generate-whatsnew.sh 1.7.1
 ```
+
+### `changesNotSentForReview`
+
+Play sometimes rejects commits when this flag is wrong for the app's current console state:
+
+- **Must be true** — edits cannot be auto-sent for review (checklist / rejected changes)
+- **Must be omitted** — changes are sent for review automatically
+
+The workflow tries upload **without** the flag first, then retries **with** `true` if that fails. `scripts/assign-play-track.py` does the same when assigning Internal.
 
 ## Versioning rules
 

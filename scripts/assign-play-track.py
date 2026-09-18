@@ -5,6 +5,9 @@ Usage:
   assign-play-track.py <track> <versionCode> [status] [releaseName]
 
 Requires PLAY_SERVICE_ACCOUNT_JSON in the environment.
+
+Play Console flips between requiring and forbidding changesNotSentForReview
+depending on whether edits can be auto-sent for review. We try both.
 """
 
 from __future__ import annotations
@@ -15,6 +18,34 @@ import sys
 
 PACKAGE_NAME = "com.jorotayo.algorubickrevamped"
 SCOPE = "https://www.googleapis.com/auth/androidpublisher"
+
+
+def commit_edit(service, edit_id: str) -> None:
+    """Commit a Play edit, tolerating either auto-review console state."""
+    last_error: Exception | None = None
+    # Prefer omitting the flag (auto-review apps). Fall back to true when Play
+    # requires manual "Send for review" (outstanding checklist / rejected state).
+    for kwargs in ({}, {"changesNotSentForReview": True}):
+        try:
+            service.edits().commit(
+                packageName=PACKAGE_NAME,
+                editId=edit_id,
+                **kwargs,
+            ).execute()
+            flag = kwargs.get("changesNotSentForReview")
+            print(
+                "Committed Play edit "
+                f"(changesNotSentForReview={'true' if flag else 'omitted'})"
+            )
+            return
+        except Exception as exc:  # noqa: BLE001
+            last_error = exc
+            message = str(exc)
+            if "changesNotSentForReview" not in message:
+                raise
+            print(f"Commit rejected ({message}); retrying with alternate flag…")
+    assert last_error is not None
+    raise last_error
 
 
 def main() -> int:
@@ -63,11 +94,7 @@ def main() -> int:
             track=track,
             body=body,
         ).execute()
-        service.edits().commit(
-            packageName=PACKAGE_NAME,
-            editId=edit_id,
-            changesNotSentForReview=True,
-        ).execute()
+        commit_edit(service, edit_id)
     except Exception:
         try:
             service.edits().delete(packageName=PACKAGE_NAME, editId=edit_id).execute()
