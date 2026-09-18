@@ -37,10 +37,10 @@ on:
           - internal
           - review
       version_name:
-        description: "versionName (default 1.7.0)"
+        description: "versionName (default 1.7.1)"
         required: false
         type: string
-        default: "1.7.0"
+        default: "1.7.1"
       version_code:
         description: "versionCode (integer). Leave blank to use last Internal testing code + 1."
         required: false
@@ -88,7 +88,7 @@ jobs:
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             RELEASE_TYPE="${INPUT_RELEASE_TYPE}"
-            VERSION_NAME="${INPUT_VERSION_NAME:-1.7.0}"
+            VERSION_NAME="${INPUT_VERSION_NAME:-1.7.1}"
             VERSION_CODE_INPUT="${INPUT_VERSION_CODE:-}"
             NOTES_OVERRIDE="${INPUT_RELEASE_NOTES:-}"
             DRY_RUN="${INPUT_DRY_RUN:-false}"

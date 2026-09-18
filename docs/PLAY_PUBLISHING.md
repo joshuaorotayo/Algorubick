@@ -127,12 +127,12 @@ bash scripts/generate-whatsnew.sh 1.7.0
 
 ## Versioning rules
 
-- App defaults: **versionName `1.7.0`**, **versionCode `170`** (local/`build.gradle`; overridable via env).
+- App defaults: **versionName `1.7.1`**, **versionCode `171`** (local/`build.gradle`; overridable via env).
 - Update `BuildConfig.RELEASE_DATE` (`yyyy-MM-dd` in `app/build.gradle`) whenever you ship so Settings shows the correct release day.
 - `versionCode` must increase for every upload to Play (internal or production).
 - Leaving workflow `version_code` blank queries Play for the highest `versionCode` across Internal/Production (and alpha/beta if present) and uses **that + 1**.
   - Review uploads the AAB once to Production (draft), then **assigns** the same version to Internal without re-uploading.
-  - If no builds exist yet, starts at **170**.
+  - If no builds exist yet, starts at **171**.
 - You can still set an explicit `version_code` (must be unused on Play).
 - Do not reuse a `versionCode` that was already accepted by Play, even on another track.
 

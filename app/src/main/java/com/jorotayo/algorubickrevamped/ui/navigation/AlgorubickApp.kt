@@ -50,6 +50,7 @@ import com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeScreen
 import com.jorotayo.algorubickrevamped.ui.home.AlgorithmHomeViewModel
 import com.jorotayo.algorubickrevamped.ui.notation.NotationScreen
 import com.jorotayo.algorubickrevamped.ui.settings.DisplaySettingsScreen
+import com.jorotayo.algorubickrevamped.ui.settings.MiscellaneousSettingsScreen
 import com.jorotayo.algorubickrevamped.ui.settings.PracticeSettingsScreen
 import com.jorotayo.algorubickrevamped.ui.settings.SettingsHubScreen
 import com.jorotayo.algorubickrevamped.ui.settings.SettingsRoutes
@@ -96,6 +97,7 @@ fun AlgorubickApp(
     val settingsTitleRes = when (currentRoute) {
         SettingsRoutes.Display -> R.string.settings_title_display
         SettingsRoutes.Practice -> R.string.settings_title_practice
+        SettingsRoutes.Miscellaneous -> R.string.settings_title_miscellaneous
         else -> R.string.settings_title_hub
     }
 
@@ -327,6 +329,7 @@ fun AlgorubickApp(
                 SettingsHubScreen(
                     onDisplay = { navController.navigate(SettingsRoutes.Display) },
                     onPractice = { navController.navigate(SettingsRoutes.Practice) },
+                    onMiscellaneous = { navController.navigate(SettingsRoutes.Miscellaneous) },
                 )
             }
             composable(SettingsRoutes.Display) {
@@ -334,6 +337,9 @@ fun AlgorubickApp(
             }
             composable(SettingsRoutes.Practice) {
                 PracticeSettingsScreen(viewModel = settingsViewModel)
+            }
+            composable(SettingsRoutes.Miscellaneous) {
+                MiscellaneousSettingsScreen(viewModel = settingsViewModel)
             }
         }
     }

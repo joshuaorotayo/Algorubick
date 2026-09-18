@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +37,7 @@ import com.jorotayo.algorubickrevamped.ui.theme.DefaultPreviews
 fun SettingsHubScreen(
     onDisplay: () -> Unit,
     onPractice: () -> Unit,
+    onMiscellaneous: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +45,9 @@ fun SettingsHubScreen(
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             SettingsDestinationRow(
@@ -69,6 +75,19 @@ fun SettingsHubScreen(
                 title = stringResource(R.string.settings_hub_practice_title),
                 subtitle = stringResource(R.string.settings_hub_practice_subtitle),
                 onClick = onPractice,
+            )
+            SettingsDestinationRow(
+                icon = {
+                    Icon(
+                        Icons.Outlined.MoreHoriz,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(28.dp),
+                    )
+                },
+                title = stringResource(R.string.settings_hub_miscellaneous_title),
+                subtitle = stringResource(R.string.settings_hub_miscellaneous_subtitle),
+                onClick = onMiscellaneous,
             )
         }
 
@@ -139,6 +158,6 @@ private fun SettingsDestinationRow(
 @Composable
 private fun SettingsHubScreenPreview() {
     AlgorubickTheme {
-        SettingsHubScreen(onDisplay = {}, onPractice = {})
+        SettingsHubScreen(onDisplay = {}, onPractice = {}, onMiscellaneous = {})
     }
 }

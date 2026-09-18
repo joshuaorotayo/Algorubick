@@ -275,24 +275,31 @@
     <string name="whatsNew_action_get_started">Get started</string>
     <string name="whatsNew_action_dont_show">Don\'t show this again</string>
     <string name="whatsNew_page1_title">A smarter Settings hub</string>
-    <string name="whatsNew_page1_body">Tap the gear on the top bar to open Settings. Personalise display and practice from one modern place.</string>
+    <string name="whatsNew_page1_body">Tap the gear on the top bar to open Settings. Personalise display, practice, and miscellaneous options from one modern place.</string>
     <string name="whatsNew_page2_title">Display your way</string>
     <string name="whatsNew_page2_body">Choose Light, Dark, or follow your system theme — with live Home previews so you can see the difference instantly.</string>
     <string name="whatsNew_page3_title">Practice that feels right</string>
     <string name="whatsNew_page3_body">Pick sound packs and vibration patterns for correct and incorrect answers, and set how accurate a session must be before an algorithm is marked learnt.</string>
-    <string name="whatsNew_page4_title">Home polish</string>
-    <string name="whatsNew_page4_body">Algorithm icons match their cases again, and card text is centred so your library is easier to scan at a glance.</string>
+    <string name="whatsNew_page4_title">What\'s New, your way</string>
+    <string name="whatsNew_page4_body">After each update we show What\'s New again. Prefer not to? Turn it off — or reopen it anytime from Settings → Miscellaneous.</string>
     <!-- endregion -->
 
     <!-- region settings -->
     <string name="settings_title_hub">Settings</string>
     <string name="settings_title_display">Display</string>
     <string name="settings_title_practice">Practice</string>
+    <string name="settings_title_miscellaneous">Miscellaneous</string>
     <string name="navigation_cd_settings">Settings</string>
     <string name="settings_hub_display_title">Display settings</string>
     <string name="settings_hub_display_subtitle">Light, dark, or match your device</string>
     <string name="settings_hub_practice_title">Practice settings</string>
     <string name="settings_hub_practice_subtitle">Sounds, vibration, and learnt threshold</string>
+    <string name="settings_hub_miscellaneous_title">Miscellaneous</string>
+    <string name="settings_hub_miscellaneous_subtitle">What\'s New and other options</string>
+    <string name="settings_misc_whats_new_heading">What\'s New</string>
+    <string name="settings_misc_whats_new_helper">After each app update, What\'s New shows once following the splash screen. Turn this on again if you previously chose not to see it for this version.</string>
+    <string name="settings_misc_show_whats_new">Show What\'s New on startup</string>
+    <string name="settings_misc_view_whats_new">View What\'s New now</string>
     <string name="settings_footer_version">Algorubick %1$s</string>
     <string name="settings_footer_released">Released %1$s</string>
     <string name="settings_display_appearance_heading">Appearance</string>

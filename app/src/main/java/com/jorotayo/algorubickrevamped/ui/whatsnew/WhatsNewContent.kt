@@ -4,19 +4,18 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DarkMode
-import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.jorotayo.algorubickrevamped.R
 
 /**
- * Bump [CONTENT_VERSION] whenever these pages change so returning users see What's New again.
- * "Don't show again" stores this value in DataStore.
+ * In-app What's New pages. Update copy when you ship features.
+ * Dismissed state is keyed to [com.jorotayo.algorubickrevamped.AppRelease.versionName],
+ * so each app update shows the tour again until the user opts out for that version.
  */
 object WhatsNewContent {
-    const val CONTENT_VERSION = "1.7.0"
-
     data class Page(
         @StringRes val titleRes: Int,
         @StringRes val bodyRes: Int,
@@ -43,7 +42,7 @@ object WhatsNewContent {
         Page(
             titleRes = R.string.whatsNew_page4_title,
             bodyRes = R.string.whatsNew_page4_body,
-            icon = Icons.Outlined.Home,
+            icon = Icons.Outlined.MoreHoriz,
         ),
     )
 }

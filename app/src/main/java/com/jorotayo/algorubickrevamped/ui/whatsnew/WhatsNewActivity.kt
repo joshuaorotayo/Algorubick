@@ -17,20 +17,21 @@ class WhatsNewActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         val repository = SettingsRepository.get(this)
+        val fromSettings = intent.getBooleanExtra(EXTRA_FROM_SETTINGS, false)
 
         setContent {
             AlgorubickThemeFromSettings {
                 WhatsNewScreen(
                     onContinue = {
                         lifecycleScope.launch {
-                            repository.setWhatsNewDismissedVersion(WhatsNewContent.CONTENT_VERSION)
-                            goToMain()
+                            repository.setWhatsNewDismissedVersion(WhatsNewPrefs.currentVersion)
+                            finishFlow(fromSettings)
                         }
                     },
                     onDontShowAgain = {
                         lifecycleScope.launch {
-                            repository.setWhatsNewDismissedVersion(WhatsNewContent.CONTENT_VERSION)
-                            goToMain()
+                            repository.setWhatsNewDismissedVersion(WhatsNewPrefs.currentVersion)
+                            finishFlow(fromSettings)
                         }
                     },
                 )
@@ -38,8 +39,14 @@ class WhatsNewActivity : ComponentActivity() {
         }
     }
 
-    private fun goToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+    private fun finishFlow(fromSettings: Boolean) {
+        if (!fromSettings) {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
         finish()
+    }
+
+    companion object {
+        const val EXTRA_FROM_SETTINGS = "from_settings"
     }
 }

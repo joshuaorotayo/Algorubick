@@ -41,7 +41,7 @@ import com.jorotayo.algorubickrevamped.ui.theme.AlgorubickTheme
 import com.jorotayo.algorubickrevamped.ui.theme.DefaultPreviews
 import com.jorotayo.algorubickrevamped.ui.theme.Primary
 import com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewActivity
-import com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewContent
+import com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewPrefs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -65,10 +65,10 @@ class SplashScreen : ComponentActivity() {
                 .settings
                 .first()
                 .whatsNewDismissedVersion
-            val next = if (dismissed == WhatsNewContent.CONTENT_VERSION) {
-                MainActivity::class.java
-            } else {
+            val next = if (WhatsNewPrefs.shouldShowAfterSplash(dismissed)) {
                 WhatsNewActivity::class.java
+            } else {
+                MainActivity::class.java
             }
             startActivity(Intent(this@SplashScreen, next))
             finish()

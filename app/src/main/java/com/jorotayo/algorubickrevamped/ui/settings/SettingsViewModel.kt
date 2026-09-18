@@ -8,6 +8,7 @@ import com.jorotayo.algorubickrevamped.data.SettingsRepository
 import com.jorotayo.algorubickrevamped.data.SoundPack
 import com.jorotayo.algorubickrevamped.data.ThemeMode
 import com.jorotayo.algorubickrevamped.data.VibrationPreset
+import com.jorotayo.algorubickrevamped.ui.whatsnew.WhatsNewPrefs
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -59,6 +60,19 @@ class SettingsViewModel(
 
     fun setLearntThresholdPercent(percent: Int) = viewModelScope.launch {
         repository.setLearntThresholdPercent(percent)
+    }
+
+    /**
+     * When enabled, clears the dismissed version so What's New shows after the next splash.
+     * When disabled, marks the current app version as dismissed.
+     * A new app version always re-enables showing until the user opts out again.
+     */
+    fun setShowWhatsNewOnStartup(enabled: Boolean) = viewModelScope.launch {
+        if (enabled) {
+            repository.setWhatsNewDismissedVersion("")
+        } else {
+            repository.setWhatsNewDismissedVersion(WhatsNewPrefs.currentVersion)
+        }
     }
 
     fun previewCorrectSound() {
